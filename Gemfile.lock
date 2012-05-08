@@ -1,0 +1,73 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    addressable (2.2.8)
+    bacon (1.1.0)
+    diff-lcs (1.1.3)
+    foreman (0.46.0)
+      thor (>= 0.13.6)
+    heroku (2.25.0)
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.1)
+      rest-client (~> 1.6.1)
+      rubyzip
+    innate (2012.03)
+      rack (~> 1.4.1)
+    json (1.7.1)
+    kgio (2.7.4)
+    launchy (2.1.0)
+      addressable (~> 2.2.6)
+    mime-types (1.18)
+    multi_json (1.3.4)
+    mysql2 (0.3.11)
+    netrc (0.7.1)
+    rack (1.4.1)
+    rack-test (0.6.1)
+      rack (>= 1.0)
+    raindrops (0.8.0)
+    rake (0.9.2.2)
+    ramaze (2012.04.14)
+      innate (>= 2012.03)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rspec (2.10.0)
+      rspec-core (~> 2.10.0)
+      rspec-expectations (~> 2.10.0)
+      rspec-mocks (~> 2.10.0)
+    rspec-core (2.10.0)
+    rspec-expectations (2.10.0)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.10.1)
+    rubyzip (0.9.8)
+    sequel (3.35.0)
+    simplecov (0.6.2)
+      multi_json (~> 1.3)
+      simplecov-html (~> 0.5.3)
+    simplecov-html (0.5.3)
+    sqlite3 (1.3.6)
+    thor (0.15.2)
+    unicorn (4.3.1)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
+    yard (0.8.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bacon
+  bundler
+  foreman
+  heroku
+  json
+  mysql2
+  rack-test
+  rake
+  ramaze
+  rspec
+  sequel
+  simplecov
+  sqlite3
+  unicorn
+  yard

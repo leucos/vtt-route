@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Challenge VTT-Route - Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Challenge VTT et route, seul ou en duo">
+    <meta name="keywords" content="challenge, vtt, route, saint laurent, jean-christophe péraud, vélo, course">
+    <meta name="author" content="Association Sportive su Collège Saint Laurent">
+
+    <!-- Le styles -->
+    #{css('bootstrap')}
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+
+    #{css('bootstrap-responsive')}
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    #{js('jquery')}
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png ">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+
+      <?r @content r>
+
+      <hr>
+      <div class="modal hide fade" id="mentions" style="display:none;">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">×</button>
+          <h3>Mentions l&eacute;gales</h3>
+        </div>
+        <div class="modal-body">
+
+          <p> Ce site est le site officiel du Challenge VTT-Route géré par l'Association Sportive
+          Saint Laurent.
+          </p>
+
+          <p> Il répond aux noms de domaines suivants : 
+          <strong> inscription.challengevttroute.fr </strong>,
+          <strong> inscription.challengevttroute.com </strong> et
+          <strong> inscription.challengevttroute.org </strong>
+          </p>
+
+          <dl>
+            <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>
+            <dt>Crédits photographiques</dt><dd>???</dd>
+            <dt>Réalisation technique</dt><dd>Association ls~</dd>
+            <dt>Hébergement</dt><dd>Association ls~</dd>
+          </dl>
+
+          <p> Ce site web est la propriété du Groupe
+          Scolaire Saint Laurent : la structure générale, ainsi que les textes, images
+          animées ou non, et tous les éléments composant ce site web sont propriété de
+          l'association sportive Saint Laurent.
+          </p>
+
+          <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
+          extraction d'une partie substantielle de la base de données qu'il contient est
+          interdite, sans autorisation expresse et préalable de l'association OGEC Saint
+          Laurent. Toute exploitation non autorisée du site ou de son contenu, des
+          informations qui y sont divulguées engageraient la responsabilité de
+          l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
+          L. 335-2 et suivants du Code de la Propriété Intellectuelle.
+          </p>
+
+          <p> En conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
+          janvier 1978, vous disposez d'un droit d'accès, de modification, de
+          rectification et de suppression des données nominatives qui vous concernent.
+          Vous pouvez exercer ce droit en vous adressant à :
+          </p>
+
+          <address>
+            <strong>Association Sportive Collège Saint Laurent</strong><br>
+            Rue Côte Pinay<br>
+            69930 Saint Laurent de Chamousset<br>
+            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+          </address>
+
+          <p> Les éléments contenus dans ce document sont susceptibles d'évoluer ; ils sont
+          donnés à titre d'information et en aucun cas ne peuvent être considérés comme
+          contractuels.
+          </p>
+
+
+       </div>
+        <div class="modal-footer">
+          <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+        </div>
+      </div>
+
+      <footer>
+        <p align="center">&copy; Association Sportive Collège Saint Laurent 2012 - 
+        <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> - 
+        <a href="mailto:info@challengevttroute.fr">Contact</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    #{js('bootstrap-transition')}
+    #{js('bootstrap-alert')}
+    #{js('bootstrap-modal')}
+    #{js('bootstrap-dropdown')}
+    #{js('bootstrap-scrollspy')}
+    #{js('bootstrap-tab')}
+    #{js('bootstrap-tooltip')}
+    #{js('bootstrap-popover')}
+    #{js('bootstrap-button')}
+    #{js('bootstrap-collapse')}
+    #{js('bootstrap-carousel')}
+    #{js('bootstrap-typeahead')}
+
+  </body>
+</html>
+

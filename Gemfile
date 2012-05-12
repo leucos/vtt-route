@@ -9,6 +9,7 @@ gem 'json'
 #gem 'thin'
 gem 'unicorn'
 gem 'foreman'
+gem 'pony'
 
 group :development do
   gem 'heroku'

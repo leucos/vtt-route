@@ -1,57 +1,204 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
+  <head>
+    <meta charset="utf-8">
+    <title>Challenge VTT-Route - Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Challenge VTT et route, seul ou en duo">
+    <meta name="keywords" content="challenge, vtt, route, saint laurent, jean-christophe péraud, vélo, course">
+    <meta name="author" content="Association Sportive su Collège Saint Laurent">
 
-        <title>#{@title}</title>
+    <!-- Le styles -->
+    #{css('bootstrap')}
 
-        #{css('reset')}
-        #{css('grid')}
-        #{css('layout')}
-        #{css('text')}
-    </head>
-    <body>
-        <div class="container">
-            <div id="container" class="row">
-                <!-- Top part, contains the navigation menu -->
-                <div id="top" class="grid_12">
-                    <header class="grid_6">
-                        <h1>#{@title}</h1>
-                    </header> 
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
 
-                    <nav class="grid_6 last">
-                        <ul class="clearfix">
-                            <li>
-                                <a href="http://ramaze.net/">Website</a>
-                            </li>
-                            <li>
-                                <a href="http://ramaze.net/documentation/index.html">
-                                    Documentation
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://groups.google.com/forum/#!forum/ramaze">
-                                    Mailing List
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+    #{css('bootstrap-responsive')}
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    #{js('jquery')}
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png ">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+
+        <div class="span6 columns">
+          <div id="maincaroussel" class="carousel">
+            <!-- Carousel items -->
+            <div class="carousel-inner">
+              <div class="active item">
+                <a href="http://www.challengevttroute.fr"><img src="/images/vtt1-600.jpg" alt=""></a>
+                <div class="carousel-caption">
+                  <h4>Chalenge Vtt Route</h4>
+                  <p>Premier challenge VTT route parainné par Jean-Christophe P&eacute;raud</p>
                 </div>
-
-                <div id="content" class="grid_12">
-                    #{@content}
+              </div>
+              <div class="item">
+                <a href="http://www.challengevttroute.fr"><img src="/images/vtt2-600.jpg" alt=""></a>
+                <div class="carousel-caption">
+                  <h4>Chalenge Vtt Route</h4>
+                  <p>Encha&icirc;nez 20km en VTT et 40km sur route, seul, ou en duo</p>
                 </div>
+              </div>
+              <div class="item"><img src="/images/vtt3-600.jpg" alt="" /></div>
+              <div class="item">
+                <a href="http://www.challengevttroute.fr"><img src="/images/vtt4-600.jpg" alt="" /></a>
+                <div class="carousel-caption">
+                  <h4>Chalenge Vtt Route</h4>
+                  <p>Le challenge est parainn&eacute; par Jean-Christophe P&eacute;raud</p>
+                </div>
+              </div>
+            
             </div>
+            <!-- Carousel nav -->
+            <a class="carousel-control left" href="#maincaroussel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#maincaroussel" data-slide="next">&rsaquo;</a>
+          </div>
+        </div> <!-- caroussel -->
 
-            <footer id="footer">
-                <p>
-                    Ramaze is free software and is licensed under the MIT license.<br />
-                    All textual content is licensed under a 
-                    <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">
-                        Creative Commons license.
-                    </a>
-                </p>
-            </footer>
+        
+        <div class="span6">
+          <!-- Main hero unit for a primary marketing message or call to action -->
+          <div class="hero-unit">
+            <h2>Challenge VTT-Route</h2>
+            <h3>Edition 2012</h3>
+            <p>Enchainez 20km de VTT et 40km sur route, seul, ou en duo!</p>
+            <p><a class="btn btn-large" href="http://www.chalengevttroute.fr">Plus d'infos</a> 
+            <a class="btn btn-primary btn-large" href="inscription">S'inscrire</a></p>
+          </div>
+        </div> <!-- hero unit -->
+
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <h2>R&egrave;glement</h2>
+          <p>La participation à l'épreuve implique l'acceptation du r&egrave;glement</p>
+          <p><a class="btn" href="#">Lire le r&egrave;glement &raquo;</a></p>
         </div>
-    </body>
+        <div class="span4">
+          <h2>S'inscrire</h2>
+          <p>Pour s'inscrire en ligne, c'est par ici</p>
+          <p><a class="btn btn-primary" href="#">Inscription &raquo;</a></p>
+        </div>
+         <div class="span4">
+          <h2>Résultats</h2>
+          <p>R&eacute;sultats en temps r&eacute;&egrave;l d&egrave;s le 22 octobre</p>
+          <p><a class="btn disabled" href="#">Voir les r&eacute;sultats &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+
+      <div class="modal hide fade" id="mentions" style="display:none;">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">×</button>
+          <h3>Mentions l&eacute;gales</h3>
+        </div>
+        <div class="modal-body">
+
+          <p> Ce site est le site officiel du Challenge VTT-Route géré par l'Association Sportive
+          Saint Laurent.
+          </p>
+
+          <p> Il répond aux noms de domaines suivants : 
+          <strong> inscription.challengevttroute.fr </strong>,
+          <strong> inscription.challengevttroute.com </strong> et
+          <strong> inscription.challengevttroute.org </strong>
+          </p>
+
+          <dl>
+            <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>
+            <dt>Crédits photographiques</dt><dd>???</dd>
+            <dt>Réalisation technique</dt><dd>Association ls~</dd>
+            <dt>Hébergement</dt><dd>Association ls~</dd>
+          </dl>
+
+          <p> Ce site web est la propriété du Groupe
+          Scolaire Saint Laurent : la structure générale, ainsi que les textes, images
+          animées ou non, et tous les éléments composant ce site web sont propriété de
+          l'association sportive Saint Laurent.
+          </p>
+
+          <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
+          extraction d'une partie substantielle de la base de données qu'il contient est
+          interdite, sans autorisation expresse et préalable de l'association OGEC Saint
+          Laurent. Toute exploitation non autorisée du site ou de son contenu, des
+          informations qui y sont divulguées engageraient la responsabilité de
+          l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
+          L. 335-2 et suivants du Code de la Propriété Intellectuelle.
+          </p>
+
+          <p> En conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
+          janvier 1978, vous disposez d'un droit d'accès, de modification, de
+          rectification et de suppression des données nominatives qui vous concernent.
+          Vous pouvez exercer ce droit en vous adressant à :
+          </p>
+
+          <address>
+            <strong>Association Sportive Collège Saint Laurent</strong><br>
+            Rue Côte Pinay<br>
+            69930 Saint Laurent de Chamousset<br>
+            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+          </address>
+
+          <p> Les éléments contenus dans ce document sont susceptibles d'évoluer ; ils sont
+          donnés à titre d'information et en aucun cas ne peuvent être considérés comme
+          contractuels.
+          </p>
+
+
+       </div>
+        <div class="modal-footer">
+          <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+        </div>
+      </div>
+
+      <footer>
+        <p align="center">&copy; Association Sportive Collège Saint Laurent 2012 - 
+        <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> - 
+        <a href="mailto:info@challengevttroute.fr">Contact</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    #{js('bootstrap-transition')}
+    #{js('bootstrap-alert')}
+    #{js('bootstrap-modal')}
+    #{js('bootstrap-dropdown')}
+    #{js('bootstrap-scrollspy')}
+    #{js('bootstrap-tab')}
+    #{js('bootstrap-tooltip')}
+    #{js('bootstrap-popover')}
+    #{js('bootstrap-button')}
+    #{js('bootstrap-collapse')}
+    #{js('bootstrap-carousel')}
+    #{js('bootstrap-typeahead')}
+
+  </body>
 </html>
+

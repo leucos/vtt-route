@@ -1,0 +1,152 @@
+<?r @form_data ||= {} ?>
+<?r case @form_data[:stage] when nil ?>
+<form class="form-horizontal well" method="post">
+  <fieldset>
+
+    <!-- nom -->
+    <div class="control-group">
+      <label class="control-label" for="name">Nom</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="name">
+        <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="surname">Prénom</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="surname">
+      </div>
+    </div>
+
+    <!-- sexe -->
+    <div class="control-group">
+      <label class="control-label" for="gender">Sexe</label>
+      <div class="controls">
+        <label class="radio">
+          <input type="radio" id="gender" name="gender" value="female">Femme
+        </label>
+        <label class="radio">
+          <input type="radio" id="gender" name="gender" value="male">Homme
+        </label>
+      </div>
+    </div>
+
+    <!-- date de naissance -->
+    <div class="control-group">
+      <label class="control-label" for="ddn">Date de naissance</label>
+      <div class="controls">
+        <input type="text" class="input-mini" id="ddn-day" placeholder="jour">
+        <input type="text" class="input-mini" id="ddn-month" placeholder="mois">
+        <input type="text" class="input-mini" id="ddn-year" placeholder="année">
+      </div>
+    </div> 
+    <!-- date de naissance -->
+
+    <!-- adresse -->
+    <div class="control-group">
+      <label class="control-label">Adresse</label>
+      <div class="controls">
+        <input class="input-xlarge" type="text" name="address1" placeholder="Rue...">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input class="input-xlarge" type="text" name="address2" placeholder="Complément...">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input class="input-mini" type="text" name="zip" placeholder="CP">
+        <input class="input-large" type="text" name="city" placeholder="ville">
+      </div>
+    </div>
+    <!-- adresse -->
+
+    <!-- email -->
+     <div class="control-group">
+      <label class="control-label" for="email">Email</label>
+      <div class="controls">
+        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org">
+      </div>
+    </div> 
+    <!-- email -->
+
+    <!-- club -->
+     <div class="control-group">
+      <label class="control-label" for="club">Club ou entreprise</label>
+      <div class="controls">
+        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ...">
+      </div>
+    </div> 
+    <!-- club -->
+
+    <!-- licence -->
+     <div class="control-group">
+      <label class="control-label" for="club">Licence</label>
+      <div class="controls">
+        <select id="federation" name="federation">
+          <option>FFC</option>
+          <option>UFOLEP</option>
+          <option>Non licencié</option>
+          <option>Autre</option>
+        </select>
+        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence">
+      </div>
+    </div> 
+    <!-- licence -->
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Valider et continuer</button>
+      <!-- <button class="btn">Cancel</button> -->
+    </div>
+  </fieldset>
+</form>
+
+<?r when 2 ?>
+
+<form class="form-horizontal well" method="post">
+  <fieldset>
+
+    <!-- epreuve -->
+     <div class="control-group">
+      <label class="control-label" for="epreuve">Epreuve</label>
+      <div class="controls">
+        <select id="epreuve" name="epreuve">
+          <option>Solo</option>
+          <option>Duo</option>
+          <option>Tandem</option>
+          <option>Handi</option>
+        </select>
+        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence">
+      </div>
+    </div> 
+    <!-- licence -->
+
+    <!-- nom -->
+    <div class="control-group">
+      <label class="control-label" for="name">Nom</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="name">
+        <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="surname">Prénom</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="surname">
+      </div>
+    </div>
+    <!-- nom -->
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Revenir</button>
+      <button type="submit" class="btn btn-primary">Valider et continuer</button>
+    </div>
+  </fieldset>
+</form>
+
+<?r when 3 ?>
+
+Hell
+
+<?r end ?>

@@ -1,26 +1,34 @@
-<?r @form_data ||= {} ?>
-<?r case @form_data[:stage] when nil ?>
-<form class="form-horizontal well" method="post">
+
+<h2>#{@subtitle}</h2>
+<p class="lead">
+Ce formulaire vous permettra de vous inscrire au Challenge VTT-Route. Si vous
+participez en equipe (duo, tandem, handi), il faudra renseigner les
+informations pour les deux équipiers.
+</p>
+
+<?r case @form_data[:stage] when 1 ?>
+
+<form class="form-horizontal well" method="post" action="#{Inscriptions.r(:new)}">
   <fieldset>
 
     <!-- nom -->
-    <div class="control-group">
-      <label class="control-label" for="name">Nom</label>
+    <div class="control-group #{@missing[:name]}">
+      <label class="control-label" for="name"><strong>Nom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="name">
+        <input type="text" class="input-xlarge" id="name" name="name">
         <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="surname">Prénom</label>
+      <label class="control-label" for="surname"><strong>Prénom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="surname">
+        <input type="text" class="input-xlarge" id="surname" name="surname" value="">
       </div>
     </div>
 
     <!-- sexe -->
     <div class="control-group">
-      <label class="control-label" for="gender">Sexe</label>
+      <label class="control-label" for="gender"><strong>Sexe</strong></label>
       <div class="controls">
         <label class="radio">
           <input type="radio" id="gender" name="gender" value="female">Femme
@@ -33,18 +41,18 @@
 
     <!-- date de naissance -->
     <div class="control-group">
-      <label class="control-label" for="ddn">Date de naissance</label>
+      <label class="control-label" for="ddn"><strong>Date de naissance</strong></label>
       <div class="controls">
-        <input type="text" class="input-mini" id="ddn-day" placeholder="jour">
-        <input type="text" class="input-mini" id="ddn-month" placeholder="mois">
-        <input type="text" class="input-mini" id="ddn-year" placeholder="année">
+        <input type="text" class="input-mini" id="ddn_day" placeholder="jour">
+        <input type="text" class="input-mini" id="ddn_month" placeholder="mois">
+        <input type="text" class="input-mini" id="ddn_year" placeholder="année">
       </div>
     </div> 
     <!-- date de naissance -->
 
     <!-- adresse -->
     <div class="control-group">
-      <label class="control-label">Adresse</label>
+      <label class="control-label"><strong>Adresse</strong></label>
       <div class="controls">
         <input class="input-xlarge" type="text" name="address1" placeholder="Rue...">
       </div>
@@ -64,7 +72,7 @@
 
     <!-- email -->
      <div class="control-group">
-      <label class="control-label" for="email">Email</label>
+      <label class="control-label" for="email"><strong>Email</strong></label>
       <div class="controls">
         <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org">
       </div>
@@ -85,9 +93,9 @@
       <label class="control-label" for="club">Licence</label>
       <div class="controls">
         <select id="federation" name="federation">
+          <option>Non licencié</option>
           <option>FFC</option>
           <option>UFOLEP</option>
-          <option>Non licencié</option>
           <option>Autre</option>
         </select>
         <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence">
@@ -95,58 +103,32 @@
     </div> 
     <!-- licence -->
 
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Valider et continuer</button>
-      <!-- <button class="btn">Cancel</button> -->
-    </div>
-  </fieldset>
-</form>
-
-<?r when 2 ?>
-
-<form class="form-horizontal well" method="post">
-  <fieldset>
-
     <!-- epreuve -->
      <div class="control-group">
-      <label class="control-label" for="epreuve">Epreuve</label>
+      <label class="control-label" for="event"><strong>Epreuve</strong></label>
       <div class="controls">
-        <select id="epreuve" name="epreuve">
+        <select id="event" name="event">
           <option>Solo</option>
           <option>Duo</option>
           <option>Tandem</option>
           <option>Handi</option>
         </select>
-        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence">
       </div>
     </div> 
-    <!-- licence -->
+    <!-- epreuve -->
 
-    <!-- nom -->
-    <div class="control-group">
-      <label class="control-label" for="name">Nom</label>
-      <div class="controls">
-        <input type="text" class="input-xlarge" id="name">
-        <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="surname">Prénom</label>
-      <div class="controls">
-        <input type="text" class="input-xlarge" id="surname">
-      </div>
-    </div>
-    <!-- nom -->
+    <input type="hidden" name="attendee" value="1">
 
     <div class="form-actions">
-      <button type="submit" class="btn">Revenir</button>
       <button type="submit" class="btn btn-primary">Valider et continuer</button>
+      <!-- <button class="btn">Cancel</button> -->
     </div>
+
   </fieldset>
 </form>
 
-<?r when 3 ?>
+<?r when 2 ?>
 
-Hell
+yay
 
 <?r end ?>

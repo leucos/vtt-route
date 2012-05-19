@@ -1,4 +1,4 @@
-class User < Controller
+class Users < Controller
   layout :main
   helper :blue_form
 

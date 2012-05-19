@@ -16,4 +16,5 @@ end
 #  end
 #
 require __DIR__('main')
-require __DIR__('inscription')
+require __DIR__('user')
+

@@ -1,28 +1,49 @@
 
 <h2>#{@subtitle}</h2>
 <p class="lead">
-Ce formulaire vous permettra de vous inscrire au Challenge VTT-Route. Si vous
-participez en equipe (duo, tandem, handi), il faudra renseigner les
-informations pour les deux équipiers.
+Ce formulaire vous permet de vous inscrire au Challenge VTT-Route. Si vous
+participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipier.
 </p>
-
-<?r case @form_data[:stage] when 1 ?>
 
 <form class="form-horizontal well" method="post" action="#{Inscriptions.r(:new)}">
   <fieldset>
 
-    <!-- nom -->
+    <!-- email -->
+     <div class="control-group">
+      <label class="control-label" for="email"><strong>Email</strong></label>
+      <div class="controls">
+        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ @form_data['email'] }" />
+        <p class="help-block">Cet email vous permettra de vous identifier sur le site et de recevoir des informations sur la course.</p>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <label class="control-label" for="pass1"><strong>Mot de passe</strong></label>
+      <div class="controls">
+        <input type="password" class="input-large" id="pass1" name="pass1" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="pass1"><strong>Confirmation du passe</strong></label>
+      <div class="controls">
+        <input type="password" class="input-large" id="pass2" name="pass2" />
+      </div>
+    </div> 
+    <!-- email -->
+
+     <!-- nom -->
     <div class="control-group #{@missing[:name]}">
       <label class="control-label" for="name"><strong>Nom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="name" name="name">
+        <input type="text" class="input-xlarge" id="name" name="name" value="#{ @form_data['name'] }" />
         <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="surname"><strong>Prénom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="surname" name="surname" value="">
+        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ @form_data['surname'] }" />
       </div>
     </div>
 
@@ -43,9 +64,9 @@ informations pour les deux équipiers.
     <div class="control-group">
       <label class="control-label" for="ddn"><strong>Date de naissance</strong></label>
       <div class="controls">
-        <input type="text" class="input-mini" id="ddn_day" placeholder="jour">
-        <input type="text" class="input-mini" id="ddn_month" placeholder="mois">
-        <input type="text" class="input-mini" id="ddn_year" placeholder="année">
+        <input type="text" class="input-mini" name="ddn_day" placeholder="jour" value="#{ @form_data['ddn_day'] }" />
+        <input type="text" class="input-mini" name="ddn_month" placeholder="mois" value="#{ @form_data['ddn_month'] }" />
+        <input type="text" class="input-mini" name="ddn_year" placeholder="année" value="#{ @form_data['ddn_year'] }" />
       </div>
     </div> 
     <!-- date de naissance -->
@@ -54,36 +75,27 @@ informations pour les deux équipiers.
     <div class="control-group">
       <label class="control-label"><strong>Adresse</strong></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address1" placeholder="Rue...">
+        <input class="input-xlarge" type="text" name="address1" placeholder="Rue..." value="#{ @form_data['address1'] }" />
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address2" placeholder="Complément...">
+        <input class="input-xlarge" type="text" name="address2" placeholder="Complément..." value="#{ @form_data['address2'] }" />
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="input-mini" type="text" name="zip" placeholder="CP">
-        <input class="input-large" type="text" name="city" placeholder="ville">
+        <input class="input-mini" type="text" name="zip" placeholder="CP" value="#{ @form_data['zip'] }" />
+        <input class="input-large" type="text" name="city" placeholder="ville" value="#{ @form_data['city'] }" />
       </div>
     </div>
     <!-- adresse -->
 
-    <!-- email -->
-     <div class="control-group">
-      <label class="control-label" for="email"><strong>Email</strong></label>
-      <div class="controls">
-        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org">
-      </div>
-    </div> 
-    <!-- email -->
-
-    <!-- club -->
+   <!-- club -->
      <div class="control-group">
       <label class="control-label" for="club">Club ou entreprise</label>
       <div class="controls">
-        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ...">
+        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ @form_data['org'] }" />
       </div>
     </div> 
     <!-- club -->
@@ -98,7 +110,7 @@ informations pour les deux équipiers.
           <option>UFOLEP</option>
           <option>Autre</option>
         </select>
-        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence">
+        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence" value="#{ @form_data['license'] }" />
       </div>
     </div> 
     <!-- licence -->
@@ -126,9 +138,3 @@ informations pour les deux équipiers.
 
   </fieldset>
 </form>
-
-<?r when 2 ?>
-
-yay
-
-<?r end ?>

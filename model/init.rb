@@ -3,4 +3,7 @@
 # fit.
 
 # Here go your requires for models:
-# require __DIR__('user')
+
+Sequel.extension(:pagination)
+
+require __DIR__('user')

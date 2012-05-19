@@ -1,0 +1,11 @@
+<h2>#{@subtitle}</h2>
+
+#{
+form_for(@form_data, :method => :post, :action => Inscriptions.r(@form_data[:next_step])) do |f|
+  f.input_hidden :step
+  f.input_hidden :next_step
+  f.input_text 'Username', :username
+  f.input_submit 'Accepter et continuer'
+end
+}
+

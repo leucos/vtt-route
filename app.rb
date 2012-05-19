@@ -8,6 +8,14 @@ require 'ramaze'
 # Make sure that Ramaze knows where you are
 Ramaze.options.roots = [__DIR__]
 
+# Some useful requires
+require 'sequel'
+require 'pony'
+
+# Read some conf
+require __DIR__('config/environment')
+require __DIR__('config/database')
+
 # Initialize controllers and models
 require __DIR__('model/init')
 require __DIR__('controller/init')

@@ -5,10 +5,10 @@
 
 case Ramaze.options.mode
 when :dev, :test
-  DB=Sequel.connect('sqlite://blog.db')
+  DB=Sequel.connect('sqlite://vttroute.db')
 when :live
   DB=Sequel.mysql2(
-    'mail',
+    'vttroute',
     :database => '',
     :user     => '',
     :password => '')

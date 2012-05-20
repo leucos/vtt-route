@@ -6,27 +6,27 @@ Ce formulaire vous permet de vous inscrire au Challenge VTT-Route. Si vous
 participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipier.
 </p>
 
-<form class="form-horizontal well" method="post" action="#{Users.r(:create)}">
-  <fieldset>
+<form class="form-horizontal well" method="post" action="#{Users.r(:save)}">
+  <fieldset class="control-group errors">
 
     <!-- email -->
-     <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:email] }">
       <label class="control-label" for="email"><strong>Email</strong></label>
       <div class="controls">
-        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ @form_data['email'] }" />
+        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ flash[:form_data]['email'] }" />
         <p class="help-block">Cet email vous permettra de vous identifier sur le site et de recevoir des informations sur la course.</p>
       </div>
     </div>
-    
-    <div class="control-group">
+
+    <div class="control-group #{ flash[:form_errors][:password_hash] }">
       <label class="control-label" for="pass1"><strong>Mot de passe</strong></label>
       <div class="controls">
         <input type="password" class="input-large" id="pass1" name="pass1" />
       </div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label" for="pass1"><strong>Confirmation du passe</strong></label>
+    <div class="control-group #{ flash[:form_errors][:password_hash] }">
+      <label class="control-label" for="pass2"><strong>Confirmation du passe</strong></label>
       <div class="controls">
         <input type="password" class="input-large" id="pass2" name="pass2" />
       </div>
@@ -34,22 +34,22 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <!-- email -->
 
      <!-- nom -->
-    <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:name] }">
       <label class="control-label" for="name"><strong>Nom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="name" name="name" value="#{ @form_data['name'] }" />
+        <input type="text" class="input-xlarge" id="name" name="name" value="#{ flash[:form_data]['name'] }" />
         <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
       </div>
     </div>
-    <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:surname] }">
       <label class="control-label" for="surname"><strong>Prénom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ @form_data['surname'] }" />
+        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ flash[:form_data]['surname'] }" />
       </div>
     </div>
 
     <!-- sexe -->
-    <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:gender] }">
       <label class="control-label" for="gender"><strong>Sexe</strong></label>
       <div class="controls">
         <label class="radio">
@@ -62,32 +62,37 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     </div>
 
     <!-- date de naissance -->
-    <div class="control-group">
-      <label class="control-label" for="ddn"><strong>Date de naissance</strong></label>
+    <div class="control-group #{ flash[:form_errors][:birth] }">
+      <label class="control-label" for="dob"><strong>Date de naissance</strong></label>
       <div class="controls">
-        <input type="text" class="input-mini" name="ddn_day" placeholder="jour" value="#{ @form_data['ddn_day'] }" />
-        <input type="text" class="input-mini" name="ddn_month" placeholder="mois" value="#{ @form_data['ddn_month'] }" />
-        <input type="text" class="input-mini" name="ddn_year" placeholder="année" value="#{ @form_data['ddn_year'] }" />
+        <input type="text" class="input-mini" name="dob-day" placeholder="jour" value="#{ flash[:form_data]['dob-day'] }" />
+        <input type="text" class="input-mini" name="dob-month" placeholder="mois" value="#{ flash[:form_data]['dob-month'] }" />
+        <input type="text" class="input-mini" name="dob-year" placeholder="année" value="#{ flash[:form_data]['dob-year'] }" />
       </div>
     </div> 
     <!-- date de naissance -->
 
     <!-- adresse -->
-    <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:address1] }">
       <label class="control-label"><strong>Adresse</strong></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address1" placeholder="Rue..." value="#{ @form_data['address1'] }" />
+        <input class="input-xlarge" type="text" name="address1" placeholder="Rue..." value="#{ flash[:form_data]['address1'] }" />
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address2" placeholder="Complément..." value="#{ @form_data['address2'] }" />
+        <input class="input-xlarge" type="text" name="address2" placeholder="Complément..." value="#{ flash[:form_data]['address2'] }" />
       </div>
     </div>
-    <div class="control-group">
+    <div class="control-group #{ flash[:form_errors][:zip] } #{ flash[:form_errors][:city] }">
       <div class="controls">
-        <input class="input-mini" type="text" name="zip" placeholder="CP" value="#{ @form_data['zip'] }" />
-        <input class="input-large" type="text" name="city" placeholder="ville" value="#{ @form_data['city'] }" />
+        <input class="input-mini" type="text" name="zip" placeholder="CP" value="#{ flash[:form_data]['zip'] }" />
+        <input class="input-large" type="text" name="city" placeholder="ville" value="#{ flash[:form_data]['city'] }" />
+      </div>
+    </div>
+    <div class="control-group #{ flash[:form_errors][:country] }">
+      <div class="controls">
+        <input class="input-xlarge" type="text" name="country" placeholder="pays" value="#{ flash[:form_data]['country'] }" />
       </div>
     </div>
     <!-- adresse -->
@@ -96,7 +101,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
      <div class="control-group">
       <label class="control-label" for="club">Club ou entreprise</label>
       <div class="controls">
-        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ @form_data['org'] }" />
+        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ flash[:form_data]['org'] }" />
       </div>
     </div> 
     <!-- club -->
@@ -111,13 +116,13 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
           <option>UFOLEP</option>
           <option>Autre</option>
         </select>
-        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence" value="#{ @form_data['license'] }" />
+        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence" value="#{ flash[:form_data]['license'] }" />
       </div>
     </div> 
     <!-- licence -->
 
     <!-- epreuve -->
-     <div class="control-group">
+     <div class="control-group #{ flash[:form_errors][:event] }">
       <label class="control-label" for="event"><strong>Epreuve</strong></label>
       <div class="controls">
         <select id="event" name="event">
@@ -133,7 +138,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <input type="hidden" name="attendee" value="1">
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary" name="validate" value="true">Valider</button>
+      <button type="submit" class="btn btn-primary" name="create">Cr&eacute;er</button>
       <!-- <button class="btn">Cancel</button> -->
     </div>
 

@@ -47,8 +47,23 @@
       </div>
       
       <div class="row">
+
         <div class="span10 offset1">
+
+        <?r [:success, :error, :info].each do |type| ?>
+          <?r if flash[type] ?>
+
+         <div class="alert alert-block alert-#{type} fade in">
+           <a class="close" data-dismiss="alert" href="#">×</a>
+           <h4 class="alert-heading">#{ type.capitalize }</h4>
+           <p>#{flash[type].capitalize}</p>
+         </div>
+
+          <?r end ?>
+        <?r end ?>
+
           #{@content}
+
         </div>
       </div>
 

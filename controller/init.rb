@@ -4,9 +4,12 @@
 
 class Controller < Ramaze::Controller
   layout :default
-  helper :xhtml
+  helper :xhtml, :flash
   engine :etanni
 end
+
+require 'pony'
+require 'guid'
 
 require __DIR__('main')
 require __DIR__('users')

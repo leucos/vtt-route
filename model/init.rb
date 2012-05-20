@@ -6,4 +6,6 @@
 
 Sequel.extension(:pagination)
 
+require 'bcrypt'
+
 require __DIR__('user')

@@ -96,7 +96,20 @@ class Users < Controller
     when :create
       send_confirmation_email(user.email, user.confirmation_key)
       flash[:success] = 'Utilisateur créé'
+      @subtitle = 'Email de vérification envoyé'
       render_view(:confirm)
+    end
+  end
+
+  def confirm(key)
+    u = User[:confirmation_key => key]
+
+    if u.nil?
+      @subtitle = 'Compte inexistant'
+    else
+      u.confirmed = true
+      u.save
+      @subtitle = 'Votre compte est validé'
     end
   end
 
@@ -125,6 +138,7 @@ ou en écrivant à : info@challengevttroute.fr
 L'équipe du challenge VTT-Route
 EOF
 
+  Ramaze::Log.info("sending validation email to #{email}");
   Pony.mail(:to => email,
             :from => 'info@challengevttroute.fr',
             :subject => 'Inscription au challenge VTT-Route',

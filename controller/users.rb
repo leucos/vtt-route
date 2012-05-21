@@ -5,8 +5,29 @@ class Users < Controller
   layout :main
   helper :blue_form
 
+  FIELD_NAMES = { :email => "Email", 
+                  :name  => "Nom",
+                  :surname => "Prénom",
+                  :gender  => "Sexe",
+                  :address1 => "Adresse",
+                  :address2 => "Complément d'adresse",
+                  :zip => "Code Postal",
+                  :city => "Ville",
+                  :country => "Pays",
+                  :phone => "Téléphone",
+                  :org => "Club ou entreprise", 
+                  :birth => "Date de naissance", 
+                  :licence => "Numéro de licence",
+                  :event => "Epreuve", 
+                  :peer => "Coéquipier" }
+
+
+  def index
+    @title = 'Espace participants'
+    @subtitle = ''
+  end
+
   def create
-    # TODO: use captcha
     @title = 'Inscription'
     @subtitle = 'S\'inscrire'
 
@@ -16,6 +37,9 @@ class Users < Controller
   end
 
   def save
+    flash[:form_data] ||= {}
+    flash[:form_errors] ||= {}
+
     user = User.new
 
     data = request.subset(:email, :name, :surname, :gender,
@@ -23,7 +47,7 @@ class Users < Controller
                           :phone, :org, :licence, :event, :peer)
 
     p data
-
+    
     id = request.params['id']
 
     if !id.nil? and !id.empty?
@@ -77,14 +101,32 @@ class Users < Controller
       data[:birth] = Date.new(request.params['dob-year'].to_i,
                               request.params['dob-month'].to_i,
                               request.params['dob-day'].to_i)
+    rescue
+      # Let Sequel handle this and report back
+      data[:birth] = nil
+    end
+
+    begin
+      user.raise_on_typecast_failure = false
       user.update(data)
+#      Ramaze::Log.info("nil date")
     rescue Sequel::ValidationFailed => e
-      p e
+      # An error occured, so let's save form data
+      # so the user doesn't have to retype everything
+      flash[:form_data] = data
+      ['dob-day', 'dob-month', 'dob-year'].each do |d|
+        flash[:form_data][d] = request.params[d]
+      end
+
+      Ramaze::Log.info(e.inspect)
+      flash[:error] = 'Votre formulaire contient des erreurs :'
+      flash[:error] << '<ul>'
       e.errors.each do |i|
         Ramaze::Log.info("missing field #{i[0]}")
+        flash[:error] << "<li> %s : %s</li>" % [ FIELD_NAMES[i[0]], i[1][0] ]
         flash[:form_errors][i[0]] = :error
       end
-      flash[:error] = 'Certains champs obligatoires ne sont pas renseignés'
+      flash[:error] << '</ul>'
 
       redirect_referrer
     end
@@ -97,6 +139,8 @@ class Users < Controller
       send_confirmation_email(user.email, user.confirmation_key)
       flash[:success] = 'Utilisateur créé'
       @subtitle = 'Email de vérification envoyé'
+      @title = 'Inscription'
+
       render_view(:confirm)
     end
   end
@@ -106,10 +150,12 @@ class Users < Controller
 
     if u.nil?
       @subtitle = 'Compte inexistant'
+      redirect(self.r(:index))
     else
       u.confirmed = true
       u.save
       @subtitle = 'Votre compte est validé'
+      render_view(:welcome)
     end
   end
 

@@ -1,11 +1,22 @@
 <h2>#{@subtitle}</h2>
 
-#{
-form_for(@form_data, :method => :post, :action => Inscriptions.r(@form_data[:next_step])) do |f|
-  f.input_hidden :step
-  f.input_hidden :next_step
-  f.input_text 'Username', :username
-  f.input_submit 'Accepter et continuer'
-end
-}
+<div class="container">
+  <div class="row">
+    <div class="span6">
+    
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h2>Challenge VTT-Route</h2>
+        <h3>Edition 2012</h3>
+        <p>Inscrivez vous ou consultez votre profil</p>
+        <p>
+          <a class="btn btn-large" href="login">Se connecter</a> 
+          <a class="btn btn-primary btn-large" href="create">S'inscrire</a>
+        </p>
+      </div>
+    </div> <!-- hero unit -->
 
+  </div>
+</div>
+
+   

@@ -9,7 +9,7 @@ class User < Sequel::Model
   one_to_many :partner, :key => :peer, :class => self
 
   def validate
-    validates_unique [:email], :message => 'Cette adresse email est déjà utilisée'
+    validates_unique :email, :message => 'Cette adresse email est déjà utilisée'
     validates_presence [:name, :surname, :address1, :zip, :city, 
                         :email, :password_hash, :gender, :birth, :event ],
                         :message => 'Ce champ doit être renseigné'

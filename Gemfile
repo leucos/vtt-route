@@ -21,4 +21,5 @@ group :development do
   gem 'bundler'
   gem 'simplecov'
   gem 'rack-test'
+  gem 'nokogiri'
 end

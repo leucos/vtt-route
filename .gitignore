@@ -1,3 +1,4 @@
-vttroute.db
-db/schema.db
+coverage/
+vttroute-*.db
+db/schema.rb
 

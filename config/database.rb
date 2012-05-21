@@ -4,8 +4,10 @@
 
 
 case Ramaze.options.mode
-when :dev, :test
-  DB=Sequel.connect('sqlite://vttroute.db')
+when :dev
+  DB=Sequel.connect('sqlite://vttroute-dev.db')
+when :spec
+  DB=Sequel.connect('sqlite://vttroute-spec.db')
 when :live
   DB=Sequel.mysql2(
     'vttroute',

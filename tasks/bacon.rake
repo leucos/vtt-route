@@ -3,8 +3,6 @@ task :bacon do
   require 'simplecov'
   require 'bacon'
 
-  ENV['RACK_ENV'] = 'spec'
-
   Bacon.const_set :Backtraces, false unless ENV['BACON_MUTE'].nil? 
 
   SimpleCov.command_name 'bacon'

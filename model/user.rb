@@ -10,10 +10,14 @@ class User < Sequel::Model
 
   def validate
     validates_unique :email, :message => 'Cette adresse email est déjà utilisée'
-    validates_presence [:name, :surname, :address1, :zip, :city, 
+    validates_presence [:name, :surname, :address1, :zip, :city, :country,
                         :email, :password_hash, :gender, :birth, :event ],
                         :message => 'Ce champ doit être renseigné'
     validates_exact_length 5, :zip, :message => 'Ce code postal est invalide'
+  end
+
+  def before_create
+    self.confirmation_key = Guid.new.to_s
   end
 
   def password

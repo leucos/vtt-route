@@ -12,7 +12,7 @@ Sequel.migration do
       String :address2
       String :zip, :null => false
       String :city, :null => false
-      String :country, :null => false
+      String :country, :null => false, :default => "France"
       String :phone
       String :org
       String :licence

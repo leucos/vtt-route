@@ -19,6 +19,8 @@ class Users < Controller
                   :birth => "Date de naissance", 
                   :licence => "Numéro de licence",
                   :event => "Epreuve", 
+                  :pass1 => "Mots de passe",
+                  :pass2 => "Mots de passe",
                   :peer => "Coéquipier" }
 
 
@@ -33,7 +35,6 @@ class Users < Controller
 
     flash[:form_data] ||= {}
     flash[:form_errors] ||= {}
-    p request.params
   end
 
   def save
@@ -46,8 +47,6 @@ class Users < Controller
                           :address1, :address2, :zip, :city, :country,
                           :phone, :org, :licence, :event, :peer)
 
-    p data
-    
     id = request.params['id']
 
     if !id.nil? and !id.empty?
@@ -75,14 +74,15 @@ class Users < Controller
       operation = :update
     else
       user = User.new
-      user.confirmation_key = Guid.new.to_s
       operation = :create
 
     end
 
     # Let's check if passwords match first
+    # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
-      flash[:error] = 'Les mots de passe ne correspondent pas'
+      flash[:error] = 'Il y a un problème avec votre mot de passe :'
+      flash[:error] << '<ul><li>Les mots de passe ne correspondent pas</li></ul>'
       redirect_referrer
     end
 
@@ -98,9 +98,10 @@ class Users < Controller
     # Now let's update the User instance
     # Since many things can fail, we enclose this in a rescue block
     begin
-      data[:birth] = Date.new(request.params['dob-year'].to_i,
-                              request.params['dob-month'].to_i,
-                              request.params['dob-day'].to_i)
+      date_str = "%s-%s-%s" % [ request.params['dob-year'],
+                                request.params['dob-month'],
+                                request.params['dob-day'] ]
+      data[:birth] = Date.parse(date_str)
     rescue
       # Let Sequel handle this and report back
       data[:birth] = nil
@@ -109,7 +110,6 @@ class Users < Controller
     begin
       user.raise_on_typecast_failure = false
       user.update(data)
-#      Ramaze::Log.info("nil date")
     rescue Sequel::ValidationFailed => e
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything

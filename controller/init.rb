@@ -9,7 +9,6 @@ class Controller < Ramaze::Controller
 end
 
 require 'pony'
-require 'guid'
 
 require __DIR__('main')
 require __DIR__('users')

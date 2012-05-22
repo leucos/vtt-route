@@ -6,10 +6,6 @@ Ce formulaire vous permet de vous inscrire au Challenge VTT-Route. Si vous
 participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipier.
 </p>
 
-#{p flash }
-#{p flash[:form_errors] }
-#{p flash[:form_data] }
-
 <form class="form-horizontal well" method="post" action="#{Users.r(:save)}">
   <fieldset class="control-group errors">
 
@@ -69,9 +65,9 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <div class="control-group #{ flash[:form_errors][:birth] }">
       <label class="control-label" for="dob"><strong>Date de naissance</strong></label>
       <div class="controls">
-        <input type="text" class="input-mini" name="dob-day" placeholder="jour" value="#{ flash[:form_data]['dob-day'] }" />
-        <input type="text" class="input-mini" name="dob-month" placeholder="mois" value="#{ flash[:form_data]['dob-month'] }" />
-        <input type="text" class="input-mini" name="dob-year" placeholder="année" value="#{ flash[:form_data]['dob-year'] }" />
+        <input type="text" class="input-mini" id="dob-day" name="dob-day" placeholder="jour" value="#{ flash[:form_data]['dob-day'] }" />
+        <input type="text" class="input-mini" id="dob-month" name="dob-month" placeholder="mois" value="#{ flash[:form_data]['dob-month'] }" />
+        <input type="text" class="input-mini" id="dob-year" name="dob-year" placeholder="année" value="#{ flash[:form_data]['dob-year'] }" />
       </div>
     </div> 
     <!-- date de naissance -->
@@ -80,23 +76,23 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <div class="control-group #{ flash[:form_errors][:address1] }">
       <label class="control-label"><strong>Adresse</strong></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address1" placeholder="Rue..." value="#{ flash[:form_data]['address1'] }" />
+        <input class="input-xlarge" type="text" id="address1" name="address1" placeholder="Rue..." value="#{ flash[:form_data]['address1'] }" />
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="input-xlarge" type="text" name="address2" placeholder="Complément..." value="#{ flash[:form_data]['address2'] }" />
+        <input class="input-xlarge" type="text" id="address2" name="address2" placeholder="Complément..." value="#{ flash[:form_data]['address2'] }" />
       </div>
     </div>
     <div class="control-group #{ flash[:form_errors][:zip] } #{ flash[:form_errors][:city] }">
       <div class="controls">
-        <input class="input-mini" type="text" name="zip" placeholder="CP" value="#{ flash[:form_data]['zip'] }" />
-        <input class="input-large" type="text" name="city" placeholder="ville" value="#{ flash[:form_data]['city'] }" />
+        <input class="input-mini" type="text" id="zip" name="zip" placeholder="CP" value="#{ flash[:form_data]['zip'] }" />
+        <input class="input-large" type="text" id="city" name="city" placeholder="ville" value="#{ flash[:form_data]['city'] }" />
       </div>
     </div>
     <div class="control-group #{ flash[:form_errors][:country] }">
       <div class="controls">
-        <input class="input-xlarge" type="text" name="country" placeholder="pays" value="#{ flash[:form_data]['country'] }" />
+        <input class="input-xlarge" type="text" id="country" name="country" placeholder="pays" value="#{ flash[:form_data]['country'] }" />
       </div>
     </div>
     <!-- adresse -->
@@ -120,7 +116,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
           <option>UFOLEP</option>
           <option>Autre</option>
         </select>
-        <input type="text" class="input-large" id="license" name="license" placeholder="Numéro de licence" value="#{ flash[:form_data]['license'] }" />
+        <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ flash[:form_data]['licence'] }" />
       </div>
     </div> 
     <!-- licence -->

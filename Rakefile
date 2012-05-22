@@ -13,7 +13,7 @@ CLEAN.include %w[
   *.gem
   .config
   **/*~
-  **/{data.db,cache.yaml}
+  **/{vttroute-*.db,cache.yaml}
   *.yaml
   pkg
   rdoc
@@ -26,5 +26,5 @@ Dir.glob(File.expand_path('../tasks/*.rake', __FILE__)).each do |f|
 end
 
 # Set the default task to running all the bacon specifications
-task :default => [:bacon]
+task :default => [ :bacon ]
 

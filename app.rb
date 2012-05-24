@@ -18,4 +18,5 @@ require __DIR__('config/database')
 
 # Initialize controllers and models
 require __DIR__('model/init')
+require __DIR__('helper/init')
 require __DIR__('controller/init')

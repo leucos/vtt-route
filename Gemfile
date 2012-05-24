@@ -22,4 +22,5 @@ group :development do
   gem 'simplecov'
   gem 'rack-test'
   gem 'nokogiri'
+  gem 'lolcommits'
 end

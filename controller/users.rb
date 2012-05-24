@@ -3,7 +3,7 @@
 
 class Users < Controller
   layout :main
-  helper :blue_form
+  helper :form_helper
 
   FIELD_NAMES = { :email => "Email", 
                   :name  => "Nom",
@@ -21,6 +21,7 @@ class Users < Controller
                   :event => "Epreuve", 
                   :pass1 => "Mots de passe",
                   :pass2 => "Mots de passe",
+                  :password => "Mots de passe",
                   :peer => "Coéquipier" }
 
 
@@ -33,13 +34,26 @@ class Users < Controller
     @title = 'Inscription'
     @subtitle = 'S\'inscrire'
 
-    flash[:form_data] ||= {}
-    flash[:form_errors] ||= {}
+#    flash[:form_data] ||= {}
+#    flash[:error] = {}
+
+    # Quite ugly, but we don't want to use 'if's in view
+    FIELD_NAMES.each_key do |f|
+      Ramaze::Log.info("adding key %s" % f)
+    end
+
   end
 
   def save
-    flash[:form_data] ||= {}
-    flash[:form_errors] ||= {}
+    #flash[:form_data] ||= {}
+    #flash[:error] = {}
+    #flash[:field_errors] = {}
+
+    # Quite ugly, but we don't want to use 'if's in view
+    #FIELD_NAMES.each_key do |f|
+     # Ramaze::Log.info("adding key %s" % f)
+     # flash[:field_errors][f] = {}
+    #end
 
     user = User.new
 
@@ -51,6 +65,7 @@ class Users < Controller
 
     if !id.nil? and !id.empty?
       # This is an update
+      Ramaze::Log.info("trying to update user ##{id}")
       user = User[id]
 
       # Ensure user tried to edit it's own data
@@ -58,21 +73,26 @@ class Users < Controller
       # THINK: Is this enough ? Can user tamper with session data ?
       if user.id != session[:user_id]
         flash[:error] = 'Modification impossible'
+
         Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
         redirect_referrer
       end
 
       if user.nil?
         flash[:error] = 'Utilisateur invalide'
+
         redirect_referrer
       end
 
       if !user.confirmed
         flash[:error] = 'Vous devez confirmer votre inscription avant'
+
         redirect_referrer
       end
+
       operation = :update
     else
+      Ramaze::Log.info("trying to create user")
       user = User.new
       operation = :create
 
@@ -81,19 +101,12 @@ class Users < Controller
     # Let's check if passwords match first
     # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
-      flash[:error] = 'Il y a un problème avec votre mot de passe :'
-      flash[:error] << '<ul><li>Les mots de passe ne correspondent pas</li></ul>'
-      redirect_referrer
+      flash[:field_errors][:password] = { 
+        :message => 'Les mots de passe ne correspondent pas' }
+    else
+      # Password match, let's use one of them if not nil
+      data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
     end
-
-    # Password match, let's use one of them if not nil
-    data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
-
-    #flash[:form_errors] = {}
-    #[ :name, :surname, :address1, :zip, :city,
-    #  :email, :gender, :birth, :event ].each do |k|
-    #  flash[:form_errors][k] = nil
-    #  end
 
     # Now let's update the User instance
     # Since many things can fail, we enclose this in a rescue block
@@ -111,22 +124,26 @@ class Users < Controller
       user.raise_on_typecast_failure = false
       user.update(data)
     rescue Sequel::ValidationFailed => e
+
+      Ramaze::Log.info(e.inspect)
+      e.errors.each do |i|
+        Ramaze::Log.info("missing field #{i[0]}")
+        flash[:error][i[0]] = { :type => :error,
+          :message => "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
+        }
+      end
+    end
+
+
+    p flash[:error].inspect
+
+    if !flash[:error].empty?
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything
       flash[:form_data] = data
       ['dob-day', 'dob-month', 'dob-year'].each do |d|
         flash[:form_data][d] = request.params[d]
       end
-
-      Ramaze::Log.info(e.inspect)
-      flash[:error] = 'Votre formulaire contient des erreurs :'
-      flash[:error] << '<ul>'
-      e.errors.each do |i|
-        Ramaze::Log.info("missing field #{i[0]}")
-        flash[:error] << "<li> %s : %s</li>" % [ FIELD_NAMES[i[0]], i[1][0] ]
-        flash[:form_errors][i[0]] = :error
-      end
-      flash[:error] << '</ul>'
 
       redirect_referrer
     end
@@ -161,7 +178,8 @@ class Users < Controller
 
   private
 
-  def create_user
+  # Tries to update user and return an error array is something failed
+  def update_user(user)
 
   end
 
@@ -193,8 +211,8 @@ EOF
 end
 
 
-def send_welcome_email(user)
+  def send_welcome_email(user)
 
-end
+  end
 
 end

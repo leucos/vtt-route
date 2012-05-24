@@ -128,9 +128,9 @@ class Users < Controller
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
         Ramaze::Log.info("missing field #{i[0]}")
-        flash[:error][i[0]] = { :type => :error,
-          :message => "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
-        }
+#        flash[:error][i[0]] = { :type => :error,
+#         :message => "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
+#       }
       end
     end
 

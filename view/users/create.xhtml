@@ -13,22 +13,22 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
   <fieldset class="control-group errors">
 
     <!-- email -->
-    <div class="control-group #{ flash[:error][:email][:type].to_s }">
+    <div class="control-group #{ class_for :email }">
       <label class="control-label" for="email"><strong>Email</strong></label>
       <div class="controls">
-        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ flash[:form_data]['email'] }" />
+        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ data_for :email }" />
         <p class="help-block">Cet email vous permettra de vous identifier sur le site et de recevoir des informations sur la course.</p>
       </div>
     </div>
 
-    <div class="control-group #{ flash[:error][:password][:type].to_s }">
+    <div class="control-group #{ class_for :password }">
       <label class="control-label" for="pass1"><strong>Mot de passe</strong></label>
       <div class="controls">
         <input type="password" class="input-large" id="pass1" name="pass1" />
       </div>
     </div>
 
-    <div class="control-group #{ flash[:error][:password][:type].to_s }">
+    <div class="control-group #{ class_for :password }">
       <label class="control-label" for="pass2"><strong>Confirmation du passe</strong></label>
       <div class="controls">
         <input type="password" class="input-large" id="pass2" name="pass2" />
@@ -37,65 +37,65 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <!-- email -->
 
      <!-- nom -->
-    <div class="control-group #{ flash[:error][:name][:type].to_s }">
+    <div class="control-group #{ class_for :name }">
       <label class="control-label" for="name"><strong>Nom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="name" name="name" value="#{ flash[:form_data]['name'] }" />
+        <input type="text" class="input-xlarge" id="name" name="name" value="#{ data_for 'name' }" />
         <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
       </div>
     </div>
-    <div class="control-group #{ flash[:error][:surname][:type].to_s }">
+    <div class="control-group #{ class_for :surname }">
       <label class="control-label" for="surname"><strong>Prénom</strong></label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ flash[:form_data]['surname'] }" />
+        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ data_for 'surname' }" />
       </div>
     </div>
 
     <!-- sexe -->
-    <div class="control-group #{ flash[:error][:gender][:type].to_s }">
+    <div class="control-group #{ class_for :gender }">
       <label class="control-label" for="gender"><strong>Sexe</strong></label>
       <div class="controls">
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if flash[:form_data]['gender'] == 'female' }>Femme
+          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for 'gender' == 'female' }>Femme
         </label>
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if flash[:form_data]['gender'] == 'male' }>Homme
+          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for 'gender' == 'male' }>Homme
         </label>
       </div>
     </div>
 
     <!-- date de naissance -->
-    <div class="control-group #{ flash[:error][:birth][:type].to_s }">
+    <div class="control-group #{ class_for :birth }">
       <label class="control-label" for="dob"><strong>Date de naissance</strong></label>
       <div class="controls">
-        <input type="text" class="input-mini" id="dob-day" name="dob-day" placeholder="jour" value="#{ flash[:form_data]['dob-day'] }" />
-        <input type="text" class="input-mini" id="dob-month" name="dob-month" placeholder="mois" value="#{ flash[:form_data]['dob-month'] }" />
-        <input type="text" class="input-mini" id="dob-year" name="dob-year" placeholder="année" value="#{ flash[:form_data]['dob-year'] }" />
+        <input type="text" class="input-mini" id="dob-day" name="dob-day" placeholder="jour" value="#{ data_for 'dob-day' }" />
+        <input type="text" class="input-mini" id="dob-month" name="dob-month" placeholder="mois" value="#{ data_for 'dob-month' }" />
+        <input type="text" class="input-mini" id="dob-year" name="dob-year" placeholder="année" value="#{ data_for 'dob-year' }" />
       </div>
     </div> 
     <!-- date de naissance -->
 
     <!-- adresse -->
-    <div class="control-group #{ flash[:error][:address1][:type].to_s }">
+    <div class="control-group #{ class_for :address1 }">
       <label class="control-label"><strong>Adresse</strong></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" id="address1" name="address1" placeholder="Rue..." value="#{ flash[:form_data]['address1'] }" />
+        <input class="input-xlarge" type="text" id="address1" name="address1" placeholder="Rue..." value="#{ data_for 'address1' }" />
       </div>
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="input-xlarge" type="text" id="address2" name="address2" placeholder="Complément..." value="#{ flash[:form_data]['address2'] }" />
+        <input class="input-xlarge" type="text" id="address2" name="address2" placeholder="Complément..." value="#{ data_for 'address2' }" />
       </div>
     </div>
-    <div class="control-group #{ flash[:error][:zip][:type].to_s } #{ flash[:error][:city][:type] }">
+    <div class="control-group #{ class_for :zip } #{ class_for :city }">
       <div class="controls">
-        <input class="input-mini" type="text" id="zip" name="zip" placeholder="CP" value="#{ flash[:form_data]['zip'] }" />
-        <input class="input-large" type="text" id="city" name="city" placeholder="ville" value="#{ flash[:form_data]['city'] }" />
+        <input class="input-mini" type="text" id="zip" name="zip" placeholder="CP" value="#{ data_for 'zip' }" />
+        <input class="input-large" type="text" id="city" name="city" placeholder="ville" value="#{ data_for 'city' }" />
       </div>
     </div>
-    <div class="control-group #{ flash[:error][:country][:type].to_s }">
+    <div class="control-group #{ class_for :country }">
       <div class="controls">
-        <input class="input-xlarge" type="text" id="country" name="country" placeholder="pays" value="#{ flash[:form_data]['country'] }" />
+        <input class="input-xlarge" type="text" id="country" name="country" placeholder="pays" value="#{ data_for 'country' }" />
       </div>
     </div>
     <!-- adresse -->
@@ -104,7 +104,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
      <div class="control-group">
       <label class="control-label" for="club">Club ou entreprise</label>
       <div class="controls">
-        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ flash[:form_data]['org'] }" />
+        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ data_for 'org' }" />
       </div>
     </div> 
     <!-- club -->
@@ -119,13 +119,13 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
           <option>UFOLEP</option>
           <option>Autre</option>
         </select>
-        <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ flash[:form_data]['licence'] }" />
+        <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ data_for 'licence' }" />
       </div>
     </div> 
     <!-- licence -->
 
     <!-- epreuve -->
-     <div class="control-group #{ flash[:error][:event][:type].to_s }">
+     <div class="control-group #{ class_for :event }">
       <label class="control-label" for="event"><strong>Epreuve</strong></label>
       <div class="controls">
         <select id="event" name="event">

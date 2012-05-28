@@ -4,34 +4,55 @@ module Ramaze
 
 
       # Returns class for field if present in flash[:form_errors]
-      def class_for(field)
-        flash[:form_errors][field][:class] if flash[:form_errors] && flash[:form_errors].key?(field)
+      def class_for(field, klass = nil)
+        if !klass.nil?
+          flash[:form_errors] ||= {}
+          flash[:form_errors][field] ||= {}
+          flash[:form_errors][field][:class] = klass
+        else
+          flash[:form_errors][field][:class] if flash[:form_errors] && flash[:form_errors].key?(field)
+        end
       end
 
-      def class_for(field, klass)
-        flash[:form_errors] ||= {}
-        flash[:form_errors][field] ||= {}
-        flash[:form_errors][field][:class] = klass
+      def message_for(field, message = nil)
+        if !message.nil?
+          flash[:form_errors] ||= {}
+          flash[:form_errors][field] ||= {}
+          flash[:form_errors][field][:message] = message
+          class_for field, :error
+        else
+          flash[:form_errors][field][:message] if flash[:form_errors] && flash[:form_errors].key?(field)
+        end
+      end
+      alias error_for message_for
+
+      def data_for(field, data = nil)
+        if !data.nil?
+          flash[:form_data] ||= {}
+          flash[:form_data][field] ||= {}
+          flash[:form_data][field][:data] = data
+        else
+          flash[:form_data][field][:data] if flash[:form_data] && flash[:form_data].key?(field)
+        end
       end
 
-      def message_for(field)
-        flash[:form_errors][field][:message] if flash[:form_errors] && flash[:form_errors].key?(field)
+      def bulk_data(data)
+        data.each_pair do |d,v|
+          data_for d, v
+        end 
       end
 
-      def message_for(field, message)
-        flash[:form_errors] ||= {}
-        flash[:form_errors][field] ||= {}
-        flash[:form_errors][field][:message] = message
+      def has_errors?
+        !flash[:form_errors].nil?
       end
 
-      def data_for(field)
-        flash[:form_data][field] if flash[:form_errors] && flash[:form_errors].key?(field)
-      end
+      def prepare_flash
+        if has_errors?
+          flash[:error] = "<p>Le formulaire contient des erreurs :\n<ul>"
+          flash[:form_errors].each_pair { |f,m| flash[:error] << "<li>%s</li>" % message_for(f) }
 
-      def data_for(field, data)
-        flash[:form_data] ||= {}
-        flash[:form_data][field] ||= {}
-        flash[:form_data][field][:data] = data
+          flash[:error] << "</ul></p>"
+        end        
       end
 
     end

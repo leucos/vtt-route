@@ -55,11 +55,7 @@
           <div class="alert alert-block alert-#{type} fade in">
             <a class="close" data-dismiss="alert" href="#">×</a>
             <h4 class="alert-heading">#{ type.capitalize }</h4>
-            <ul>
-              <?r flash[type].each_pair do |k,v| ?>
-              <li>#{k} : #{v.inspect}</li>
-              <?r end ?>
-            </ul>
+            #{flash[type]}
           </div>
 
           <?r end ?>

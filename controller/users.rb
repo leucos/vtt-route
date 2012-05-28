@@ -45,16 +45,6 @@ class Users < Controller
   end
 
   def save
-    #flash[:form_data] ||= {}
-    #flash[:error] = {}
-    #flash[:field_errors] = {}
-
-    # Quite ugly, but we don't want to use 'if's in view
-    #FIELD_NAMES.each_key do |f|
-     # Ramaze::Log.info("adding key %s" % f)
-     # flash[:field_errors][f] = {}
-    #end
-
     user = User.new
 
     data = request.subset(:email, :name, :surname, :gender,
@@ -101,8 +91,7 @@ class Users < Controller
     # Let's check if passwords match first
     # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
-      flash[:field_errors][:password] = { 
-        :message => 'Les mots de passe ne correspondent pas' }
+      error_for :password, 'Les mots de passe ne correspondent pas'
     else
       # Password match, let's use one of them if not nil
       data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
@@ -128,23 +117,20 @@ class Users < Controller
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
         Ramaze::Log.info("missing field #{i[0]}")
-#        flash[:error][i[0]] = { :type => :error,
-#         :message => "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
-#       }
+        error_for i[0], "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
       end
     end
 
-
-    p flash[:error].inspect
-
-    if !flash[:error].empty?
+    if has_errors?
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything
-      flash[:form_data] = data
-      ['dob-day', 'dob-month', 'dob-year'].each do |d|
-        flash[:form_data][d] = request.params[d]
-      end
+      #flash[:form_data] = data
+      ##['dob-day', 'dob-month', 'dob-year'].each do |d|
+      ##  flash[:form_data][d] = request.params[d]
+      ##end
 
+      bulk_data data
+      prepare_flash
       redirect_referrer
     end
 

@@ -29,4 +29,16 @@ class User < Sequel::Model
     self.password_hash = @password
   end
 
+  def age_at_event
+    (EVENT_DATE - self.birth).to_f/365
+  end
+
+  def needs_certificate?
+    ! (self.federation && self.licence)
+  end
+
+  def needs_authorization?
+    age_at_event < 18
+  end
+
 end

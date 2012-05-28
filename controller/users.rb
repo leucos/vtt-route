@@ -194,7 +194,7 @@ EOF
             :subject => 'Inscription au challenge VTT-Route',
             :body => body,
             :via => :sendmail)
-end
+  end
 
 
   def send_welcome_email(user)

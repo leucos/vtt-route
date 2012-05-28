@@ -16,11 +16,14 @@ Sequel.migration do
       String :phone
       String :org
       String :licence
+      String :federation
       String :event, :null => false
       String :peer, :index => true
       TrueClass :confirmed, :default => false
       TrueClass :payment_received, :default => false
       TrueClass :certificate_received, :default => false
+      TrueClass :licence_received, :default => false
+      TrueClass :authorization_received, :default => false
       String :confirmation_key, :default => nil
     end
   end

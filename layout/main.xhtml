@@ -38,6 +38,40 @@
   </head>
 
   <body>
+    <?r if session[:logged_in] ?>
+    <!-- navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Inscription</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="/profiles/">Profil</a>
+              </li>
+              <li class="">
+                <a href="/results/">Résultats</a>
+              </li>
+              <li class="divider-vertical"></li>
+              <li class="">
+                <a href="./download.html">Customize</a>
+              </li>
+              <li class="">
+                <a href="./examples.html">Examples</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?r end ?>
+
+
     <div class="container">
       <div class="row">
 

@@ -36,12 +36,7 @@ class Profiles < Controller
 
   def index
     @title = 'Espace participants'
-    @subtitle = 'Yaouh !'
-  end
-
-  def create
-    @title = 'Inscription'
-    @subtitle = 'S\'inscrire'
+    @subtitle = 'Profil'
 
 #    flash[:form_data] ||= {}
 #    flash[:error] = {}

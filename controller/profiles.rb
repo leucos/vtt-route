@@ -1,12 +1,11 @@
 # encoding: UTF-8
 #
 
-class Participants < Controller
+class Profiles < Controller
   layout :main
   helper :form_helper, :user
 
-  FIELD_NAMES = { :email => "Email", 
-                  :name  => "Nom",
+  FIELD_NAMES = { :name  => "Nom",
                   :surname => "Prénom",
                   :gender  => "Sexe",
                   :address1 => "Adresse",
@@ -55,18 +54,17 @@ class Participants < Controller
   end
 
   def save
-    user = User.new
+    part = Participant.new
 
-    data = request.subset(:email, :name, :surname, :gender,
+    data = request.subset(:name, :surname, :gender,
                           :address1, :address2, :zip, :city, :country,
                           :phone, :org, :licence, :event, :peer)
 
-    id = request.params['id']
 
     if !id.nil? and !id.empty?
       # This is an update
       Ramaze::Log.info("trying to update user ##{id}")
-      user = User[id]
+      part = Participant[:user_id => user.id]
 
       # Ensure user tried to edit it's own data
       # If we get here, this means he's tinkering with the post data
@@ -176,38 +174,6 @@ class Participants < Controller
 
   # Tries to update user and return an error array is something failed
   def update_user(user)
-
-  end
-
-  def send_confirmation_email(email, key)
-    body =<<EOF
-Bonjour,
-
-  Afin de valider votre inscription au challenge VTT-Route, merci de bien
-vouloir suivre ce lien :
-  http://inscription.challengevttroute.fr/users/confirm/#{key}
-
-  Vous pourrez ensuite inviter un coéquipier si vous participez à un 
-challenge par équipes.
-
-  En cas de difficultés, vous pouvez nous contacter en cliquant sur 'Répondre'
-ou en écrivant à : info@challengevttroute.fr
-
-  Cordialement,
-
-L'équipe du challenge VTT-Route
-EOF
-
-  Ramaze::Log.info("sending validation email to #{email}");
-  Pony.mail(:to => email,
-            :from => 'info@challengevttroute.fr',
-            :subject => 'Inscription au challenge VTT-Route',
-            :body => body,
-            :via => :sendmail)
-  end
-
-
-  def send_welcome_email(user)
 
   end
 

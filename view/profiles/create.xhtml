@@ -8,32 +8,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
 
 <form class="form-horizontal well" method="post" action="#{Users.r(:save)}">
   <fieldset class="control-group errors">
-
-    <!-- email -->
-    <div class="control-group #{ class_for :email }">
-      <label class="control-label" for="email"><strong>Email</strong></label>
-      <div class="controls">
-        <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ data_for 'email' }" />
-        <p class="help-block">Cet email vous permettra de vous identifier sur le site et de recevoir des informations sur la course.</p>
-      </div>
-    </div>
-
-    <div class="control-group #{ class_for :password }">
-      <label class="control-label" for="pass1"><strong>Mot de passe</strong></label>
-      <div class="controls">
-        <input type="password" class="input-large" id="pass1" name="pass1" />
-      </div>
-    </div>
-
-    <div class="control-group #{ class_for :password }">
-      <label class="control-label" for="pass2"><strong>Confirmation du passe</strong></label>
-      <div class="controls">
-        <input type="password" class="input-large" id="pass2" name="pass2" />
-      </div>
-    </div> 
-    <!-- email -->
-
-     <!-- nom -->
+    <!-- nom -->
     <div class="control-group #{ class_for :name }">
       <label class="control-label" for="name"><strong>Nom</strong></label>
       <div class="controls">

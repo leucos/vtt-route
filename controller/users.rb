@@ -19,7 +19,7 @@ class Users < Controller
     redirect_referer if logged_in?
     return unless request.post?
     user_login(request.subset(:email, :password))
-    redirect Participants.r(:index)
+    redirect Profiles.r(:index)
   end
 
   def logout

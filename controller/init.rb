@@ -12,4 +12,5 @@ require 'pony'
 
 require __DIR__('main')
 require __DIR__('users')
+require __DIR__('participants')
 

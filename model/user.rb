@@ -2,18 +2,17 @@
 #
 class User < Sequel::Model
   plugin :validation_helpers
-  plugin :composition
+  one_to_one :participant
 
   include BCrypt
 
-  one_to_many :partner, :key => :peer, :class => self
-
   def validate
     validates_unique :email, :message => 'Cette adresse email est déjà utilisée'
-    validates_presence [:name, :surname, :address1, :zip, :city, :country,
-                        :email, :password_hash, :gender, :birth, :event ],
-                        :message => 'Ce champ doit être renseigné'
-    validates_exact_length 5, :zip, :message => 'Ce code postal est invalide'
+    validates_presence :password_hash, :message => 'Ce champ doit être renseigné'
+  end
+
+  def before_create
+    self.confirmation_key = Guid.new.to_s
   end
 
   def before_create
@@ -29,16 +28,23 @@ class User < Sequel::Model
     self.password_hash = @password
   end
 
-  def age_at_event
-    (EVENT_DATE - self.birth).to_f/365
-  end
+  def self.authenticate(creds)
+    Ramaze::Log.info("Login attempt with %s | %s" % [ creds['email'], creds['password'] ] )
 
-  def needs_certificate?
-    ! (self.federation && self.licence)
-  end
+    if !creds['email'] or !creds['password']
+      Ramaze::Log.info("Login failure : no credentials")
+      return false
+    end
 
-  def needs_authorization?
-    age_at_event < 18
+    user = self[:email => creds['email']]
+
+    if !user.nil? and user.password == creds['password']
+      Ramaze::Log.info("Login success")
+      return user
+    else
+      Ramaze::Log.info("Login failure : wrong password")
+      return false
+    end
   end
 
 end

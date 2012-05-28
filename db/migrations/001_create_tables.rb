@@ -1,33 +1,46 @@
 Sequel.migration do
   up do
+    create_table(:participants, :ignore_index_errors=>true) do
+      primary_key :id
+      foreign_key :user_id, :users
+      
+      String :name, :size=>255, :null=>false
+      String :surname, :size=>255, :null=>false
+      String :gender, :size=>1, :null=>false
+      Date   :birth, :null=>false
+      String :address1, :size=>255, :null=>false
+      String :address2, :size=>255
+      String :zip, :size=>255, :null=>false
+      String :city, :size=>255, :null=>false
+      String :country, :default=>"France", :size=>255, :null=>false
+      String :phone, :size=>255
+      String :org, :size=>255
+      String :licence, :size=>255
+      String :event, :size=>255, :null=>false
+      String :peer, :size=>255
+      TrueClass :payment_received, :default=>false
+      TrueClass :certificate_received, :default=>false
+
+      index [:email]
+      index [:gender]
+      index [:peer]
+      index [:surname]
+    end
+
     create_table(:users) do
       primary_key :id
-      String :email, :null => false, :unique => true, :index => true
-      String :password_hash, :null => false
-      String :name, :null => false, :null => false
-      String :surname, :null => false, :index => true
-      String :gender, :size => 1, :null => false, :index => true
-      Date   :birth, :null => false
-      String :address1, :null => false
-      String :address2
-      String :zip, :null => false
-      String :city, :null => false
-      String :country, :null => false, :default => "France"
-      String :phone
-      String :org
-      String :licence
-      String :federation
-      String :event, :null => false
-      String :peer, :index => true
+      foreign_key :participant_id, :users
+
+      String :email, :size => 255, :null => false
+      String :password_hash, :size => 255, :null => false
+      String :confirmation_key, :size => 255
       TrueClass :confirmed, :default => false
-      TrueClass :payment_received, :default => false
-      TrueClass :certificate_received, :default => false
-      TrueClass :licence_received, :default => false
-      TrueClass :authorization_received, :default => false
-      String :confirmation_key, :default => nil
+      TrueClass :admin, :default => false
     end
   end
+  
   down do
-    drop_table(:users)
+    drop_table(:users, :schema_info)
+    drop_table(:participants, :schema_info)
   end
 end

@@ -10,4 +10,4 @@ require 'bcrypt'
 require 'guid'
 
 require __DIR__('user')
-require __DIR__('participant')
+require __DIR__('profile')

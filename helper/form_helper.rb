@@ -31,6 +31,7 @@ module Ramaze
           flash[:form_data] ||= {}
           flash[:form_data][field] ||= {}
           flash[:form_data][field][:data] = data
+          Ramaze::Log.info("Adding %s for %s" % [ data, field] )
         else
           flash[:form_data][field][:data] if flash[:form_data] && flash[:form_data].key?(field)
         end

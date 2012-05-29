@@ -6,7 +6,7 @@ Ce formulaire vous permet de vous inscrire au Challenge VTT-Route. Si vous
 participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipier.
 </p>
 
-<form class="form-horizontal well" method="post" action="#{Users.r(:save)}">
+<form class="form-horizontal well" method="post" action="#{Profiles.r(:save)}">
   <fieldset class="control-group errors">
     <!-- nom -->
     <div class="control-group #{ class_for :name }">
@@ -72,6 +72,14 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     </div>
     <!-- adresse -->
 
+    <!-- adresse -->
+    <div class="control-group #{ class_for :phone }">
+      <label class="control-label"><strong>Téléphone</strong></label>
+      <div class="controls">
+        <input class="input-xlarge" type="text" id="phone" name="phone" placeholder="04 ou 06 ou ..." value="#{ data_for 'phone' }" />
+      </div>
+    </div>
+    <!-- téléphone -->
    <!-- club -->
      <div class="control-group">
       <label class="control-label" for="club">Club ou entreprise</label>

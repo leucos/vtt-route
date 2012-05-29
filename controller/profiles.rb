@@ -17,11 +17,7 @@ class Profiles < Controller
                   :org => "Club ou entreprise", 
                   :birth => "Date de naissance", 
                   :licence => "Numéro de licence",
-                  :event => "Epreuve", 
-                  :pass1 => "Mots de passe",
-                  :pass2 => "Mots de passe",
-                  :password => "Mots de passe",
-                  :peer => "Coéquipier" }
+                  :event => "Epreuve" }
 
   before_all do
     Ramaze::Log.info("Mmmh, this guy doesn't seem to be logged in")
@@ -40,64 +36,54 @@ class Profiles < Controller
 
 #    flash[:form_data] ||= {}
 #    flash[:error] = {}
-
+    
     # Quite ugly, but we don't want to use 'if's in view
-    FIELD_NAMES.each_key do |f|
-      Ramaze::Log.info("adding key %s" % f)
+    if user.profile
+      FIELD_NAMES.each_key do |f|
+        #Ramaze::Log.info("adding key #{f} : #{user.profile[f]}")
+        data_for( f.to_s, user.profile[f] )
+      end
     end
 
   end
 
   def save
-    part = Participant.new
-
     data = request.subset(:name, :surname, :gender,
                           :address1, :address2, :zip, :city, :country,
                           :phone, :org, :licence, :event, :peer)
 
-
-    if !id.nil? and !id.empty?
+    if user.profile
       # This is an update
-      Ramaze::Log.info("trying to update user ##{id}")
-      part = Participant[:user_id => user.id]
+      Ramaze::Log.info("trying to update user #{user.id}")
+      prof = Profile[:user_id => user.id]
 
       # Ensure user tried to edit it's own data
       # If we get here, this means he's tinkering with the post data
       # THINK: Is this enough ? Can user tamper with session data ?
-      if user.id != session[:user_id]
-        flash[:error] = 'Modification impossible'
+      #if user.id != session[:user_id]
+      #  flash[:error] = 'Modification impossible'
 
-        Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
-        redirect_referrer
-      end
+      #  Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
+      #  redirect_referrer
+      #end
 
-      if user.nil?
-        flash[:error] = 'Utilisateur invalide'
-
-        redirect_referrer
-      end
-
-      if !user.confirmed
-        flash[:error] = 'Vous devez confirmer votre inscription avant'
+      if prof.nil?
+        flash[:error] = 'Profil invalide'
 
         redirect_referrer
       end
+
+      #if !user.confirmed
+      #  flash[:error] = 'Vous devez confirmer votre inscription avant'
+
+      #  redirect_referrer
+      #end
 
       operation = :update
     else
-      Ramaze::Log.info("trying to create user")
-      user = User.new
+      Ramaze::Log.info("trying to create profile")
+      prof = Profile.new
       operation = :create
-
-    end
-
-    # Let's check if passwords match first
-    # TODO: form should be pre-filled again
-    if request.params['pass1'] != request.params['pass2']
-      error_for :password, 'Les mots de passe ne correspondent pas'
-    else
-      # Password match, let's use one of them if not nil
-      data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
     end
 
     # Now let's update the User instance
@@ -113,8 +99,8 @@ class Profiles < Controller
     end
 
     begin
-      user.raise_on_typecast_failure = false
-      user.update(data)
+      prof.raise_on_typecast_failure = false
+      prof.update(data)
     rescue Sequel::ValidationFailed => e
 
       Ramaze::Log.info(e.inspect)
@@ -137,18 +123,18 @@ class Profiles < Controller
       redirect_referrer
     end
 
-    case operation
-    when :update
-      flash[:success] = 'Vos informations ont été mises à jour'
-      redirect_referrer
-    when :create
-      send_confirmation_email(user.email, user.confirmation_key)
-      flash[:success] = 'Utilisateur créé'
-      @subtitle = 'Email de vérification envoyé'
-      @title = 'Inscription'
+    user.profile = prof
+    user.save
 
-      render_view(:confirm)
-    end
+    p prof.inspect
+    p user.inspect
+
+    user.profile = prof
+
+    flash[:success] = 'Profil mis à jour'
+    @title = 'Profil'
+
+    redirect Profiles.r(:index)
   end
 
   def confirm(key)

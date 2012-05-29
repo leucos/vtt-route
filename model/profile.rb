@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-class Participant < Sequel::Model
+class Profile < Sequel::Model
   plugin :validation_helpers
   plugin :composition
 
@@ -8,7 +8,7 @@ class Participant < Sequel::Model
 
   
   one_to_many :partner, :key => :peer, :class => self
-  one_to_one :user
+  many_to_one :user
 
   def validate
     validates_presence [:name, :surname, :address1, :zip, :city, :country,

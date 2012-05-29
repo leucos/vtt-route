@@ -1,6 +1,6 @@
 Sequel.migration do
   up do
-    create_table(:participants, :ignore_index_errors=>true) do
+    create_table(:profiles, :ignore_index_errors=>true) do
       primary_key :id
       foreign_key :user_id, :users
       
@@ -29,7 +29,6 @@ Sequel.migration do
 
     create_table(:users) do
       primary_key :id
-      foreign_key :participant_id, :users
 
       String :email, :size => 255, :null => false
       String :password_hash, :size => 255, :null => false
@@ -41,6 +40,6 @@ Sequel.migration do
   
   down do
     drop_table(:users, :schema_info)
-    drop_table(:participants, :schema_info)
+    drop_table(:profiles, :schema_info)
   end
 end

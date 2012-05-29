@@ -2,12 +2,12 @@
 #
 class User < Sequel::Model
   plugin :validation_helpers
-  one_to_one :participant
+  one_to_one :profile
 
   include BCrypt
 
   def validate
-    validates_unique :email, :message => 'Cette adresse email est déjà utilisée'
+    validates_unique :email, :message => "Cette adresse email est déjà utilisée. Voulez vous vous <a href='#{Users.r(:login)}'>connecter</a>?"
     validates_presence :password_hash, :message => 'Ce champ doit être renseigné'
   end
 

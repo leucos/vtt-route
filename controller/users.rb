@@ -23,7 +23,7 @@ class Users < Controller
   end
 
   def logout
-    flash[:success] = "Logged out"
+    flash[:bravo] = "Logged out"
     user_logout
   end
 
@@ -36,7 +36,7 @@ class Users < Controller
     # Let's check if passwords match first
     # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
-      flash[:error] = 'Les mots de passe ne correspondent pas'
+      flash[:erreur] = 'Les mots de passe ne correspondent pas'
     else
       # Password match, let's use one of them if not nil
       data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
@@ -48,13 +48,13 @@ class Users < Controller
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
         Ramaze::Log.info("error with field #{i[0]}")
-        flash[:error] = e.message
+        flash[:erreur] = e.message
         redirect_referrer
       end
     end
 
     send_confirmation_email(user.email, user.confirmation_key)
-    flash[:success] = 'Utilisateur créé'
+    flash[:bravo] = 'Utilisateur créé'
     @subtitle = 'Email de vérification envoyé'
     @title = 'Inscription'
   end

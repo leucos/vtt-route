@@ -1,7 +1,5 @@
 # encoding: UTF-8
 #
-require 'securerandom'
-
 class User < Sequel::Model
   plugin :validation_helpers
   one_to_one :profile

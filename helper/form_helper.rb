@@ -49,10 +49,10 @@ module Ramaze
 
       def prepare_flash
         if has_errors?
-          flash[:error] = "<p>Le formulaire contient des erreurs :\n<ul>"
-          flash[:form_errors].each_pair { |f,m| flash[:error] << "<li>%s</li>" % message_for(f) }
+          flash[:erreur] = "<p>Le formulaire contient des erreurs :\n<ul>"
+          flash[:form_errors].each_pair { |f,m| flash[:erreur] << "<li>%s</li>" % message_for(f) }
 
-          flash[:error] << "</ul></p>"
+          flash[:erreur] << "</ul></p>"
         end        
       end
 

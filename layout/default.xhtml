@@ -17,6 +17,18 @@
         padding-top: 60px;
         padding-bottom: 40px;
       }
+      .navbar .nav.pull-right .dropdown-menu { 
+        left: auto; 
+        right: 0; 
+        &:before { 
+          left: auto; 
+          right: 12px; 
+        } 
+        &:after { 
+          left: auto; 
+          right: 13px; 
+        } 
+      } 
     </style>
 
     #{css('bootstrap-responsive')}
@@ -38,79 +50,103 @@
   </head>
 
   <body>
+    <!-- navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Inscription</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+
+              
+              <li class="divider-vertical"></li>
+      
+              <li class="">
+                <a href="/">Accueil</a>
+              </li>
+              <li class="">
+                <a href="/reglement/">Règlement</a>
+              </li>
+            </ul>
+            <?r if session[:logged_in] ?>
+
+            <ul class="nav pull-right">
+              <li class="dropdown" id="profile" class="pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
+                  <!-- Display name is user has profile -->
+                  <?r if user.profile ?>
+                  #{user.profile.surname} #{user.profile.name} 
+                  <?r else ?>
+                  Profil
+                  <?r end ?>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#{Profiles.r(:index)}">Mon Profil</a></li>
+                  <li><a href="#">Mon co-équipier</a></li>
+                  <li><a href="#">Etat de mon inscription</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Déconnexion</a></li>
+                </ul>
+              </li>
+            </ul>
+              <?r end ?>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- navbar -->
+
+    <!-- main pane -->
     <div class="container">
+
+      <!-- navigation breadcrumbs -->
       <div class="row">
-
-        <div class="span6 columns">
-          <div id="maincaroussel" class="carousel">
-            <!-- Carousel items -->
-            <div class="carousel-inner">
-              <div class="active item">
-                <a href="http://www.challengevttroute.fr"><img src="/images/vtt1-600.jpg" alt=""></a>
-                <div class="carousel-caption">
-                  <h4>Chalenge Vtt Route</h4>
-                  <p>Premier challenge VTT route parainné par Jean-Christophe P&eacute;raud</p>
-                </div>
-              </div>
-              <div class="item">
-                <a href="http://www.challengevttroute.fr"><img src="/images/vtt2-600.jpg" alt=""></a>
-                <div class="carousel-caption">
-                  <h4>Chalenge Vtt Route</h4>
-                  <p>Encha&icirc;nez 20km en VTT et 40km sur route, seul, ou en duo</p>
-                </div>
-              </div>
-              <div class="item"><img src="/images/vtt3-600.jpg" alt="" /></div>
-              <div class="item">
-                <a href="http://www.challengevttroute.fr"><img src="/images/vtt4-600.jpg" alt="" /></a>
-                <div class="carousel-caption">
-                  <h4>Chalenge Vtt Route</h4>
-                  <p>Le challenge est parainn&eacute; par Jean-Christophe P&eacute;raud</p>
-                </div>
-              </div>
-            
-            </div>
-            <!-- Carousel nav -->
-            <a class="carousel-control left" href="#maincaroussel" data-slide="prev">&lsaquo;</a>
-            <a class="carousel-control right" href="#maincaroussel" data-slide="next">&rsaquo;</a>
-          </div>
-        </div> <!-- caroussel -->
-
-        
-        <div class="span6">
-          <!-- Main hero unit for a primary marketing message or call to action -->
-          <div class="hero-unit">
-            <h2>Challenge VTT-Route</h2>
-            <h3>Edition 2012</h3>
-            <p>Enchainez 20km de VTT et 40km sur route, seul, ou en duo!</p>
-            <p><a class="btn btn-large" href="http://www.chalengevttroute.fr">Plus d'infos</a> 
-            <a class="btn btn-primary btn-large" href="users/create">S'inscrire</a>
-            <a class="btn btn-success btn-large" href="users/login">Se connecter</a></p>
-          </div>
-        </div> <!-- hero unit -->
-
+        <ul class="breadcrumb">
+          <li>
+            <a href="/">Site Inscriptions</a> <span class="divider">/</span>
+          </li>
+          <li>
+            <a href="#{r(:index)}">#{@title}</a> <span class="divider">/</span>
+          </li>
+          <li class="active">#{@subtitle}</li>
+        </ul>
       </div>
 
       <div class="row">
-        <div class="span4">
-          <h2>R&egrave;glement</h2>
-          <p>La participation à l'épreuve implique l'acceptation du r&egrave;glement</p>
-          <p><a class="btn" href="#">Lire le r&egrave;glement &raquo;</a></p>
+
+        <!-- page title -->
+        <div class="well">
+          <h1>#{@title}</h1>
         </div>
-        <div class="span4">
-          <h2>S'inscrire</h2>
-          <p>Pour s'inscrire en ligne, c'est par ici</p>
-          <p><a class="btn btn-primary" href="users/create">Inscription &raquo;</a></p>
-        </div>
-         <div class="span4">
-          <h2>Résultats</h2>
-          <p>R&eacute;sultats en temps r&eacute;&egrave;l d&egrave;s le 22 octobre</p>
-          <p><a class="btn disabled" href="#">Voir les r&eacute;sultats &raquo;</a></p>
+      
+        <div class="span10">
+        <?r [:bravo, :erreur, :info].each do |type| ?>
+          <?r if flash[type] ?>
+
+          <div class="alert alert-block alert-#{type} fade in">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">#{ type.capitalize }</h4>
+            #{flash[type]}
+          </div>
+
+          <?r end ?>
+        <?r end ?>
+
+          #{@content}
+
         </div>
       </div>
 
+      <!-- page bottom -->
       <hr>
-
-
       <div class="modal hide fade" id="mentions" style="display:none;">
         <div class="modal-header">
           <button class="close" data-dismiss="modal">×</button>

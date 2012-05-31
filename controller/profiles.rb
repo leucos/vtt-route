@@ -36,7 +36,7 @@ class Profiles < Controller
     @subtitle = 'Profil'
 
 #    flash[:form_data] ||= {}
-#    flash[:error] = {}
+#    flash[:erreur] = {}
     
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile
@@ -66,20 +66,20 @@ class Profiles < Controller
       # If we get here, this means he's tinkering with the post data
       # THINK: Is this enough ? Can user tamper with session data ?
       #if user.id != session[:user_id]
-      #  flash[:error] = 'Modification impossible'
+      #  flash[:erreur] = 'Modification impossible'
 
       #  Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
       #  redirect_referrer
       #end
 
       if prof.nil?
-        flash[:error] = 'Profil invalide'
+        flash[:erreur] = 'Profil invalide'
 
         redirect_referrer
       end
 
       #if !user.confirmed
-      #  flash[:error] = 'Vous devez confirmer votre inscription avant'
+      #  flash[:erreur] = 'Vous devez confirmer votre inscription avant'
 
       #  redirect_referrer
       #end
@@ -136,7 +136,7 @@ class Profiles < Controller
 
     user.profile = prof
 
-    flash[:success] = 'Profil mis à jour'
+    flash[:bravo] = 'Profil mis à jour'
     @title = 'Profil'
 
     redirect Profiles.r(:index)

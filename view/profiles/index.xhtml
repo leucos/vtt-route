@@ -28,10 +28,10 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="gender"><strong>Sexe</strong></label>
       <div class="controls">
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for 'gender' == 'female' }>Femme
+          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for('gender') == 'female' }>Femme
         </label>
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for 'gender' == 'male' }>Homme
+          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for('gender') == 'male' }>Homme
         </label>
       </div>
     </div>
@@ -76,7 +76,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <div class="control-group #{ class_for :phone }">
       <label class="control-label"><strong>Téléphone</strong></label>
       <div class="controls">
-        <input class="input-xlarge" type="text" id="phone" name="phone" placeholder="04 ou 06 ou ..." value="#{ data_for 'phone' }" />
+        <input class="input-xlarge" type="telephone" id="phone" name="phone" placeholder="04 ou 06 ou ..." value="#{ data_for 'phone' }" />
       </div>
     </div>
     <!-- téléphone -->
@@ -94,10 +94,16 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="club">Licence</label>
       <div class="controls">
         <select id="federation" name="federation">
-          <option>Non licencié</option>
-          <option>FFC</option>
-          <option>UFOLEP</option>
-          <option>Autre</option>
+          #{  a = ""
+              ['Non licencié', 'FFC', 'UFOLEP', 'Autre'].each do |e|
+                if data_for('licence') == e
+                  a << "<option selected='selected'>#{e}</option>"
+                else
+                  a <<"<option>#{e}</option>"
+                end
+              end
+              a
+            }
         </select>
         <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ data_for 'licence' }" />
       </div>
@@ -109,10 +115,16 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="event"><strong>Epreuve</strong></label>
       <div class="controls">
         <select id="event" name="event">
-          <option>Solo</option>
-          <option>Duo</option>
-          <option>Tandem</option>
-          <option>Handi</option>
+          #{  a = ""
+              ['Solo', 'Duo', 'Tandem', 'Handi'].each do |e|
+                if data_for('event') == e
+                  a << "<option selected='selected'>#{e}</option>"
+                else
+                  a <<"<option>#{e}</option>"
+                end
+              end
+              a
+            }
         </select>
       </div>
     </div> 
@@ -121,7 +133,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <input type="hidden" name="attendee" value="1">
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary" name="create">Cr&eacute;er</button>
+      <button type="submit" class="btn btn-primary" name="create">Mettre à jour</button>
       <!-- <button class="btn">Cancel</button> -->
     </div>
 

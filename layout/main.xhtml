@@ -17,6 +17,18 @@
         padding-top: 60px;
         padding-bottom: 40px;
       }
+      .navbar .nav.pull-right .dropdown-menu { 
+        left: auto; 
+        right: 0; 
+        &:before { 
+          left: auto; 
+          right: 12px; 
+        } 
+        &:after { 
+          left: auto; 
+          right: 13px; 
+        } 
+      } 
     </style>
 
     #{css('bootstrap-responsive')}
@@ -38,7 +50,6 @@
   </head>
 
   <body>
-    <?r if session[:logged_in] ?>
     <!-- navbar -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -51,29 +62,60 @@
           <a class="brand" href="/">Inscription</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="">
-                <a href="/profiles/">Profil</a>
-              </li>
-              <li class="">
-                <a href="/results/">Résultats</a>
-              </li>
+
+              
               <li class="divider-vertical"></li>
+      
               <li class="">
-                <a href="./download.html">Customize</a>
+                <a href="/">Accueil</a>
               </li>
               <li class="">
-                <a href="./examples.html">Examples</a>
+                <a href="/reglement/">Règlement</a>
               </li>
+            </ul>
+            <?r if session[:logged_in] ?>
+
+            <ul class="nav pull-right">
+              <li class="dropdown" id="profile" class="pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
+                  <!-- Display name is user has profile -->
+                  <?r if user.profile ?>
+                  #{user.profile.surname} #{user.profile.name} 
+                  <?r else ?>
+                  Profil
+                  <?r end ?>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#{Profiles.r(:index)}">Mon Profil</a></li>
+                  <li><a href="#">Mon co-équipier</a></li>
+                  <li><a href="#">Etat de mon inscription</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Déconnexion</a></li>
+                </ul>
+              </li>
+            </ul>
+              <?r end ?>
+
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <?r end ?>
-
 
     <div class="container">
       <div class="row">
+
+        <ul class="breadcrumb">
+          <li>
+            <a href="/">Site Inscriptions</a> <span class="divider">/</span>
+          </li>
+          <li>
+            <a href="#{r(:index)}">#{@title}</a> <span class="divider">/</span>
+          </li>
+          <li class="active">#{@subtitle}</li>
+        </ul>
+
 
         <div class="well">
           <h1>#{@title}</h1>

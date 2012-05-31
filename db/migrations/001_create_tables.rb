@@ -16,6 +16,7 @@ Sequel.migration do
       String :phone, :size=>255
       String :org, :size=>255
       String :licence, :size=>255
+      String :federation, :size=>255
       String :event, :size=>255, :null=>false
       String :peer, :size=>255
       TrueClass :payment_received, :default=>false

@@ -17,6 +17,7 @@ class Profiles < Controller
                   :org => "Club ou entreprise", 
                   :birth => "Date de naissance", 
                   :licence => "Numéro de licence",
+                  :federation => "Fédération",
                   :event => "Epreuve" }
 
   before_all do
@@ -43,6 +44,10 @@ class Profiles < Controller
         #Ramaze::Log.info("adding key #{f} : #{user.profile[f]}")
         data_for( f.to_s, user.profile[f] )
       end
+      
+      dte = user.profile.birth
+      ['day','month','year'].each { |t| data_for("dob-#{t}", dte.send(t)) }
+
     end
 
   end
@@ -50,7 +55,7 @@ class Profiles < Controller
   def save
     data = request.subset(:name, :surname, :gender,
                           :address1, :address2, :zip, :city, :country,
-                          :phone, :org, :licence, :event, :peer)
+                          :phone, :org, :licence, :event, :federation)
 
     if user.profile
       # This is an update
@@ -114,9 +119,9 @@ class Profiles < Controller
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything
       #flash[:form_data] = data
-      ##['dob-day', 'dob-month', 'dob-year'].each do |d|
-      ##  flash[:form_data][d] = request.params[d]
-      ##end
+      ['dob-day', 'dob-month', 'dob-year'].each do |d|
+        data_for d, request.params[d]
+      end
 
       bulk_data data
       prepare_flash

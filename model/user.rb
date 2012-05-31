@@ -1,5 +1,7 @@
 # encoding: UTF-8
 #
+require 'securerandom'
+
 class User < Sequel::Model
   plugin :validation_helpers
   one_to_one :profile
@@ -12,11 +14,7 @@ class User < Sequel::Model
   end
 
   def before_create
-    self.confirmation_key = Guid.new.to_s
-  end
-
-  def before_create
-    self.confirmation_key = Guid.new.to_s
+    self.confirmation_key = SecureRandom.hex(16)
   end
 
   def password

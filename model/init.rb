@@ -7,7 +7,7 @@
 Sequel.extension(:pagination)
 
 require 'bcrypt'
-require 'guid'
+require 'securerandom'
 
 require __DIR__('user')
 require __DIR__('profile')

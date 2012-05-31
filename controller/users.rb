@@ -60,7 +60,8 @@ class Users < Controller
   end
 
   def confirm(key)
-    u = User[:confirmation_key => key]
+    u = User[:confirmation_key => key, :confirmed => false]
+    @title = 'Inscriptions'
 
     if u.nil?
       @subtitle = 'Compte inexistant'

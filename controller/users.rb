@@ -81,7 +81,7 @@ Bonjour,
 
   Afin de valider votre inscription au challenge VTT-Route, merci de bien
 vouloir suivre ce lien :
-  http://#{MYURL}#/{r(:confirm,key)}
+  #{VttRoute.options.myurl}#/{r(:confirm,key)}
 
   Vous pourrez ensuite inviter un coéquipier si vous participez à un 
 challenge par équipes.

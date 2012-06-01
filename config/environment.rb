@@ -2,10 +2,14 @@
 # Environment settings
 #
 
-module VttRoute
-  GITHUB="https://github.com/leucos/vtt-route/"
-  MYURL="http://inscriptions.vttroute.fr"
-  VERSION="0.0.2"
+class VttRoute
+  include Ramaze::Optioned
+
+  options.dsl do
+    o 'The GitHub repository URL', :github, 'https://github.com/leucos/vtt-route/'
+    o 'The base application URL', :myurl, 'http://inscriptions.vttroute.fr'
+    o 'The application version', :version, '0.0.2'
+  end
 end
 
 Ramaze.middleware :spec do |mode|

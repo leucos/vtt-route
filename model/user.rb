@@ -7,7 +7,7 @@ class User < Sequel::Model
   include BCrypt
 
   def validate
-    validates_unique :email, :message => "Cette adresse email est déjà utilisée. Voulez vous vous <a href='#{Users.r(:login)}'>connecter</a>?"
+    validates_unique :email, :message => "Cette adresse email est déjà utilisée." #" Voulez vous vous <a href='#{Users.r(:login)}'>connecter</a>?"
     validates_presence :password_hash, :message => 'Ce champ doit être renseigné'
   end
 

@@ -59,7 +59,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">Inscription</a>
+          <a class="brand" href="/">Challenge VTT-Route 2012</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
 
@@ -79,7 +79,7 @@
               <li class="dropdown" id="profile" class="pull-right">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
                   <!-- Display name is user has profile -->
-                  <?r if user.profile ?>
+                  <?r if user and user.profile ?>
                   #{user.profile.surname} #{user.profile.name} 
                   <?r else ?>
                   Profil
@@ -95,9 +95,17 @@
                 </ul>
               </li>
             </ul>
-              <?r end ?>
 
+            <?r else ?>
+
+            <ul class="nav pull-right">
+              <li class="">
+                <a href="/users/login">Connexion</a>
+              </li>
             </ul>
+
+            <?r end ?>
+
           </div>
         </div>
       </div>
@@ -107,29 +115,31 @@
     <!-- main pane -->
     <div class="container">
 
-      <!-- navigation breadcrumbs -->
-      <div class="row">
-        <ul class="breadcrumb">
-          <li>
-            <a href="/">Site Inscriptions</a> <span class="divider">/</span>
-          </li>
-          <li>
-            <a href="#{r(:index)}">#{@title}</a> <span class="divider">/</span>
-          </li>
-          <li class="active">#{@subtitle}</li>
-        </ul>
-      </div>
-
+      <!-- row -->
       <div class="row">
 
-        <!-- page title -->
-        <div class="well">
+        <!-- page title s
+        <!--<div class="well">
           <h1>#{@title}</h1>
-        </div>
-      
-        <div class="span10">
-        <?r [:bravo, :erreur, :info].each do |type| ?>
-          <?r if flash[type] ?>
+
+          <p/>-->
+
+          <!-- navigation breadcrumbs -->
+          <ul class="breadcrumb">
+            <li><a href="/">Site Inscriptions</a> <span class="divider">/</span></li>
+            <li><a href="#{r(:index)}">#{@title}</a>#{"<span class=\"divider\">/</span></li>" if @subtitle}
+            #{"<li class=\"active\">#{@subtitle}</li>" if @subtitle}
+          </ul>
+          
+        <!--</div>  -->
+        <!-- page title -->
+
+        <!-- main content -->
+        <div class="span12">
+
+        <!-- flash -->
+          <?r [:bravo, :erreur, :info].each do |type| ?>
+            <?r if flash[type] ?>
 
           <div class="alert alert-block alert-#{type} fade in">
             <a class="close" data-dismiss="alert" href="#">×</a>
@@ -137,16 +147,20 @@
             #{flash[type]}
           </div>
 
+            <?r end ?>
           <?r end ?>
-        <?r end ?>
 
           #{@content}
 
         </div>
+        <!-- main content -->
+
       </div>
+      <!-- row -->
 
       <!-- page bottom -->
       <hr>
+
       <div class="modal hide fade" id="mentions" style="display:none;">
         <div class="modal-header">
           <button class="close" data-dismiss="modal">×</button>

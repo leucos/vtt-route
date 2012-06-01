@@ -5,9 +5,9 @@
 
 case Ramaze.options.mode
 when :dev
-  DB=Sequel.connect("sqlite://#{Ramaze.options.root}vttroute-dev.db")
+  DB=Sequel.connect("sqlite://#{Ramaze.options.roots[0]}/vttroute-dev.db")
 when :spec
-  DB=Sequel.connect("sqlite://#{Ramaze.options.root}vttroute-spec.db")
+  DB=Sequel.connect("sqlite://#{Ramaze.options.roots[0]}/vttroute-spec.db")
 when :live
   DB=Sequel.mysql2(
     'vttroute',

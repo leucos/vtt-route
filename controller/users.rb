@@ -2,7 +2,6 @@
 #
 
 class Users < Controller
-  layout :main
   helper :form_helper, :user
 
   def index

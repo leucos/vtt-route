@@ -2,7 +2,6 @@
 #
 
 class Profiles < Controller
-  layout :main
   helper :form_helper, :user
 
   FIELD_NAMES = { :name  => "Nom",
@@ -21,10 +20,8 @@ class Profiles < Controller
                   :event => "Epreuve" }
 
   before_all do
-    Ramaze::Log.info("Mmmh, this guy doesn't seem to be logged in")
     redirect_referrer unless logged_in?
-    #u = user
-    #i = u.inspect
+
     Ramaze::Log.info("Oh my bad, it is %s" % user.email)
     Ramaze::Log.info("class %s" % user.class)
 

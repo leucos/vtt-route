@@ -1,6 +1,18 @@
 
 <h2>#{@subtitle}</h2>
 
+<?r if @closed ?>
+
+
+<p class="lead">
+Merci de vous être enregistré.
+La connexion à votre profil sera disponible à partir du 15 juin.
+</p>
+
+<p><a class="btn btn-primary" href="/">Revenir à l'accueil &raquo;</a></p>
+
+<?r else ?>
+
 <p class="lead">
 Entrez vos identifiants pour accéder à votre espace personnel
 </p>
@@ -30,3 +42,5 @@ Entrez vos identifiants pour accéder à votre espace personnel
 
   </fieldset>
 </form>
+
+<?r end ?>

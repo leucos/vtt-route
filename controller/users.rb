@@ -15,6 +15,13 @@ class Users < Controller
 
   def login
     @title = "Connexion"
+
+    # Temp fix
+    #@subtitle = "Entrez votre email et votre mot de passe pour accéder à votre profil"
+    @subtitle = "Connexion non disponible pour l'instant"
+    
+    @closed = true
+
     redirect_referer if logged_in?
     return unless request.post?
     user_login(request.subset(:email, :password))
@@ -81,7 +88,7 @@ Bonjour,
 
   Afin de valider votre inscription au challenge VTT-Route, merci de bien
 vouloir suivre ce lien :
-  #{VttRoute.options.myurl}#/{r(:confirm,key)}
+  #{VttRoute.options.myurl}/#{r(:confirm,key)}
 
   Vous pourrez ensuite inviter un coéquipier si vous participez à un 
 challenge par équipes.

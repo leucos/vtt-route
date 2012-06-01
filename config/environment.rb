@@ -3,7 +3,8 @@
 #
 
 module VttRoute
-  URL="https://github.com/leucos/vtt-route/"
+  GITHUB="https://github.com/leucos/vtt-route/"
+  MYURL="http://inscriptions.vttroute.fr"
   VERSION="0.0.2"
 end
 

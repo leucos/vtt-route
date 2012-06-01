@@ -1,5 +1,15 @@
 Sequel.migration do
   up do
+    create_table(:users) do
+      primary_key :id
+
+      String :email, :size => 255, :null => false
+      String :password_hash, :size => 255, :null => false
+      String :confirmation_key, :size => 255
+      TrueClass :confirmed, :default => false
+      TrueClass :admin, :default => false
+    end
+
     create_table(:profiles, :ignore_index_errors=>true) do
       primary_key :id
       foreign_key :user_id, :users
@@ -26,16 +36,6 @@ Sequel.migration do
       index [:gender]
       index [:peer]
       index [:surname]
-    end
-
-    create_table(:users) do
-      primary_key :id
-
-      String :email, :size => 255, :null => false
-      String :password_hash, :size => 255, :null => false
-      String :confirmation_key, :size => 255
-      TrueClass :confirmed, :default => false
-      TrueClass :admin, :default => false
     end
   end
   

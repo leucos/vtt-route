@@ -51,6 +51,7 @@
 
   <body>
     <!-- navbar -->
+    <?r if session[:logged_in] ?>    
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -73,7 +74,6 @@
                 <a href="/reglement/">Règlement</a>
               </li>
             </ul>
-            <?r if session[:logged_in] ?>
 
             <ul class="nav pull-right">
               <li class="dropdown" id="profile" class="pull-right">
@@ -95,21 +95,11 @@
                 </ul>
               </li>
             </ul>
-
-            <?r else ?>
-
-            <ul class="nav pull-right">
-              <li class="">
-                <a href="/users/login">Connexion</a>
-              </li>
-            </ul>
-
-            <?r end ?>
-
           </div>
         </div>
       </div>
     </div>
+    <?r end ?>
     <!-- navbar -->
 
     <!-- main pane -->
@@ -118,19 +108,14 @@
       <!-- row -->
       <div class="row">
 
-        <!-- page title s
-        <!--<div class="well">
-          <h1>#{@title}</h1>
-
-          <p/>-->
-
-          <!-- navigation breadcrumbs -->
-          <ul class="breadcrumb">
-            <li><a href="/">Site Inscriptions</a> <span class="divider">/</span></li>
-            <li><a href="#{r(:index)}">#{@title}</a>#{"<span class=\"divider\">/</span></li>" if @subtitle}
-            #{"<li class=\"active\">#{@subtitle}</li>" if @subtitle}
-          </ul>
-          
+        <!-- navigation breadcrumbs 
+        <ul class="breadcrumb">
+          <li><a href="/">Site Inscriptions</a> <span class="divider">/</span></li>
+          <li><a href="#{r(:index)}">#{@title}</a>#{"<span class=\"divider\">/</span></li>" if @subtitle}
+          #{"<li class=\"active\">#{@subtitle}</li>" if @subtitle}
+        </ul>
+        -->
+        
         <!--</div>  -->
         <!-- page title -->
 
@@ -138,7 +123,7 @@
         <div class="span12">
 
         <!-- flash -->
-          <?r [:bravo, :erreur, :info].each do |type| ?>
+          <?r [:success, :error, :info].each do |type| ?>
             <?r if flash[type] ?>
 
           <div class="alert alert-block alert-#{type} fade in">

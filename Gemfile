@@ -10,7 +10,7 @@ gem 'json'
 gem 'unicorn'
 gem 'foreman'
 gem 'pony'
-gem 'guid'
+#gem 'guid'
 gem 'bcrypt-ruby'
 
 group :development do

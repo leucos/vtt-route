@@ -22,7 +22,7 @@ class Users < Controller
   end
 
   def logout
-    flash[:bravo] = "Logged out"
+    flash[:success] = "Logged out"
     user_logout
   end
 
@@ -35,7 +35,7 @@ class Users < Controller
     # Let's check if passwords match first
     # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
-      flash[:erreur] = 'Les mots de passe ne correspondent pas'
+      flash[:error] = 'Les mots de passe ne correspondent pas'
     else
       # Password match, let's use one of them if not nil
       data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
@@ -47,13 +47,13 @@ class Users < Controller
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
         Ramaze::Log.info("error with field #{i[0]}")
-        flash[:erreur] = e.message
+        flash[:error] = e.message
         redirect_referrer
       end
     end
 
     send_confirmation_email(user.email, user.confirmation_key)
-    flash[:bravo] = 'Utilisateur créé'
+    flash[:success] = 'Utilisateur créé'
     @subtitle = 'Email de vérification envoyé'
     @title = 'Inscription'
   end
@@ -81,7 +81,7 @@ Bonjour,
 
   Afin de valider votre inscription au challenge VTT-Route, merci de bien
 vouloir suivre ce lien :
-  http://127.0.0.1:7000/users/confirm/#{key}
+  http://#{MYURL}#/{r(:confirm,key)}
 
   Vous pourrez ensuite inviter un coéquipier si vous participez à un 
 challenge par équipes.

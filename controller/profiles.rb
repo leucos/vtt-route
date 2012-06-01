@@ -21,10 +21,6 @@ class Profiles < Controller
 
   before_all do
     redirect_referrer unless logged_in?
-
-    Ramaze::Log.info("Oh my bad, it is %s" % user.email)
-    Ramaze::Log.info("class %s" % user.class)
-
     session[:logged_in] = true
   end
 
@@ -33,12 +29,11 @@ class Profiles < Controller
     @subtitle = 'Profil'
 
 #    flash[:form_data] ||= {}
-#    flash[:erreur] = {}
+#    flash[:error] = {}
     
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile
       FIELD_NAMES.each_key do |f|
-        #Ramaze::Log.info("adding key #{f} : #{user.profile[f]}")
         data_for( f.to_s, user.profile[f] )
       end
       
@@ -63,20 +58,20 @@ class Profiles < Controller
       # If we get here, this means he's tinkering with the post data
       # THINK: Is this enough ? Can user tamper with session data ?
       #if user.id != session[:user_id]
-      #  flash[:erreur] = 'Modification impossible'
+      #  flash[:error] = 'Modification impossible'
 
       #  Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
       #  redirect_referrer
       #end
 
       if prof.nil?
-        flash[:erreur] = 'Profil invalide'
+        flash[:error] = 'Profil invalide'
 
         redirect_referrer
       end
 
       #if !user.confirmed
-      #  flash[:erreur] = 'Vous devez confirmer votre inscription avant'
+      #  flash[:error] = 'Vous devez confirmer votre inscription avant'
 
       #  redirect_referrer
       #end
@@ -107,7 +102,6 @@ class Profiles < Controller
 
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
-        Ramaze::Log.info("missing field #{i[0]}")
         error_for i[0], "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
       end
     end
@@ -133,7 +127,7 @@ class Profiles < Controller
 
     user.profile = prof
 
-    flash[:bravo] = 'Profil mis à jour'
+    flash[:success] = 'Profil mis à jour'
     @title = 'Profil'
 
     redirect Profiles.r(:index)
@@ -154,10 +148,5 @@ class Profiles < Controller
   end
 
   private
-
-  # Tries to update user and return an error array is something failed
-  def update_user(user)
-
-  end
 
 end

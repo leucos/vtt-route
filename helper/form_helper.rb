@@ -31,7 +31,6 @@ module Ramaze
           flash[:form_data] ||= {}
           flash[:form_data][field] ||= {}
           flash[:form_data][field][:data] = data
-          Ramaze::Log.info("Adding %s for %s" % [ data, field] )
         else
           flash[:form_data][field][:data] if flash[:form_data] && flash[:form_data].key?(field)
         end
@@ -49,10 +48,10 @@ module Ramaze
 
       def prepare_flash
         if has_errors?
-          flash[:erreur] = "<p>Le formulaire contient des erreurs :\n<ul>"
-          flash[:form_errors].each_pair { |f,m| flash[:erreur] << "<li>%s</li>" % message_for(f) }
+          flash[:error] = "<p>Le formulaire contient des erreurs :\n<ul>"
+          flash[:form_errors].each_pair { |f,m| flash[:error] << "<li>%s</li>" % message_for(f) }
 
-          flash[:erreur] << "</ul></p>"
+          flash[:error] << "</ul></p>"
         end        
       end
 

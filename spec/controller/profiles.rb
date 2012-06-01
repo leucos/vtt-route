@@ -31,12 +31,6 @@ describe "The Users controller" do
     Profile.delete
   end
 
-  # should 'show login or register choice' do
-  #   get('/users/index').status.should == 200
-  #   last_response.body.should =~ /inscrire/
-  #   last_response.body.should =~ /connecter/
-  # end
-
   should 'show register form' do
     get('/profiles/index').status.should == 200
     nok = Nokogiri::HTML(last_response.body)

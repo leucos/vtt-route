@@ -27,9 +27,6 @@ class Profiles < Controller
   def index
     @title = 'Espace participants'
     @subtitle = 'Profil'
-
-#    flash[:form_data] ||= {}
-#    flash[:error] = {}
     
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile

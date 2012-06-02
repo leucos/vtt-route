@@ -11,6 +11,9 @@
 
     <!-- Le styles -->
     #{css('bootstrap')}
+    <?r if @loadmap ?>
+    #{css('leaflet')}
+    <?r end ?>
 
     <style type="text/css">
       body {
@@ -66,7 +69,7 @@
 
   <body>
     <!-- navbar -->
-    <?r if session[:logged_in] ?>    
+       
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -85,11 +88,14 @@
               <li class="">
                 <a href="/">Accueil</a>
               </li>
-              <li class="">
+              <!--<li class="">
                 <a href="/reglement/">Règlement</a>
+              </li>-->
+              <li class="">
+                <a href="/maps">Tracé</a>
               </li>
             </ul>
-
+            <?r if session[:logged_in] ?> 
             <ul class="nav pull-right">
               <li class="dropdown" id="profile" class="pull-right">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
@@ -110,11 +116,12 @@
                 </ul>
               </li>
             </ul>
+            <?r end ?>
+
           </div>
         </div>
       </div>
     </div>
-    <?r end ?>
     <!-- navbar -->
 
     <!-- main pane -->
@@ -161,7 +168,7 @@
       <hr>
       
       <div class="row">
-        sponsors - sponsors - ....
+        <!-- sponsors - sponsors - ->
       </div>
 
       <!-- page bottom -->
@@ -247,7 +254,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
     <?r if @loadmap ?>
-    #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
+    #{js('leaflet')}
+    #{js('KML')}
     <?r end ?>
 
 

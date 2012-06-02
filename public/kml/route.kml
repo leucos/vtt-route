@@ -2,34 +2,33 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
 	<name>route.kml</name>
-	<Style id="failed">
+	<Style id="stl">
 		<LineStyle>
-			<color>ccff5500</color>
+			<color>aa0055ff</color>
 			<width>4</width>
 		</LineStyle>
 	</Style>
-	<Style id="failed0">
+	<Style id="stl0">
 		<LineStyle>
-			<color>ccff5500</color>
+			<color>aa0055ff</color>
 			<width>4</width>
 		</LineStyle>
 	</Style>
-	<StyleMap id="failed1">
+	<StyleMap id="stl1">
 		<Pair>
 			<key>normal</key>
-			<styleUrl>#failed</styleUrl>
+			<styleUrl>#stl</styleUrl>
 		</Pair>
 		<Pair>
 			<key>highlight</key>
-			<styleUrl>#failed0</styleUrl>
+			<styleUrl>#stl0</styleUrl>
 		</Pair>
 	</StyleMap>
 	<Placemark>
 		<name>Tracé route</name>
-		<Snippet maxLines="0"></Snippet>
-    <description><ul><li><strong>Dénivellé</strong> : 690m</li>
-        <li><strong>Distance</strong> : 39.8km</li></description>
-		<styleUrl>#failed1</styleUrl>
+		<description><![CDATA[<ul><li><strong>Dénivellé</strong> : 690m</li>
+<li><strong>Distance</strong> : 39.8km</li></ul>]]></description>
+		<styleUrl>#stl1</styleUrl>
 		<MultiGeometry>
 			<LineString>
 				<tessellate>1</tessellate>

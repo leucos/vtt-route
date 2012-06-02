@@ -10,7 +10,7 @@
     <meta name="author" content="Association Sportive su Collège Saint Laurent">
 
     <!-- Le styles -->
-    #{css('bootstrap')}
+    #{css('bootstrap.min')}
     <?r if @loadmap ?>
     #{css('leaflet')}
     <?r end ?>
@@ -34,17 +34,14 @@
       } 
     </style>
 
-    #{css('bootstrap-responsive')}
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    #{js('jquery')}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png ">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
@@ -186,9 +183,11 @@
           </p>
 
           <p> Il répond aux noms de domaines suivants : 
-          <strong> inscription.challengevttroute.fr </strong>,
-          <strong> inscription.challengevttroute.com </strong> et
-          <strong> inscription.challengevttroute.org </strong>
+            <ul>
+              <li>www.challengevttroute.fr</li>
+              <li>www.challengevttroute.com</li>
+              <li>www.challengevttroute.org</li>
+            </ul>
           </p>
 
           <dl>
@@ -198,24 +197,27 @@
             <dt>Hébergement</dt><dd>Association ls~</dd>
           </dl>
 
-          <p> Ce site web est la propriété du Groupe
-          Scolaire Saint Laurent : la structure générale, ainsi que les textes, images
+          <p> Ce site web est la propriété de l'Association Sportive Saint Laurent :
+          la structure générale, ainsi que les textes, images
           animées ou non, et tous les éléments composant ce site web sont propriété de
-          l'association sportive Saint Laurent.
+          l'Association Sportive Saint Laurent.
           </p>
 
           <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
           extraction d'une partie substantielle de la base de données qu'il contient est
-          interdite, sans autorisation expresse et préalable de l'association OGEC Saint
+          interdite, sans autorisation expresse et préalable de l'Association Sportive Saint
           Laurent. Toute exploitation non autorisée du site ou de son contenu, des
           informations qui y sont divulguées engageraient la responsabilité de
           l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
           L. 335-2 et suivants du Code de la Propriété Intellectuelle.
           </p>
 
-          <p> En conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
+          <p> L'utilisation et la collecte des données par ce site est effectué dans le 
+            cadre de la dispense n°7 de la CNIL.
+            Néammoins, en conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
           janvier 1978, vous disposez d'un droit d'accès, de modification, de
-          rectification et de suppression des données nominatives qui vous concernent.
+          rectification et de suppression des données nominatives qui vous concernent.</p>
+          <p>
           Vous pouvez exercer ce droit en vous adressant à :
           </p>
 
@@ -239,10 +241,12 @@
       </div>
 
       <footer>
+        <p align="center">Propulsé par <a href="http://ramaze.net" target="_new">Ramaze</a> et Twitter <a href="http://twitter.github.com/bootstrap/index.html" target="_new">Bootstrap</a> -
+          Hébergement <a href="http://lstilde.org/" target="_new">ls~</a>
+        </p>
         <p align="center">&copy; Association Sportive Collège Saint Laurent 2012 - 
         <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> - 
-        <a href="mailto:info@challengevttroute.fr">Contact</a>
-        </p>
+        <a href="mailto:info@challengevttroute.fr">Contact</a></p>
       </footer>
 
     <hr>
@@ -256,22 +260,10 @@
     <?r if @loadmap ?>
     #{js('leaflet')}
     #{js('KML')}
+    #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
     <?r end ?>
 
-
-    #{js('bootstrap-transition')}
-    #{js('bootstrap-alert')}
-    #{js('bootstrap-modal')}
-    #{js('bootstrap-dropdown')}
-    #{js('bootstrap-scrollspy')}
-    #{js('bootstrap-tab')}
-    #{js('bootstrap-tooltip')}
-    #{js('bootstrap-popover')}
-    #{js('bootstrap-button')}
-    #{js('bootstrap-collapse')}
-    #{js('bootstrap-carousel')}
-    #{js('bootstrap-typeahead')}
-
+    #{js('bootstrap.min')}
   </body>
 </html>
 

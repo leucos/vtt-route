@@ -14,6 +14,8 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="email"><strong>Email</strong></label>
       <div class="controls">
         <input type="text" class="input-large" id="email" name="email" placeholder="moi@quelquepart.org" value="#{ data_for 'email' }" />
+        <a href="#" class="" rel="popover" data-content="Nous respectons votre vie privée et ne diffusons votre adresse email à personne. Elle sera juste utilisée pour vous envoyer des informations importantes à propos de la course (classement, inscriptions, pièces manquantes, nouvelle édition, etc...). Vous pouvez supprimer votre compte (et donc cet email) à n'importe quel moment. Veuillez vous référer aux mentions légales en bas de page pour plus d'informations." data-original-title="Vie privée"><i class="icon-question-sign"></i></a>
+
         <p class="help-block">Cet email vous permettra de vous identifier sur le site et de recevoir des informations sur la course.</p>
       </div>
     </div>
@@ -22,6 +24,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="pass1"><strong>Mot de passe</strong></label>
       <div class="controls">
         <input type="password" class="input-large" id="pass1" name="pass1" />
+        <a href="#" class="" rel="popover" data-content="Bien que nous ne soyons pas trop tatillons, essayez d'utiliser un mot de passe un tant soit peu complexe, afin d'éviter que quelqu'un ne se connecte à votre place..." data-original-title="Choix du mot de passe"><i class="icon-question-sign"></i></a>
       </div>
     </div>
 
@@ -42,3 +45,10 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
 
   </fieldset>
 </form>
+
+<!-- Enable popovers -->
+<script type='text/javascript'>
+  $(function() {
+    $('a[rel="popover"]').popover();
+  });
+</script>

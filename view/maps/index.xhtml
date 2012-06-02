@@ -1,4 +1,10 @@
     <div class="well span8 offset1">
+      <!-- Add data-toggle="buttons-radio" for radio style toggling on btn-group -->
+      <div class="btn-group" data-toggle="buttons-radio">
+        <button class="btn" id="osmbut">OpenStreetMap</button>
+        <button class="btn" id="gmapsbut">Google Maps</button>
+      </div>
+      <p />
       <div class="row">
         <div class="span8 columns" id="map_canvas" style="height: 600px;"></div>
       </div>
@@ -57,37 +63,64 @@
       </div>
     </div>
 
-
+    <!-- Map type button toggling code -->
     <script type='text/javascript'>
-    $(function() {
-      var map = new L.Map('map_canvas', {center: new L.LatLng(45.721282,4.431782), zoom: 13});
-      var osmAttrib='Map data © openstreetmap contributors';
-      //var osmurl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      var osmurl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
-      var osm = new L.TileLayer(osmurl,{minZoom:8,maxZoom:18,attribution:osmAttrib});
+      $(function() {
+        $('#osmbut').button('toggle')
+        $("#gmapsbut").attr("disabled", "disabled"); // soon...
 
-      var trackvtt = new L.KML("/kml/vtt.kml", {async: true, color: 'red'});
-      trackvtt.on("loaded", function(e) { console.log(e.target); map.fitBounds(new L.LatLngBounds(e.target)); });
+        $('#gmapsbut').click(function() {
+          $('#gmapsbut').addClass('active');
+          $('#osmbut').removeClass('active');
+        });
 
-      var trackroute = new L.KML("/kml/route.kml", {async: true});
-      trackroute.on("loaded", function(e) { map.fitBounds(e.target.getBounds()); });
-
-      trackvtt.setStyle({color: '#03f'});
-      map.addLayer(trackvtt);
-      map.addLayer(trackroute);
-      map.addLayer(osm);
-      map.addControl(new L.Control.Layers({}, {'VTT':trackvtt, 'Route':trackroute}));
-
-      //map.addControl(new L.Control.Layers({}, {'Route':trackroute}));
-      //map.addControl(new L.Control.Layers({}, {'VTT':trackvtt}));
-    });
+        $('#osmbut').click(function() {
+          $('#osmbut').addClass('active');
+          $('#gmapsbut').removeClass('active');     
+        });
+      });
     </script>
 
+    <!-- OSM/Leaflet map -->
+    <script type='text/javascript'>
+      $(function osm() {
+        $('.map_canvas').empty();
+        var map = new L.Map('map_canvas', {center: new L.LatLng(45.75128,4.424866), zoom: 12});
+        var osmAttrib='Map data © openstreetmap contributors';
+        var osmurl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+        var osm = new L.TileLayer(osmurl,{minZoom:8,maxZoom:18,attribution:osmAttrib});
 
-  <!--
+        var trackvtt = new L.KML("/kml/vtt.kml", {async: true, color: 'red'});
+        trackvtt.on("loaded", function(e) { console.log(e.target); map.fitBounds(new L.LatLngBounds(e.target)); });
+
+        var trackroute = new L.KML("/kml/route.kml", {async: true});
+        trackroute.on("loaded", function(e) { map.fitBounds(e.target.getBounds()); });
+
+        trackvtt.setStyle({color: '#03f'});
+        map.addLayer(trackvtt);
+        map.addLayer(trackroute);
+        map.addLayer(osm);
+        map.addControl(new L.Control.Layers({}, {'VTT':trackvtt, 'Route':trackroute}));
+      });
+    </script>
+
+    <!-- GMap map -->
+    <script type="text/javascript">
+      $(function gmaps() {
+        return;
+        $('.map_canvas').empty();
+        var slc = new google.maps.LatLng(45.721282,4.431782);
+        var myOptions = {
+          zoom: 11,
+          center: slc,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
         var vttLayer = new google.maps.KmlLayer('http://challengevttroute.fr/kml/vtt.kml');
-        var routeLayer = new google.maps.KmlLayer('http://challengevttroute.fr/kml/route.kml');-->
-
-
+        var routeLayer = new google.maps.KmlLayer('http://challengevttroute.fr/kml/route.kml');
+        vttLayer.setMap(map);
+        routeLayer.setMap(map);
+      });
+    </script>
 

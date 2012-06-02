@@ -2,6 +2,7 @@
 <gpx creator="GPS Visualizer http://www.gpsvisualizer.com/" version="1.0" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 <trk>
   <name>Trac&#233; route</name>
+  <desc>D&#233;nivell&#233; : 690m Distance : 39.8km</desc>
   <trkseg>
     <trkpt lat="45.737934" lon="4.466809">
       <ele>624.99</ele>

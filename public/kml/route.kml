@@ -27,8 +27,8 @@
 	<Placemark>
 		<name>Tracé route</name>
 		<Snippet maxLines="0"></Snippet>
-		<description>Dénivellé : 690m
-Distance : 39.8km</description>
+    <description><ul><li><strong>Dénivellé</strong> : 690m</li>
+        <li><strong>Distance</strong> : 39.8km</li></description>
 		<styleUrl>#failed1</styleUrl>
 		<MultiGeometry>
 			<LineString>

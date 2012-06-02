@@ -158,6 +158,12 @@
       </div>
       <!-- row -->
 
+      <hr>
+      
+      <div class="row">
+        sponsors - sponsors - ....
+      </div>
+
       <!-- page bottom -->
       <hr>
 
@@ -232,11 +238,17 @@
         </p>
       </footer>
 
+    <hr>
+
     </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
+    <?r if @loadmap ?>
+    #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
+    <?r end ?>
 
 
     #{js('bootstrap-transition')}

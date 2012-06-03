@@ -11,6 +11,8 @@
 
     <!-- Le styles -->
     #{css('bootstrap.min')}
+    #{css('caroufredsel')}
+
     <?r if @loadmap ?>
     #{css('leaflet')}
     <?r end ?>
@@ -39,6 +41,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    #{js('jquery.carouFredSel-5.6.0-packed')}
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
@@ -164,8 +167,32 @@
 
       <hr>
       
-      <div class="row">
-        <!-- sponsors - sponsors - ->
+      <div class="row span12">
+        <!-- sponsors - sponsors -->
+        <h3>Le Challenge VTT-Route est soutenu par</h3>
+        
+        <div id="sponsors">
+          <div id="sponsors_elements">
+            <a href="http://www.rhone.fr"><img src="/images/sponsors/rhone.jpg" width="120" /></a>
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <img src="/images/sponsors/rhone.jpg" width="120" />
+          </div>
+          <div class="clearfix"></div>
+          <!--<a class="prev" id="sponsors_elements_prev" href="#"><span>prev</span></a>
+          <a class="next" id="sponsors_elements_next" href="#"><span>next</span></a>
+          <div class="pagination" id="sponsors_elements_pag"></div>-->
+        </div>
+
       </div>
 
       <!-- page bottom -->
@@ -256,6 +283,32 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type='text/javascript'>
+      /*  CarouFredSel: an infinite, circular jQuery carousel.
+        Configuration created by the "Configuration Robot"
+        at caroufredsel.frebsite.nl
+      */
+      $(function() {
+        $("#sponsors_elements").carouFredSel({
+          padding: [0, 0, 40, 0],
+          scroll: {
+            items: 1,
+            fx: "slide",
+            pauseOnHover: true
+          } /*,
+          prev    : {
+            button  : "#sponsors_elements_prev",
+            key     : "left"
+          },
+          next    : {
+            button  : "#sponsors_elements_next",
+            key     : "right"
+          },
+          pagination  : "#sponsors_elements_pag" */
+        });
+      });
+    </script>
+
 
     <?r if @loadmap ?>
     #{js('leaflet')}

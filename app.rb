@@ -15,6 +15,7 @@ require 'pony'
 EVENT_DATE=Date.new(2012, 10, 28)
 
 # Read some conf
+require __DIR__('config/settings')
 require __DIR__('config/environment')
 require __DIR__('config/database')
 

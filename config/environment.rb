@@ -2,21 +2,6 @@
 # Environment settings
 #
 
-class VttRoute
-  include Ramaze::Optioned
-
-  options.dsl do
-    o 'The GitHub repository URL', :github, 'https://github.com/leucos/vtt-route/'
-    o 'The base application URL', :myurl, 'http://inscriptions.vttroute.fr'
-    o 'The application version', :version, '0.0.2'
-    # :preinscriptions => pré-inscriptions
-    # :inscriptions    => inscriptions, consultation de profil
-    # :closed          => plus d'inscriptions
-    # :started         => course en cours
-    # :finished        => course terminée
-    o 'The running state', :state, :inscriptions
-  end
-end
 
 Ramaze.middleware :spec do |mode|
   puts "Middlewares for spec"

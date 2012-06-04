@@ -2,6 +2,8 @@
 # App Settings
 #
 
+Rack::Mime::MIME_TYPES['.gpx'] = 'application/octet-stream'
+
 class VttRoute
   include Ramaze::Optioned
 

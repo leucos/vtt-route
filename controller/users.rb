@@ -19,8 +19,6 @@ class Users < Controller
     # Temp fix
     #@subtitle = "Entrez votre email et votre mot de passe pour accéder à votre profil"
     @subtitle = "Connexion non disponible pour l'instant"
-    
-    @closed = true
 
     redirect_referer if logged_in?
     return unless request.post?

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+#
 require_relative '../helper'
 require 'nokogiri'
 require 'ramaze/helper/user'
@@ -15,6 +17,7 @@ module Ramaze
   end
 end
 
+# Post params
 PARAMS = { :email=> 'mb@mbnet.fr', :password => 'xyz', 'HTTP_REFERER' => '/profiles/index' }  
 
 User.delete
@@ -37,53 +40,32 @@ describe "The Users controller" do
     nok.css("div > div > input").first[:id].should == "name"
   end
     
-  FORM = { 
-#    :email => 'some@email',
-#    :pass1 => 'vtt',
-#    :pass2 => 'vtt',
-    :name  => 'Cumin',
-    :surname => 'Bernard',
-    :gender => 'male',
-    :"dob-day" => 1,
-    :"dob-month" => 1,
-    :"dob-year" => 1999,
-    :address1 => "Rue Lapierre",
-    :address2 => "Quartier Specialized",
-    :zip => 12345,
-    :city => "Sunn",
-    :country => "Fox",
-    :org => "ASSLC",
-    :licence => 54321,
-    :event => "Solo",
-    :phone => "01 23 45 67 89"
+  FORM_FIELDS = { 
+    :name        => { :value => 'Cumin', :mandatory => true },
+    :surname     => { :value => 'Bernard', :mandatory => true },
+    :gender      => { :value => 'male', :mandatory => true },
+    :"dob-day"   => { :value => 1, :mandatory => true },
+    :"dob-month" => { :value => 1, :mandatory => true },
+    :"dob-year"  => { :value => 1999, :mandatory => true },
+    :address1    => { :value => "Rue Lapierre", :mandatory => true },
+    :address2    => { :value => "Quartier Specialized", :mandatory => false },
+    :zip         => { :value => 12345, :mandatory => true },
+    :city        => { :value => "Sunn", :mandatory => true },
+    :country     => { :value => "Fox", :mandatory => true },
+    :org         => { :value => "ASSLC", :mandatory => false },
+    :licence     => { :value => 54321, :mandatory => false },
+    :event       => { :value => "Solo", :mandatory => true },
+    :phone       => { :value => "01 23 45 67 89", :mandatory => true }
   }
 
-  MANDATORY_FIELDS = { 
-#    :email => 'some@email',
-#    :pass1 => 'vtt',
-#    :pass2 => 'vtt',
-    :name  => 'Cumin',
-    :surname => 'Bernard',
-    :gender => 'male',
-    :"dob-day" => 1,
-    :"dob-month" => 1,
-    :"dob-year" => 1999,
-    :address1 => "Rue Lapierre",
-    :zip => 12345,
-    :city => "Sunn",
-    :country => "Fox",
-    :event => "Solo",
-    :phone => "01 23 45 67 89"
-  }
-
-
-  MANDATORY_FIELDS.keys.each do |f|
-  #[ :email ].each do |f|
-    form = FORM.dup
+  # Loop over mandatory fields
+  FORM_FIELDS.keep_if { |fk,fv| fv[:mandatory] }.each_key do |f|
+    form = FORM_FIELDS.dup
     form.delete(f)
-    #next if f =~ /pass/
+    # Get rid of sub-hash, promote :value to first level value
+    form.each_pair { |ik,iv| form[ik] = iv[:value] }
+
     should "refuse forms without a #{f} field" do
-    #  post('/profiles/save', form, { 'HTTP_REFERER' => '/profiles/create'}).status.should == 302
       post('/profiles/save', form, PARAMS).status.should == 302
       follow_redirect!
       nok = Nokogiri::HTML(last_response.body)
@@ -91,17 +73,35 @@ describe "The Users controller" do
     end
 
     should "redisplay form pre-filled when #{f} is missing" do
-    #  post('/profiles/save', form, { 'HTTP_REFERER' => '/profiles/create'}).status.should == 302
       post('/profiles/save', form, PARAMS).status.should == 302
       follow_redirect!
+      
       nok = Nokogiri::HTML(last_response.body)
+      
       form.each_pair do |k,v|
-        next if k =~ /pass|gender|event|dob-.*/
-#        puts "looking for //*[@id='#{k}'] to be #{v}"
-        # pass are not refilled
-        nok.xpath("//*[@id='#{k}']").first["value"].should =~ /#{v}/i
+        # Passwords are not refilled
+        next if k == :pass
+
+        # Event field is a dropdon and needs a special treament
+        if k == :event
+          nok.xpath("//*[@id='event']/option[@selected='selected']").text.should =~ /#{v}/i
+        else
+          nok.xpath("//*[@id='#{k}']").first["value"].should =~ /#{v}/i
+        end  
       end
     end
   end
+
+  form = FORM_FIELDS.dup
+  form.each_pair { |ik,iv| form[ik] = iv[:value] }
+
+  # Test valid forms
+  should "accept a valid form" do
+    post('/profiles/save', form, PARAMS).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert").text.should =~ /Profil mis à jour/
+  end
+
 end
 

@@ -3,6 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta encoding="utf-8">
     <title>Challenge VTT-Route - Inscription</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Challenge VTT et route, seul ou en duo">
@@ -21,6 +22,7 @@
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+
       }
       .navbar .nav.pull-right .dropdown-menu { 
         left: auto; 
@@ -69,7 +71,6 @@
 
   <body>
     <!-- navbar -->
-       
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -78,69 +79,69 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">Challenge VTT-Route 2012</a>
-          <div class="nav-collapse collapse">
+          <a class="brand" href="/">Challenge VTT-Route</a>
+          <div class="nav-collapse">
             <ul class="nav">
-
-              
               <li class="divider-vertical"></li>
-      
-              <li class="">
-                <a href="/">Accueil</a>
+              <li><a href="/">Accueil</a></li>
+              <li class="divider-vertical"></li>
+              <li><a href="/maps/">Tracés</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liens <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.facebook.com/events/471962059484942/"><img src="/images/facebook-icon.png">Evènement Facebook</a></li>
+                  <li><a href="http://www.jeanchristopheperaud.fr/">Site de Jean-Christophe</a></li>
+                </ul>
               </li>
-              <!--<li class="">
-                <a href="/reglement/">Règlement</a>
-              </li>-->
-              <li class="">
-                <a href="/maps">Tracé</a>
-              </li>
+              <li class="divider-vertical"></li>
             </ul>
-            <?r if session[:logged_in] ?> 
+
             <ul class="nav pull-right">
-              <li class="dropdown" id="profile" class="pull-right">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
-                  <!-- Display name is user has profile -->
-                  <?r if user and user.profile ?>
+
+            <?r if user and logged_in? ?> 
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <?r if user.profile ?>
                   #{user.profile.surname} #{user.profile.name} 
                   <?r else ?>
                   Profil
-                  <?r end ?>
-                  <b class="caret"></b>
-                </a>
+                  <?r end ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#{Profiles.r(:index)}">Mon Profil</a></li>
-                  <li><a href="#">Mon co-équipier</a></li>
-                  <li><a href="#">Etat de mon inscription</a></li>
+                  <li><a href="/profiles/index">Mon Profil</a></li>
+                  <!-- <li><a href="#">Mon Partenaire</a></li>
+                  <li><a href="#">Mes résultats</a></li> -->
                   <li class="divider"></li>
-                  <li><a href="#">Déconnexion</a></li>
+                  <li><a href="/users/logout">Déconnexion</a></li>
                 </ul>
               </li>
-            </ul>
+            <?r else ?>
+              <li><a href="/users/login">Connexion</a></li>
             <?r end ?>
-
-          </div>
+            </ul>
+          </div><!-- /.nav-collapse -->
         </div>
-      </div>
+      </div><!-- /navbar-inner -->
     </div>
     <!-- navbar -->
+
+    <script type="text/javascript">
+      $(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
 
     <!-- main pane -->
     <div class="container">
 
-      <!-- row -->
+     <!-- row -->
       <div class="row">
+        <div class="span12">
+          <img src="/images/banniere_jcp.jpg" style="margin-bottom: 20px;">
+        </div>
+      </div>
 
-        <!-- navigation breadcrumbs 
-        <ul class="breadcrumb">
-          <li><a href="/">Site Inscriptions</a> <span class="divider">/</span></li>
-          <li><a href="#{r(:index)}">#{@title}</a>#{"<span class=\"divider\">/</span></li>" if @subtitle}
-          #{"<li class=\"active\">#{@subtitle}</li>" if @subtitle}
-        </ul>
-        -->
-        
-        <!--</div>  -->
-        <!-- page title -->
-
+      <div class="row">        
         <!-- main content -->
         <div class="span12">
 
@@ -164,9 +165,10 @@
 
       </div>
       <!-- row -->
-
-      <hr>
       
+      <?r if VttRoute.options.show_sponsors ?>
+      <hr>
+
       <div class="row span12">
         <!-- sponsors - sponsors -->
         <h3>Le Challenge VTT-Route est soutenu par</h3>
@@ -194,6 +196,7 @@
         </div>
 
       </div>
+      <?r end ?>
 
       <!-- page bottom -->
       <hr>
@@ -204,6 +207,7 @@
         </p>
         <p align="center">&copy; Association Sportive Collège Saint Laurent 2012 - 
         <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> - 
+        <a data-toggle="modal" href="#reglement">Règlement</a> - 
         <a href="mailto:info@challengevttroute.fr">Contact</a></p>
       </footer>
 
@@ -317,6 +321,7 @@
           <p>Le participant autorise l'organisateur à utiliser toute image de l'epreuve ou il figure, quel que soit le dédia de diffusion (presse, internet, ...)</p>
 
           <h3>Inscriptions</h3>
+          <p>Les frais d'inscriptions sont de 15€ par participant.</p>
           <p>Les inscriptions sont ouvertes jusqu'au 19 octobre 2012 inclus. Toute inscription reçue ultérieurement ne sera pas traitée</p>
           <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2021.</p>
           <p><strong>Aucune inscription ne sera traitée sur place.</strong></p>

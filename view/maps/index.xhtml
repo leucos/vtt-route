@@ -1,15 +1,10 @@
 
-    <div class="well span8 ">
-    
-      <div id="map_canvas" style="height: 600px;"></div>
-     
+<div class="row">
+    <div class="span8">
+      <div id="map_canvas" style="height: 600px;"></div>     
     </div>
 
-  
-
-    <div class="row">
-
-      <div class="span4 offset1">
+    <div class="span4">
         <p>
           <h3>Tracé VTT</h3>
           Profil altimétrique
@@ -22,8 +17,7 @@
             <a class="btn btn-primary btn-mini" href="/kml/vtt.gpx">GPX &raquo;</a>
           </p>
         </p>
-      </div>
-      <div class="span4">
+        <hr>
         <p>
           <h3>Tracé route</h3>
           Profil altimétrique
@@ -105,22 +99,3 @@
         routeLayer.setMap(map);
       });
     </script>
-
-     <scraipt type="text/javascript">
-      $(function() {
-        $('.map_canvas').empty();
-        var slc = new google.maps.LatLng(45.721282,4.431782);
-        var myOptions = {
-          zoom: 11,
-          center: slc,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        var vttLayer = new google.maps.KmlLayer('http://challengevttroute.fr/kml/vtt.kml');
-        var routeLayer = new google.maps.KmlLayer('http://challengevttroute.fr/kml/route.kml');
-        vttLayer.setMap(map);
-        routeLayer.setMap(map);
-      });
-    </scraipt>
-

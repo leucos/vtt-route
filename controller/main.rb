@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # Default url mappings are:
 # 
 # * a controller called Main is mapped on the root of the site: /
@@ -12,5 +14,6 @@ class MainController < Controller
   # the index action is called automatically when no other action is specified
   def index
     @title = 'Challenge VTT-Route'
+    Ramaze::Log.info("current user is #{user}")
   end
 end

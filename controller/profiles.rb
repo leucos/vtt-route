@@ -23,7 +23,6 @@ class Profiles < Controller
 
   before_all do
     redirect_referrer unless logged_in?
-    session[:logged_in] = true
   end
 
   def index
@@ -38,7 +37,6 @@ class Profiles < Controller
       
       dte = user.profile.birth
       ['day','month','year'].each { |t| data_for("dob-#{t}", dte.send(t)) }
-
     end
 
   end

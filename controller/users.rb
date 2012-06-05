@@ -16,14 +16,16 @@ class Users < Controller
   def login
     @title = "Connexion"
 
-    # Temp fix
-    #@subtitle = "Entrez votre email et votre mot de passe pour accéder à votre profil"
-    @subtitle = "Connexion non disponible pour l'instant"
-
     redirect_referer if logged_in?
     return unless request.post?
-    user_login(request.subset(:email, :password))
-    redirect Profiles.r(:index)
+
+    if VttRoute.options.state == :preinscriptions
+      @subtitle = "Connexion non disponible pour l'instant"
+    else
+      @subtitle = "Entrez votre email et votre mot de passe pour accéder à votre profil"
+      user_login(request.subset(:email, :password))
+      redirect Profiles.r(:index)
+    end
   end
 
   def logout

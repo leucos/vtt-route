@@ -17,5 +17,7 @@ class VttRoute
     # :started         => course en cours
     # :finished        => course terminée
     o 'The running state', :state, :inscriptions
+    o 'Show sponsors scrolling banner', :show_sponsors, false
+
   end
 end

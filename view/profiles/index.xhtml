@@ -111,7 +111,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     <!-- licence -->
 
     <!-- epreuve -->
-     <div class="control-group #{ class_for :event }">
+    <div class="control-group #{ class_for :event }">
       <label class="control-label" for="event"><strong>Epreuve</strong></label>
       <div class="controls">
         <select id="event" name="event">
@@ -129,6 +129,26 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       </div>
     </div> 
     <!-- epreuve -->
+
+    <!-- contact -->
+    <div class="control-group #{ class_for :emergency_contact }">
+      <label class="control-label" for="emergency_contact"><strong>Personne à contacter en cas d'urgence</strong></label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="emergency_contact" name="emergency_contact" rows="3">#{ data_for 'emergency_contact' }</textarea>
+      </div>
+    </div> 
+    <!-- contact -->
+
+    <!-- accept -->
+    <div class="control-group #{ class_for :accept }">
+      <div class="controls">
+        <label class="checkbox">
+          <input type="checkbox" name="accept" id="accept" value="true">
+          J'ai lu et j'accepte le règlement du Challenge VTT-Route  
+          </label>
+      </div>
+    </div>
+    <!-- accept -->
 
     <input type="hidden" name="attendee" value="1">
 

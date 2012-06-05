@@ -17,7 +17,9 @@ class Profiles < Controller
                   :birth => "Date de naissance", 
                   :licence => "Numéro de licence",
                   :federation => "Fédération",
-                  :event => "Epreuve" }
+                  :event => "Epreuve",
+                  :emergency_contact => "Personne à contacter en cas d'urgence",
+                  :accept => "Acceptation du règlement" }
 
   before_all do
     redirect_referrer unless logged_in?
@@ -44,7 +46,8 @@ class Profiles < Controller
   def save
     data = request.subset(:name, :surname, :gender,
                           :address1, :address2, :zip, :city, :country,
-                          :phone, :org, :licence, :event, :federation)
+                          :phone, :org, :licence, :event, :federation,
+                          :emergency_contact)
 
     if user.profile
       # This is an update
@@ -103,6 +106,11 @@ class Profiles < Controller
       end
     end
 
+    if !request.params['accept']
+      Ramaze::Log.info("Accept not checked")
+      error_for :accept, "Vous n'avez pas coché la case d'acceptation du règlement" 
+    end
+
     if has_errors?
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything
@@ -119,10 +127,7 @@ class Profiles < Controller
     user.profile = prof
     user.save
 
-    p prof.inspect
-    p user.inspect
-
-    user.profile = prof
+    #user.profile = prof
 
     flash[:success] = 'Profil mis à jour'
     @title = 'Profil'

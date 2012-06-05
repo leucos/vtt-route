@@ -6,7 +6,7 @@
 Sequel.migration do
   change do
     alter_table(:profiles) do
-      add_column :emergency_contact, File
+      add_column :emergency_contact, String, :text => true
     end
   end
 end

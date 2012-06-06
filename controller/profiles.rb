@@ -87,7 +87,7 @@ class Profiles < Controller
       end
     end
 
-    if !request.params['accept']
+    if !request.params['accept'] and operation == :create
       Ramaze::Log.info("Accept not checked")
       error_for :accept, "Vous n'avez pas coché la case d'acceptation du règlement" 
     end

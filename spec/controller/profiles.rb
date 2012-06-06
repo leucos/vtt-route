@@ -67,6 +67,7 @@ describe "The Users controller" do
     # Get rid of sub-hash, promote :value to first level value
     form.each_pair { |ik,iv| form[ik] = iv[:value] }
 
+    Profile.delete
     should "refuse forms without a #{f} field" do
       post('/profiles/save', form, PARAMS).status.should == 302
       follow_redirect!
@@ -74,6 +75,7 @@ describe "The Users controller" do
       nok.css("div.alert > ul > li").first.text.should =~ /#{Profiles::FIELD_NAMES[f]}/i
     end
 
+    Profile.delete
     should "redisplay form pre-filled when #{f} is missing" do
       post('/profiles/save', form, PARAMS).status.should == 302
       follow_redirect!

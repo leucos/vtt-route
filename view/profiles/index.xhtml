@@ -145,6 +145,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
     </div> 
     <!-- contact -->
 
+    <?r if !user.profile ?>
     <!-- accept -->
     <div class="control-group #{ class_for :accept }">
       <div class="controls">
@@ -155,6 +156,7 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       </div>
     </div>
     <!-- accept -->
+    <?r end ?>
 
     <div class="form-actions">
       <button type="submit" class="btn btn-primary" name="create">Mettre à jour</button>

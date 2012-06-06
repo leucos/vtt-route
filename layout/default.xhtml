@@ -14,10 +14,6 @@
     #{css('bootstrap.min')}
     #{css('caroufredsel')}
 
-    <?r if @loadmap ?>
-    #{css('leaflet')}
-    <?r end ?>
-
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -38,6 +34,8 @@
       } 
     </style>
 
+
+    <!-- scripts -->
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -47,10 +45,12 @@
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
+    <!-- not yet
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png ">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+    -->
 
     <?r if ENV['RACK_ENV'] == 'live' ?>
     <script type="text/javascript">
@@ -119,7 +119,9 @@
               <li class="divider-vertical"></li>
               <li><a href="/users/login">Connexion</a></li>
             <?r end ?>
-            </ul>
+              <li class="divider-vertical"></li>
+              <li><div style="margin-top: 10px;"><div class="g-plusone" data-size="small" data-annotation="none"></div></div></li>
+            </ul>            
           </div><!-- /.nav-collapse -->
         </div>
       </div><!-- /navbar-inner -->
@@ -166,7 +168,7 @@
 
       </div>
       <!-- row -->
-      
+
       <?r if VttRoute.options.show_sponsors ?>
       <hr>
 
@@ -203,10 +205,11 @@
       <hr>
 
       <footer>
-        <p align="center">Propulsé par <a href="http://ramaze.net" target="_new">Ramaze</a> et Twitter <a href="http://twitter.github.com/bootstrap/index.html" target="_new">Bootstrap</a> -
+
+        <p>Propulsé par <a href="http://ramaze.net" target="_new">Ramaze</a> et Twitter <a href="http://twitter.github.com/bootstrap/index.html" target="_new">Bootstrap</a> -
           Hébergement <a href="http://lstilde.org/" target="_new">ls~</a>
         </p>
-        <p align="center">&copy; Association Sportive Collège Saint Laurent 2012 - 
+        <p>&copy; Association Sportive Collège Saint Laurent 2012 - 
         <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> - 
         <a data-toggle="modal" href="#reglement">Règlement</a> - 
         <a href="mailto:info@challengevttroute.fr">Contact</a></p>
@@ -216,133 +219,141 @@
 
     </div> <!-- /container -->
 
-      <!-- modal : mentions légales -->
-      <div class="modal hide fade" id="mentions" style="display:none;">
+    <!-- modal : mentions légales -->
+    <div class="modal hide fade" id="mentions" style="display:none;">
 
-        <div class="modal-header">
-          <button class="close" data-dismiss="modal">×</button>
-          <h3>Mentions l&eacute;gales</h3>
-        </div>
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Mentions l&eacute;gales</h3>
+      </div>
 
-        <div class="modal-body">
-          <p> Ce site est le site officiel du Challenge VTT-Route géré par l'Association Sportive
-          Saint Laurent.
-          </p>
+      <div class="modal-body">
+        <p> Ce site est le site officiel du Challenge VTT-Route géré par l'Association Sportive
+        Saint Laurent.
+        </p>
 
-          <p> Il répond aux noms de domaines suivants : 
-            <ul>
-              <li>www.challengevttroute.fr</li>
-              <li>www.challengevttroute.com</li>
-              <li>www.challengevttroute.org</li>
-            </ul>
-          </p>
+        <p> Il répond aux noms de domaines suivants : 
+          <ul>
+            <li>www.challengevttroute.fr</li>
+            <li>www.challengevttroute.com</li>
+            <li>www.challengevttroute.org</li>
+          </ul>
+        </p>
 
-          <p>La version actuellement en fonctionnement est la <strong>v#{VttRoute.options.version}</strong>, et 
-            disponible sur <a href="#{VttRoute.options.github}">GitHub</a>.</p>
+        <p>La version actuellement en fonctionnement est la <strong>v#{VttRoute.options.version}</strong>, et 
+          disponible sur <a href="#{VttRoute.options.github}">GitHub</a>.</p>
 
-          <dl>
-            <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>
-            <dt>Crédits photographiques</dt><dd>???</dd>
-            <dt>Réalisation technique</dt><dd>Association ls~</dd>
-            <dt>Hébergement</dt><dd>Association ls~</dd>
-          </dl>
+        <dl>
+          <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>
+          <dt>Crédits photographiques</dt><dd>???</dd>
+          <dt>Réalisation technique</dt><dd>Association ls~</dd>
+          <dt>Hébergement</dt><dd>Association ls~</dd>
+        </dl>
 
-          <p> Ce site web est la propriété de l'Association Sportive Saint Laurent :
-          la structure générale, ainsi que les textes, images
-          animées ou non, et tous les éléments composant ce site web sont propriété de
-          l'Association Sportive Saint Laurent.
-          </p>
+        <p> Ce site web est la propriété de l'Association Sportive Saint Laurent :
+        la structure générale, ainsi que les textes, images
+        animées ou non, et tous les éléments composant ce site web sont propriété de
+        l'Association Sportive Saint Laurent.
+        </p>
 
-          <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
-          extraction d'une partie substantielle de la base de données qu'il contient est
-          interdite, sans autorisation expresse et préalable de l'Association Sportive Saint
-          Laurent. Toute exploitation non autorisée du site ou de son contenu, des
-          informations qui y sont divulguées engageraient la responsabilité de
-          l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
-          L. 335-2 et suivants du Code de la Propriété Intellectuelle.
-          </p>
+        <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
+        extraction d'une partie substantielle de la base de données qu'il contient est
+        interdite, sans autorisation expresse et préalable de l'Association Sportive Saint
+        Laurent. Toute exploitation non autorisée du site ou de son contenu, des
+        informations qui y sont divulguées engageraient la responsabilité de
+        l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
+        L. 335-2 et suivants du Code de la Propriété Intellectuelle.
+        </p>
 
-          <p> L'utilisation et la collecte des données par ce site est effectué dans le 
-            cadre de la dispense n°7 de la CNIL.
-            Néammoins, en conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
-          janvier 1978, vous disposez d'un droit d'accès, de modification, de
-          rectification et de suppression des données nominatives qui vous concernent.</p>
-          <p>
-          Vous pouvez exercer ce droit en vous adressant à :
-          </p>
+        <p> L'utilisation et la collecte des données par ce site est effectué dans le 
+          cadre de la dispense n°7 de la CNIL.
+          Néammoins, en conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
+        janvier 1978, vous disposez d'un droit d'accès, de modification, de
+        rectification et de suppression des données nominatives qui vous concernent.</p>
+        <p>
+        Vous pouvez exercer ce droit en vous adressant à :
+        </p>
 
-          <address>
-            <strong>Association Sportive Collège Saint Laurent</strong><br>
-            Rue Côte Pinay<br>
-            69930 Saint Laurent de Chamousset<br>
-            <abbr title="Phone">Tel:</abbr> +33-(0)607582880
-          </address>
+        <address>
+          <strong>Association Sportive Collège Saint Laurent</strong><br>
+          Rue Côte Pinay<br>
+          69930 Saint Laurent de Chamousset<br>
+          <abbr title="Phone">Tel:</abbr> +33-(0)607582880
+        </address>
 
-          <p> Les éléments contenus dans ce document sont susceptibles d'évoluer ; ils sont
-          donnés à titre d'information et en aucun cas ne peuvent être considérés comme
-          contractuels.
-          </p>
-        </div>
+        <p> Les éléments contenus dans ce document sont susceptibles d'évoluer ; ils sont
+        donnés à titre d'information et en aucun cas ne peuvent être considérés comme
+        contractuels.
+        </p>
+      </div>
 
-        <div class="modal-footer">
-          <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
-        </div>
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+      </div>
+
+    </div>
+    <!-- modal : mentions légales -->
+
+    <!-- modal : règlement -->
+    <div class="modal hide fade" id="reglement" style="display:none;">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Règlement</h3>
+      </div>
+
+      <div class="modal-body">
+        <h2>Règlement du challenge VTT-Route 2012</h2>
+        
+        <p>La participation au challenge VTT-Route 2012 implique l'acceptation sans réserve du présent règlement. Tout participant ne respectant pas le règlement pendant l'épreuve sera immédiatement mis hors-course.</p>
+
+        <h3>Organisateur</h3>
+        Le challenge est organisé par :
+        <address>
+          <strong>Association Sportive Collège Saint Laurent</strong><br>
+          Rue Côte Pinay<br>
+          69930 Saint Laurent de Chamousset<br>
+          <abbr title="Phone">Tel:</abbr> +33-(0)607582880
+        </address>
+        
+        <h3>Sécurité</h3>
+        <p>Le port du casque est <strong>obligatoire</strong>. Les participants sans casque ne seront pas autorisés à prendre le départ des épreuves.</p>
+        <p>Les participants s'engagent à respecter le code de la route</p>
+        <p>Les participants respecteront la nature et les passages privés</p>
+
+        <h3>Remboursement</h3>
+        <p>Le remboursement de l'épreuve ne pourra se faire que sur présentation d'un certificat médical justifiant l'inaptitude aux épreuves</p>
+
+        <h3>Droit à l'image</h3>
+        <p>Le participant autorise l'organisateur à utiliser toute image de l'epreuve ou il figure, quel que soit le dédia de diffusion (presse, internet, ...)</p>
+
+        <h3>Inscriptions</h3>
+        <p>Les frais d'inscriptions sont de 15€ par participant.</p>
+        <p>Les inscriptions sont ouvertes jusqu'au 19 octobre 2012 inclus. Toute inscription reçue ultérieurement ne sera pas traitée</p>
+        <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2021.</p>
+        <p><strong>Aucune inscription ne sera traitée sur place.</strong></p>
+        <p>Les participants s'engagent à fournir des informations exactes pour l'inscription.</p> 
 
       </div>
-      <!-- modal : mentions légales -->
 
-      <!-- modal : règlement -->
-      <div class="modal hide fade" id="reglement" style="display:none;">
-
-        <div class="modal-header">
-          <button class="close" data-dismiss="modal">×</button>
-          <h3>Règlement</h3>
-        </div>
-
-        <div class="modal-body">
-          <h2>Règlement du challenge VTT-Route 2012</h2>
-          
-          <p>La participation au challenge VTT-Route 2012 implique l'acceptation sans réserve du présent règlement. Tout participant ne respectant pas le règlement pendant l'épreuve sera immédiatement mis hors-course.</p>
-
-          <h3>Organisateur</h3>
-          Le challenge est organisé par :
-          <address>
-            <strong>Association Sportive Collège Saint Laurent</strong><br>
-            Rue Côte Pinay<br>
-            69930 Saint Laurent de Chamousset<br>
-            <abbr title="Phone">Tel:</abbr> +33-(0)607582880
-          </address>
-          
-          <h3>Sécurité</h3>
-          <p>Le port du casque est <strong>obligatoire</strong>. Les participants sans casque ne seront pas autorisés à prendre le départ des épreuves.</p>
-          <p>Les participants s'engagent à respecter le code de la route</p>
-          <p>Les participants respecteront la nature et les passages privés</p>
-
-          <h3>Remboursement</h3>
-          <p>Le remboursement de l'épreuve ne pourra se faire que sur présentation d'un certificat médical justifiant l'inaptitude aux épreuves</p>
-
-          <h3>Droit à l'image</h3>
-          <p>Le participant autorise l'organisateur à utiliser toute image de l'epreuve ou il figure, quel que soit le dédia de diffusion (presse, internet, ...)</p>
-
-          <h3>Inscriptions</h3>
-          <p>Les frais d'inscriptions sont de 15€ par participant.</p>
-          <p>Les inscriptions sont ouvertes jusqu'au 19 octobre 2012 inclus. Toute inscription reçue ultérieurement ne sera pas traitée</p>
-          <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2021.</p>
-          <p><strong>Aucune inscription ne sera traitée sur place.</strong></p>
-          <p>Les participants s'engagent à fournir des informations exactes pour l'inscription.</p> 
-
-        </div>
-
-        <div class="modal-footer">
-          <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
-        </div>
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
       </div>
-      <!-- modal : règlement -->
+    </div>
+    <!-- modal : règlement -->
 
+    <!-- javascript -->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- +1 button -->
+    <script type="text/javascript">
+      window.___gcfg = {lang: 'fr'};
+
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
+
     <script type='text/javascript'>
       /*  CarouFredSel: an infinite, circular jQuery carousel.
         Configuration created by the "Configuration Robot"
@@ -371,12 +382,11 @@
 
 
     <?r if @loadmap ?>
-    #{js('leaflet')}
-    #{js('KML')}
     #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
     <?r end ?>
 
     #{js('bootstrap.min')}
+
   </body>
 </html>
 

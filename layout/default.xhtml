@@ -82,7 +82,6 @@
           <a class="brand" href="/">Challenge VTT-Route</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="divider-vertical"></li>
               <li><a href="/">Accueil</a></li>
               <li class="divider-vertical"></li>
               <li><a href="/maps/">Tracés</a></li>
@@ -94,7 +93,6 @@
                   <li><a href="http://www.jeanchristopheperaud.fr/">Site de Jean-Christophe</a></li>
                 </ul>
               </li>
-              <li class="divider-vertical"></li>
             </ul>
 
             <ul class="nav pull-right">
@@ -117,6 +115,8 @@
                 </ul>
               </li>
             <?r else ?>
+              <li><a href="/users/create">Inscription</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="/users/login">Connexion</a></li>
             <?r end ?>
             </ul>
@@ -149,10 +149,10 @@
         <!-- flash -->
           <?r [:success, :error, :info].each do |type| ?>
             <?r if flash[type] ?>
-
+            <?r   local = { :success => "Succès", :error => "Erreur", :info => "Information" } ?>
           <div class="alert alert-block alert-#{type} fade in">
             <a class="close" data-dismiss="alert" href="#">×</a>
-            <h4 class="alert-heading">#{ type.capitalize }</h4>
+            <h4 class="alert-heading">#{ local[type] }</h4>
             #{flash[type]}
           </div>
 
@@ -236,6 +236,9 @@
               <li>www.challengevttroute.org</li>
             </ul>
           </p>
+
+          <p>La version actuellement en fonctionnement est la <strong>v#{VttRoute.options.version}</strong>, et 
+            disponible sur <a href="#{VttRoute.options.github}">GitHub</a>.</p>
 
           <dl>
             <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>

@@ -2,4 +2,5 @@ coverage/
 vttroute-*.db
 db/schema.rb
 config/database.rb
+config/settings.rb
 

@@ -15,6 +15,7 @@ class Users < Controller
 
   def login
     @title = "Connexion"
+    @subtitle = 'Se connecter'
 
     redirect_referer if logged_in?
     return unless request.post?
@@ -71,7 +72,9 @@ class Users < Controller
 
     if u.nil?
       @subtitle = 'Compte inexistant'
-      redirect(self.r(:index))
+      flash[:error] = "Ce numéro de confirmation n'existe pas"
+      
+      redirect MainController.r(:/)
     else
       u.confirmed = true
       u.save
@@ -106,6 +109,12 @@ EOF
             :from => 'info@challengevttroute.fr',
             :subject => 'Inscription au challenge VTT-Route',
             :body => body,
+            :via => :sendmail)
+
+  Pony.mail(:to => VttRoute.options.admin_email,
+            :from => 'info@challengevttroute.fr',
+            :subject => '[vtt-route] Inscription reçue',
+            :body => "L'utilisateur #{email} s'est inscrit.",
             :via => :sendmail)
   end
 

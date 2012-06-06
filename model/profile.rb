@@ -11,10 +11,16 @@ class Profile < Sequel::Model
   many_to_one :user
 
   def validate
+    Ramaze::Log.info('here')
     validates_presence [:name, :surname, :address1, :zip, :city, :country,
-                        :phone, :gender, :birth, :event ],
+                        :phone, :gender, :birth, :event, :emergency_contact ],
                         :message => 'Ce champ doit être renseigné'
     validates_exact_length 5, :zip, :message => 'Ce code postal est invalide'
+    #validates_min_length 1, :emergency_contact, :message => 'Ce champ doit être rempli'
+    # No Solo for young men
+    errors.add(:event, 'Impossible de participer en Solo pour les moins de 17 ans') if birth and birth.year > 1995 
+    Ramaze::Log.info('and there')
+
   end
 
   def age_at_event

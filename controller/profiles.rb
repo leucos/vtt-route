@@ -49,18 +49,7 @@ class Profiles < Controller
 
     if user.profile
       # This is an update
-      Ramaze::Log.info("trying to update user #{user.id}")
       prof = Profile[:user_id => user.id]
-
-      # Ensure user tried to edit it's own data
-      # If we get here, this means he's tinkering with the post data
-      # THINK: Is this enough ? Can user tamper with session data ?
-      #if user.id != session[:user_id]
-      #  flash[:error] = 'Modification impossible'
-
-      #  Ramaze::Log.warning('Form edit attempt : %s' % request.params) 
-      #  redirect_referrer
-      #end
 
       if prof.nil?
         flash[:error] = 'Profil invalide'
@@ -68,15 +57,8 @@ class Profiles < Controller
         redirect_referrer
       end
 
-      #if !user.confirmed
-      #  flash[:error] = 'Vous devez confirmer votre inscription avant'
-
-      #  redirect_referrer
-      #end
-
       operation = :update
     else
-      Ramaze::Log.info("trying to create profile")
       prof = Profile.new
       operation = :create
     end
@@ -95,9 +77,10 @@ class Profiles < Controller
 
     begin
       prof.raise_on_typecast_failure = false
+      Ramaze::Log.info(data.inspect)
       prof.update(data)
-    rescue Sequel::ValidationFailed => e
 
+    rescue Sequel::ValidationFailed => e
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
         error_for i[0], "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]

@@ -20,6 +20,7 @@ module Ramaze
           flash[:form_errors][field] ||= {}
           flash[:form_errors][field][:message] = message
           class_for field, :error
+          Ramaze::Log.info("added error for #{field}")
         else
           flash[:form_errors][field][:message] if flash[:form_errors] && flash[:form_errors].key?(field)
         end

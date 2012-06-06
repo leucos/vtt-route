@@ -46,7 +46,7 @@ describe "The Users controller" do
     :gender            => { :value => 'male', :mandatory => true },
     :"dob-day"         => { :value => 1, :mandatory => true },
     :"dob-month"       => { :value => 1, :mandatory => true },
-    :"dob-year"        => { :value => 1999, :mandatory => true },
+    :"dob-year"        => { :value => 1990, :mandatory => true },
     :address1          => { :value => "Rue Lapierre", :mandatory => true },
     :address2          => { :value => "Quartier Specialized", :mandatory => false },
     :zip               => { :value => 12345, :mandatory => true },
@@ -56,7 +56,7 @@ describe "The Users controller" do
     :licence           => { :value => 54321, :mandatory => false },
     :event             => { :value => "Solo", :mandatory => true },
     :phone             => { :value => "01 23 45 67 89", :mandatory => true },
-    :emergency_contact => { :value => "Marcel\n01 02 03 04 05", :mandatory => false },
+    :emergency_contact => { :value => "Marcel\n01 02 03 04 05", :mandatory => true },
     :accept            => { :value => true, :mandatory => true },
   }
 
@@ -82,7 +82,7 @@ describe "The Users controller" do
       
       form.each_pair do |k,v|
         # Passwords are not refilled
-        next if k == :pass
+        next if k == :pass or k == :emergency_contact
 
         # Event field is a dropdon and needs a special treament
         if k == :event

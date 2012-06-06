@@ -12,7 +12,7 @@ class VttRoute
   options.dsl do
     o 'The GitHub repository URL', :github, 'https://github.com/leucos/vtt-route/'
     o 'The base application URL', :myurl, 'http://www.challengevttroute.fr'
-    o 'The application version', :version, '0.0.3'
+    o 'The application version', :version, '0.0.5'
     # :preinscriptions => pré-inscriptions
     # :inscriptions    => inscriptions, consultation de profil
     # :closed          => plus d'inscriptions

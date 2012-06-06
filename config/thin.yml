@@ -4,8 +4,8 @@ timeout: 30
 max_conns: 1024
 port: 5000
 max_persistent_conns: 512
-chdir: /home/leucos/demo/public_html/railsapp
-environment: production
+#chdir: /home/leucos/demo/public_html/railsapp
+environment: live
 servers: 3
 address: 0.0.0.0
 daemonize: true

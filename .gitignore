@@ -1,4 +1,7 @@
+.bundle
 coverage/
+log/
+tmp/
 vttroute-*.db
 db/schema.rb
 config/database.rb

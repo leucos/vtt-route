@@ -14,6 +14,8 @@ class User < Sequel::Model
 
   def before_create
     self.confirmation_key = SecureRandom.hex(16)
+    self.created_at ||= Time.now
+    super
   end
 
   def password

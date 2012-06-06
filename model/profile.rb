@@ -10,8 +10,18 @@ class Profile < Sequel::Model
   one_to_many :partner, :key => :peer, :class => self
   many_to_one :user
 
+  def before_create
+    self.created_at ||= Time.now
+    super
+  end
+
+  def before_save
+    self.updated_at ||= Time.now
+    super
+  end
+
   def validate
-    Ramaze::Log.info('here')
+    super
     validates_presence [:name, :surname, :address1, :zip, :city, :country,
                         :phone, :gender, :birth, :event, :emergency_contact ],
                         :message => 'Ce champ doit être renseigné'
@@ -19,8 +29,6 @@ class Profile < Sequel::Model
     #validates_min_length 1, :emergency_contact, :message => 'Ce champ doit être rempli'
     # No Solo for young men
     errors.add(:event, 'Impossible de participer en Solo pour les moins de 17 ans') if birth and birth.year > 1995 
-    Ramaze::Log.info('and there')
-
   end
 
   def age_at_event

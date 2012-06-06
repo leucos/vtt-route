@@ -28,10 +28,10 @@ participez en equipe (duo, tandem, handi), vous pourrez inviter votre coéquipie
       <label class="control-label" for="gender"><strong>Sexe</strong></label>
       <div class="controls">
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for('gender') == 'female' }>Femme
+          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for('gender') and data_for('gender')[0] == 'f' }>Femme
         </label>
         <label class="radio">
-          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for('gender') == 'male' }>Homme
+          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for('gender') and data_for('gender')[0] == 'm' }>Homme
         </label>
       </div>
     </div>

@@ -4,6 +4,8 @@
 
 Rack::Mime::MIME_TYPES['.gpx'] = 'application/octet-stream'
 
+Ramaze::Cache.options.session = Ramaze::Cache::Redis
+
 class VttRoute
   include Ramaze::Optioned
 

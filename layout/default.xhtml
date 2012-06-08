@@ -11,6 +11,7 @@
 
     <!-- Le styles -->
     #{css('bootstrap.min')}
+    #{css('bootstrap-responsive.min')}
     #{css('caroufredsel')}
 
     <style type="text/css">
@@ -147,13 +148,13 @@
     <div class="container">
 
      <!-- row -->
-      <div class="row">
+      <div class="row-fluid">
         <div class="span12">
-          <img src="/images/banniere_jcp.jpg" style="margin-bottom: 20px;">
+          <a href="/"><img src="/images/banniere_jcp.jpg" style="margin-bottom: 20px;"></a>
         </div>
       </div>
 
-      <div class="row">        
+      <div class="row-fluid">        
         <!-- main content -->
         <div class="span12">
 
@@ -181,25 +182,15 @@
       <?r if VttRoute.options.show_sponsors ?>
       <hr>
 
-      <div class="row span12">
+      <div class="row-fluid span12">
         <!-- sponsors - sponsors -->
         <h3>Le Challenge VTT-Route est soutenu par</h3>
         
         <div id="sponsors">
           <div id="sponsors_elements">
-            <a href="http://www.rhone.fr"><img src="/images/sponsors/rhone.jpg" width="120" /></a>
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
-            <img src="/images/sponsors/rhone.jpg" width="120" />
+            <?r Sponsor.each do |s| ?>
+            <a href="#{s.url}" style="display: block; float: left;" rel="popover" data-content="" data-original-title="#{html_escape s.name}" alt="#{s.name}"><img src="/#{s.logo}" width="150" height="75" /></a>
+            <?r end ?>
           </div>
           <div class="clearfix"></div>
           <!--<a class="prev" id="sponsors_elements_prev" href="#"><span>prev</span></a>
@@ -211,10 +202,13 @@
       <?r end ?>
 
       <!-- page bottom -->
+      <div class="span12">
+        <p />
+      </div>
+      
       <hr>
 
-      <footer>
-
+      <footer align="center">
         <p>Propulsé par <a href="http://ramaze.net" target="_new">Ramaze</a> /
           HTML5 boilerplate par Twitter <a href="http://twitter.github.com/bootstrap/index.html" target="_new">Bootstrap</a> /
           Hébergement <a href="http://lstilde.org/" target="_new">ls~</a>
@@ -225,7 +219,7 @@
         <a href="mailto:info@challengevttroute.fr">Contact</a></p>
       </footer>
 
-    <hr>
+      <hr>
 
     </div> <!-- /container -->
 
@@ -378,7 +372,7 @@
         $("#sponsors_elements").carouFredSel({
           padding: [0, 0, 40, 0],
           scroll: {
-            items: 1,
+            items: 4,
             fx: "slide",
             pauseOnHover: true
           } /*,

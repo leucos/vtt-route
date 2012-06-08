@@ -9,5 +9,12 @@ Sequel.extension(:pagination)
 require 'bcrypt'
 require 'securerandom'
 
-require __DIR__('user')
-require __DIR__('profile')
+# Require settings
+Ramaze::Log.debug("Requiring models")
+
+Dir.glob('model/*.rb').each do |file|
+ file = file.match(/model\/(.*)\.rb/)[1]
+  next if file == "init"
+  Ramaze::Log.debug("Loading model #{file}")
+  require __DIR__(file)
+end

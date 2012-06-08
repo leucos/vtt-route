@@ -363,6 +363,7 @@
     </script>
 
 
+
     <script type='text/javascript'>
       /*  CarouFredSel: an infinite, circular jQuery carousel.
         Configuration created by the "Configuration Robot"
@@ -389,6 +390,12 @@
       });
     </script>
 
+    <!-- Enable popovers -->
+    <script type='text/javascript'>
+      $(function() {
+        $('a[rel="popover"]').popover();
+      });
+    </script>
 
     <?r if @loadmap ?>
     #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}

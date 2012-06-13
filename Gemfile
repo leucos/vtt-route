@@ -13,9 +13,12 @@ gem 'pony'
 #gem 'guid'
 gem 'bcrypt-ruby'
 gem 'redis'
+gem 'fnordmetric', :git => 'https://github.com/hewo/fnordmetric.git', :branch => 'master'
 
 group :development do
-  gem 'heroku'
+  gem 'rdoc'
+  gem 'rdoc-data'
+  #gem 'heroku'
   gem 'rspec'
   gem 'bacon'
   gem 'yard'
@@ -24,4 +27,5 @@ group :development do
   gem 'rack-test'
   gem 'nokogiri'
   gem 'lolcommits'
+  gem 'sqlite3'
 end

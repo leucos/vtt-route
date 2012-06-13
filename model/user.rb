@@ -29,7 +29,7 @@ class User < Sequel::Model
 
   def self.authenticate(creds)
     Ramaze::Log.info("Login attempt with %s | %s" % [ creds['email'], creds['password'] ] )
-  
+
     if !creds['email'] or !creds['password']
       Ramaze::Log.info("Login failure : no credentials")
       return false

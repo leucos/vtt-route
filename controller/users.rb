@@ -2,7 +2,7 @@
 #
 
 class Users < Controller
-  helper :form_helper, :user
+  helper :form_helper, :user, :gravatar, :fnordmetric
 
   def index
     redirect r(:login)
@@ -14,6 +14,7 @@ class Users < Controller
   end
 
   def login
+    Ramaze::Log.debug("In User#login")
     @title = "Connexion"
     @subtitle = 'Se connecter'
 
@@ -23,14 +24,32 @@ class Users < Controller
     if VttRoute.options.state == :preinscriptions
       @subtitle = "Connexion non disponible pour l'instant"
     else
-      @subtitle = "Entrez votre email et votre mot de passe pour accéder à votre profil"
       user_login(request.subset(:email, :password))
+
+      if logged_in?
+        if (user.profile)
+          set_name("#{user.profile.name} #{user.profile.surname}")
+          event(:user_yob, :year => user.profile.birth.year - 1000)
+        else
+          set_name(user.email)
+        end
+        set_picture(gravatar(user.email)) if user.email
+        event(:login)
+      else
+        # Login failed
+        Ramaze::Log.debug("OMG login failed")
+        event(:login_failed)
+        redirect r(:login)
+      end
+
+
       redirect Profiles.r(:index)
     end
   end
 
   def logout
-    flash[:success] = "Logged out"
+    flash[:success] = "Déconnecté"
+    event(:logout)
     user_logout
   end
 

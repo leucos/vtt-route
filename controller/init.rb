@@ -6,8 +6,10 @@
 
 class Controller < Ramaze::Controller
   layout :default
-  helper :xhtml, :flash, :user
+  helper :xhtml, :flash, :user, :fnordmetric
   engine :etanni
+
+  # trait :fnord_redis_url => "redis://localhost:6379"
 
   #---------------------------------------------
   # Custom 404 handling methods
@@ -32,6 +34,7 @@ class Controller < Ramaze::Controller
     #   so you should use something like 'Ramaze.options.views[0]'
     #   to get at your view directory
     flash[:error] = "Désolé, cette page n'existe pas"
+    event(:status_404)
     render_file("#{Ramaze.options.views[0]}/error_404.xhtml")
   end
 end

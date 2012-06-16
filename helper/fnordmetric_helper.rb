@@ -284,7 +284,7 @@ module Ramaze
           #newdef = "def %s(*a, &block) push_timer(:%s, %s); yield if block_given?; ensure; pop_timer; end" % [method, event_name, args, original]
           class_eval(newdef)
 
-          Ramaze::Log.debug("clo(a)cking enabled for %s (renamed as %s)" % [ method, original ])
+          Ramaze::Log.debug("Clo(a)cking enabled for %s (renamed as %s)" % [ method, original ])
         end
       end
 

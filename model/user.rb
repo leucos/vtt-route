@@ -13,9 +13,13 @@ class User < Sequel::Model
   end
 
   def before_create
+    set_confirmation_key
+    super
+  end
+
+  def set_confirmation_key
     self.confirmation_key = SecureRandom.hex(16)
     self.created_at ||= Time.now
-    super
   end
 
   def password
@@ -37,7 +41,14 @@ class User < Sequel::Model
 
     user = self[:email => creds['email']]
 
+    if !user.confirmed
+      Ramaze::Log.info("Login failure : account not confirmed")
+      return false
+    end
+
     if !user.nil? and user.password == creds['password']
+      # No need to have a confirmation key is user can log
+      user.confirmation_key = nil
       Ramaze::Log.info("Login success")
       return user
     else

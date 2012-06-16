@@ -62,28 +62,7 @@ class Users < Controller
   def save
     u = User.new
 
-    data = {}
-    data[:email] = request.params['email']
-
-    # Let's check if passwords match first
-    # TODO: form should be pre-filled again
-    if request.params['pass1'] != request.params['pass2']
-      flash[:error] = 'Les mots de passe ne correspondent pas'
-    else
-      # Password match, let's use one of them if not nil
-      data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
-    end
-
-    begin
-      u.update(data)
-    rescue Sequel::ValidationFailed => e
-      Ramaze::Log.info(e.inspect)
-      e.errors.each do |i|
-        Ramaze::Log.info("error with field #{i[0]}")
-        flash[:error] = e.message
-        redirect_referrer
-      end
-    end
+    check_and_save_user(u, request.params['email'])
 
     send_confirmation_email(u.email, u.confirmation_key)
     flash[:success] = 'Utilisateur créé'
@@ -109,52 +88,90 @@ class Users < Controller
     end
   end
 
-  def lostpassword(key=nil)
-    # All purpose lost password handler
-    # Used as :
-    #  * POST handled for reset request (key is nil)
-    #  * GET handler for password change
+  def ask_reset
+    # Let's sleep for a while so we don't get brute forced
+    # This doesn't help much for // requests though...
+    sleep 3*rand
 
-    # No key, this is a reset request
-    if key.nil?
-      u = User[:email => request.params[':email']]
-      # No email, this user doesn't exist
-      if u.nil? 
-        flash[:error] = "Désolé, cet email n'existe pas"
-        # Let's sleep for a while so we don't get brute forced
-        # This doesn't help much for // requests though...
-        event(:lostpassword, :type => :failed_no_email) 
-        sleep 4
-        redirect_referrer
-      end
-      if !u.confirmed
-        flash[:error] = "Désolé, vous n'avez pas confirmé votre compte. Veuillez suivre les instructions reçues par email"
-        send_confirmation_email(u.email, u.confirmation_key)
+    u = User[:email => request.params['email']]
+    # No email, this user doesn't exist
+    if u.nil? 
+      flash[:error] = "Désolé, cet email n'existe pas"
+      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_no_email) 
+      redirect_referrer
+    end
+    # Account not confirmed yet
+    if !u.confirmed
+      flash[:error] = "Désolé, vous n'avez pas confirmé votre compte. Veuillez suivre les instructions reçues par email"
+      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_not_confirmed) 
 
-        redirect_referrer
-        
-      
-      # create a confirmation key unless the account is not confirmed
-      if 
+      send_confirmation_email(u.email, u.confirmation_key)
+      redirect_referrer
+    end
 
-    u = User[:confirmation_key => key, :confirmed => false]
-    @title = 'Inscriptions'
+    # Now we can generate a request
+    u.set_confirmation_key
+    u.save
+    send_reset_email(u.email, u.confirmation_key)
+    flash[:success] = "Veuillez vérifier votre messagerie pour réinitialiser votre mot de passe"
+    redirect MainController.r(:/)
+  end
+
+  def lost_password(key)
+    # someone followed the reset link in the email
+    u = User[:confirmation_key => key]
+
+    # someone followed the reset link in the email
+    @title = 'Réinitialisation du mot de passe'
 
     if u.nil?
       @subtitle = 'Compte inexistant'
-      flash[:error] = "Ce numéro de n'existe pas"
-      
-      redirect MainController.r(:/)
-    else
-      u.confirmation_key = nil
-      u.confirmed = true
-      u.save
+      flash[:error] = "Ce numéro de validation n'existe pas"
+      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_invalid_key) 
 
-      @subtitle = 'Votre compte est validé'
+      redirect MainController.r(:/)
     end
+
+    @subtitle = 'Entrez votre nouveau mot de passe'
+    @key = key
+  end
+
+  def do_reset
+    # This is a post : new password
+    u = User[:confirmation_key => request.params['key']]
+
+    check_and_save_user(u)
+    flash[:success] = "Modification effectuée. Vous pouvez vous connecter."
+    redirect r(:login)
   end
 
   private
+
+  def check_and_save_user(u, email=nil)
+    data = {}
+    data[:email] = email if email
+    p u.inspect
+
+    # Let's check if passwords match first
+    # TODO: form should be pre-filled again
+    if request.params['pass1'] != request.params['pass2']
+      flash[:error] = 'Les mots de passe ne correspondent pas'
+    else
+      # Password match, let's use one of them if not nil
+      data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
+    end
+
+    begin
+      u.update(data)
+    rescue Sequel::ValidationFailed => e
+      Ramaze::Log.info(e.inspect)
+      e.errors.each do |i|
+        Ramaze::Log.info("error with field #{i[0]}")
+        flash[:error] = e.message
+        redirect_referrer
+      end
+    end
+  end
 
   def send_confirmation_email(email, key)
     body =<<EOF
@@ -163,7 +180,7 @@ Bonjour,
 Afin de valider votre inscription au challenge VTT-Route, merci de bien
 vouloir suivre ce lien :
 
-#{VttRoute.options.myurl}/#{r(:confirm,key)}
+#{VttRoute.options.myurl}/#{r(:confirm, key)}
 
 Vous pourrez ensuite inviter un coéquipier si vous participez à un 
 challenge par équipes.
@@ -203,7 +220,7 @@ Apparemment, vous avez perdu votre mot de passe. Ne vous inquiétez
 pas, ça nous arrive à tous. Vous pouvez le ré-initialiser en vous
 rendant à cette adresse :
 
-#{VttRoute.options.myurl}/r(:lostpassword,key)}
+#{VttRoute.options.myurl}/#{r(:lost_password, key)}
 
 Si vous n'avez pas perdu votre mot de passe, quelqu'un doit faire une
 mauvaise blague. Dans ce cas, vous pouvez ignorer ce message.

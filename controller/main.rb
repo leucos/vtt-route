@@ -16,7 +16,5 @@ class MainController < Controller
 
   def index
     @title = 'Challenge VTT-Route'
-    sleep(1+rand)
   end
-  clock :index, :perftest
 end

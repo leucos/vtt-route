@@ -17,7 +17,6 @@ end
 
 Ramaze.middleware :dev do |mode|
   puts "Middlewares for dev"
-
   mode.use Rack::Lint
   mode.use Rack::CommonLogger, Ramaze::Log
   mode.use Rack::ShowExceptions
@@ -32,6 +31,7 @@ Ramaze.middleware :dev do |mode|
 end
 
 Ramaze.middleware :live do |mode|
+  puts "Middlewares for live"
   mode.use Rack::CommonLogger, Ramaze::Log
   mode.use Rack::ShowExceptions
   mode.use Rack::ShowStatus

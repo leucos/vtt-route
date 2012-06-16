@@ -1,2 +1,2 @@
 rvm --install --create use 1.9.3@vttroute
-[[ -s Gemfile ]] && bundle --without development
+[[ -s Gemfile ]] && bundle 

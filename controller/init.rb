@@ -9,6 +9,9 @@ class Controller < Ramaze::Controller
   helper :xhtml, :flash, :user, :fnordmetric
   engine :etanni
 
+  before_all do
+    pageview request.env['REQUEST_PATH']
+  end
   # trait :fnord_redis_url => "redis://localhost:6379"
 
   #---------------------------------------------

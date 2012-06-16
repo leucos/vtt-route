@@ -12,8 +12,11 @@
 # this will force the controller to be mounted on: /otherurl.
 class MainController < Controller
   # the index action is called automatically when no other action is specified
+  helper :fnordmetric
+
   def index
     @title = 'Challenge VTT-Route'
-    Ramaze::Log.info("current user is #{user}")
+    sleep(1+rand)
   end
+  clock :index, :perftest
 end

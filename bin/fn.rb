@@ -34,19 +34,42 @@ event(:logout) do
   incr :logouts_per_hour
 end
 
-# Mean year of birth
-  # numeric (delta) gauge, increments uniquely by session_key, returns average
-gauge :avg_age_per_session, 
-  :tick => 1.day.to_i, 
-  :unique => true,
-  :average => true,
-  :title => "Avg. User Yob"
+# Edge cases
+#   numeric (delta) gauge, 1-day tick
+gauge :edge_cases_per_day, :tick => 1.day.to_i, :title => "Daily edge cases"
+gauge :edge_cases_per_hour, :tick => 1.hour.to_i, :title => "Hourly edge cases"
+gauge :failed_no_email_per_day, :tick => 1.day.to_i, :title => "Daily 'no email' cases"
+gauge :failed_not_confirmed_per_day, :tick => 1.day.to_i, :title => "Daily 'not confirmed' cases"
+gauge :failed_invalid_key_per_day, :tick => 1.day.to_i, :title => "Daily 'invalid key' cases"
 
-  # on every event like { "_type": "_my_set_age", "my_age_field": "23" }
-event(:user_yob) do 
+event(:edge_case) do 
   # add the value of my_set_age to the avg_age_per_session gauge if session_key 
   # hasn't been seen in this tick yet
-  incr :avg_age_per_session, data[:year] 
+  incr :edge_cases_per_day
+  incr :edge_cases_per_hour
+
+  incr :failed_no_email_per_day if data[:type] == 'failed_no_email'
+  incr :failed_not_confirmed_per_day if data[:type] == 'failed_not_confirmed'
+  incr :failed_invalid_key_per_day if data[:type] == 'failed_invalid_key'
+end
+
+# Email traffic
+#   numeric (delta) gauge, 1-day tick
+gauge :email_sent_per_day, :tick => 1.day.to_i, :title => "Daily emails"
+gauge :email_sent_per_hour, :tick => 1.hour.to_i, :title => "Hourly emails"
+gauge :administrative_email_sent_per_day, :tick => 1.day.to_i, :title => "Daily admin email sent"
+gauge :password_reset_email_sent_per_day, :tick => 1.day.to_i, :title => "Daily password reset email sent"
+gauge :subscription_email_sent_per_day, :tick => 1.day.to_i, :title => "Daily subscription email sent"
+
+event(:email_sent) do 
+  # add the value of my_set_age to the avg_age_per_session gauge if session_key 
+  # hasn't been seen in this tick yet
+  incr :email_sent_per_day
+  incr :email_sent_per_hour
+
+  incr :administrative_email_sent_per_day if data[:type] == 'administrative'
+  incr :subscription_email_sent_per_day if data[:type] == 'subscription'
+  incr :password_reset_email_sent_per_day if data[:type] == 'password_reset'
 end
 
 # 404 sent
@@ -124,14 +147,6 @@ widget 'Users', {
   :autoupdate => 2
 }
 
-widget 'Users', {
-  :title => "Averaged visitor's year of birth",
-  :type => :numbers,
-  :gauges => :avg_age_per_session,
-  :include_current => true,
-  :autoupdate => 10
-}
-
 widget 'Pages', {
   :title => "Top Pages",
   :type => :toplist,
@@ -156,7 +171,47 @@ widget 'Pages', {
   :include_current => true,
   :gauges => :status_404_per_day
 }
+
+widget 'Email', {
+  :title => "Email sent per day",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges => [ :administrative_email_sent_per_day, :subscription_email_sent_per_day, :password_reset_email_sent_per_day ],
+  :include_current => true,
+  :autoupdate => 2
+}
+
+widget 'Edge cases', {
+  :title => "Edge cases per day",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges => :edge_cases_per_day,
+  :include_current => true,
+  :autoupdate => 2
+}
+
+widget 'Edge cases', {
+  :title => "Edge cases per hour",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges => :edge_cases_per_hour,
+  :include_current => true,
+  :autoupdate => 2
+}
+
+widget 'Edge cases', {
+  :title => "Edge cases distribution per day",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges =>  [:failed_no_email_per_day, :failed_not_confirmed_per_day, :failed_invalid_key_per_day],
+  :include_current => true,
+  :autoupdate => 2
+}
+
 end
+
+
+
 
 FnordMetric.standalone
 

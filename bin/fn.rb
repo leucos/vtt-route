@@ -82,6 +82,14 @@ event(:status_404) do
   incr :status_404_per_hour
 end
 
+# Performance
+gauge :login_performance_per_day, :tick => 1.day.to_i, :average => true, :title => "Login performance per day"
+gauge :login_performance_per_hour, :tick => 1.hour.to_i, :average => true, :title => "Login performance per hour"
+
+event(:performance) do
+  incr :login_performance_per_day, data[:time] if data[:method] == 'login'
+  incr :login_performance_per_hour, data[:time] if data[:method] == 'login'
+end
 
 # All events
 #   numeric (progressive) gauge, 1-day tick
@@ -208,6 +216,23 @@ widget 'Edge cases', {
   :autoupdate => 2
 }
 
+widget 'Performance', {
+  :title => "Performance metrics per hour",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges =>  [:login_performance_per_hour],
+  :include_current => true,
+  :autoupdate => 2
+}
+
+widget 'Performance', {
+  :title => "Performance metrics per day",
+  :type => :timeline,
+  :plot_style => :areaspline,
+  :gauges =>  [:login_performance_per_day],
+  :include_current => true,
+  :autoupdate => 2
+}
 end
 
 

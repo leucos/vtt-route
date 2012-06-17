@@ -153,7 +153,6 @@ class Users < Controller
     p u.inspect
 
     # Let's check if passwords match first
-    # TODO: form should be pre-filled again
     if request.params['pass1'] != request.params['pass2']
       flash[:error] = 'Les mots de passe ne correspondent pas'
     else

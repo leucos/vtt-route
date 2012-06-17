@@ -28,8 +28,8 @@ module Ramaze
     #
     #   trait :fnord_redis_url => "redis://redis.example.com:6332"
     #
-    # @example Basic usage with User::authenticate
-    #
+    # TODO: @example Basic usage...
+    # TODO: Implement with_id that uses specific id instead of innate.sid
     module FnordmetricHelper
     
       # @@fnord will hold redis connection
@@ -120,13 +120,13 @@ module Ramaze
       #   pop_timer
       #
       def push_timer(event_name, args = {})
-        Ramaze::Log.debug("timer pushed for %s to %s.%s (stack level was %s)" % 
+        @@redis.lpush("#{@@sstack_key}.#{session.sid}", [event_name, args, Time.now.to_f].to_json)
+
+        Ramaze::Log.debug("Timer pushed for %s to %s.%s (stack level is now %s)" % 
           [ event_name, 
             @@sstack_key,
             session.sid,
             @@redis.llen(_key) ])
-
-        @@redis.lpush("#{@@sstack_key}.#{session.sid}", [event_name, args, Time.now.to_f].to_json)
       end
 
       ##
@@ -141,10 +141,11 @@ module Ramaze
           json = @@redis.lpop(_key)
 
           wat, args, wen = JSON.parse(json)
-          Ramaze::Log.debug("timer popped for %s (stack level is %s)" % [ wat, len - 1])
+          Ramaze::Log.debug("Timer popped for %s (stack level is now %s)" % [ wat, len - 1])
           event(wat, args.merge(:time => Time.now-Time.at(wen)))
         else
-          Ramaze::Log.error("unable to pop timer in %s (no event in stack)" % _key)
+          Ramaze::Log.error("Unable to pop timer in %s (no event in stack)" % _key)
+          raise RuntimeError, "Unable to pop timer in %s (no event in stack)" % _key
         end
       end
 
@@ -152,7 +153,7 @@ module Ramaze
       # Removes all timers in the stack
       #
       def clear_timers
-        Ramaze::Log.debug("cleared %s timers for %s" % [ @@redis.llen(_key), _key ])
+        Ramaze::Log.debug("Cleared %s timers for %s" % [ @@redis.llen(_key), _key ])
         @@redis.del _key
       end
 

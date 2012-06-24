@@ -23,7 +23,7 @@ PARAMS = { :email=> 'mb@mbnet.fr', :password => 'xyz', 'HTTP_REFERER' => '/profi
 User.delete
 User.create(PARAMS.reject{|k| k == 'HTTP_REFERER'} )
 
-describe "The Users controller" do
+describe "The Profiles controller" do
   behaves_like :rack_test
 
   #before do
@@ -91,7 +91,7 @@ describe "The Users controller" do
           nok.xpath("//*[@id='event']/option[@selected='selected']").text.should =~ /#{v}/i
         else
           nok.xpath("//*[@id='#{k}']").first["value"].should =~ /#{v}/i
-        end  
+        end
       end
     end
   end
@@ -101,6 +101,24 @@ describe "The Users controller" do
 
   # Test valid forms
   should "accept a valid form" do
+    post('/profiles/save', form, PARAMS).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert").text.should =~ /Profil mis à jour/
+  end
+
+  # Refuses solo for yob > 1995
+  should "refuse solo event for users born after 1995" do
+    form[:"dob-year"] = 1996
+    post('/profiles/save', form, PARAMS).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert").text.should =~ /Impossible de participer en Solo pour les moins de 17 ans/
+  end
+
+  # Refuses solo for yob > 1995
+  should "accept solo event for users born before or in 1995" do
+    form[:"dob-year"] = 1995
     post('/profiles/save', form, PARAMS).status.should == 302
     follow_redirect!
     nok = Nokogiri::HTML(last_response.body)

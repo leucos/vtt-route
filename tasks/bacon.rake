@@ -11,6 +11,7 @@ task :bacon do
     add_group "Controllers", "controller/"
     add_group "Helpers", "helper/"
     add_filter "spec/"
+    add_filter "vendor/"
     add_filter "config"
   end if ENV["COVERAGE"] 
 

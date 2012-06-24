@@ -77,7 +77,7 @@ class Users < Controller
     if u.nil?
       @subtitle = 'Compte inexistant'
       flash[:error] = "Ce numéro de confirmation n'existe pas"
-      
+
       redirect MainController.r(:/)
     else
       u.confirmation_key = nil
@@ -150,11 +150,11 @@ class Users < Controller
   def check_and_save_user(u, email=nil)
     data = {}
     data[:email] = email if email
-    p u.inspect
 
     # Let's check if passwords match first
     if request.params['pass1'] != request.params['pass2']
-      flash[:error] = 'Les mots de passe ne correspondent pas'
+      flash[:error] = 'Les mots de passe ne correspondent pas.'
+      redirect_referrer
     else
       # Password match, let's use one of them if not nil
       data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
@@ -162,6 +162,10 @@ class Users < Controller
 
     begin
       u.update(data)
+    rescue NoMethodError => e
+      flash[:error] = "Ooops, quelque chose s'est très mal passé... J'ai prévenu le responsable."
+      event(:edge_case, :controller => "Users#check_and_save_user", :type => :failed_nil_user) 
+      redirect_referrer
     rescue Sequel::ValidationFailed => e
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|

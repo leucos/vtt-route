@@ -1,3 +1,5 @@
+# encode: utf-8
+#
 # FNordmetric helper
 #
 # 
@@ -13,11 +15,9 @@ module Ramaze
     # events can be anything, its just an indication that something happened.
     # Fnordmetric can then make some agregates on events received per period.
     #
-    # events can also carry arbitrary data, and this helper uses it to send
+    # Since events can carry arbitrary data, this helper adds methods that send
     # performance data to Fnordmetric, so one can easily measure code execution
     # times.
-    # Actually, these times can only be used in a per-request time frame. However
-    # future versions of timer methods might cover session lifetimes.
     #
     # events are associated to the Innate session id, and thus are linked to 
     # visitors of your site. this is really usefull since you can, for instance,
@@ -31,15 +31,16 @@ module Ramaze
     # TODO: @example Basic usage...
     # TODO: Implement with_id that uses specific id instead of innate.sid
     module FnordmetricHelper
-    
-      # @@fnord will hold redis connection
-      # @@times holds a stack of timers
+      # @@fnord will hold Fnordmetric API instance
+      # @@redis holds a Redis connection
       # A timer is an Array holding the event name, a Hash of arguments and a timestamp
-      @@fnord = nil
-      @@redis = nil
-      @@sstack_key = nil
+      @@fnord           = nil
+      @@redis           = nil
+      @@sstack_key_root = "fnordmetric.%s.%s.%s" % [ ENV['HOSTNAME'] || "localhost", ENV['USER'], Ramaze.options.app.name.to_s ]
 
+      ##
       # We need clock as a class method
+      # Let's extend the includer when it includes us
       def self.included(base)
         base.extend(ClassMethods)
       end
@@ -71,8 +72,8 @@ module Ramaze
       #
       def event(evt, args = {})
         # Let's connect first, it will have to be done anyway
-        _connect unless @@fnord
         return unless evt
+        _connect unless @@fnord
 
         evt = { :_type => evt.to_s, :_session => session.sid }
 
@@ -120,12 +121,12 @@ module Ramaze
       #   pop_timer
       #
       def push_timer(event_name, args = {})
-        @@redis.lpush("#{@@sstack_key}.#{session.sid}", [event_name, args, Time.now.to_f].to_json)
-
-        Ramaze::Log.debug("Timer pushed for %s to %s.%s (stack level is now %s)" % 
-          [ event_name, 
-            @@sstack_key,
-            session.sid,
+        @@redis.lpush(_key, [event_name, args, Time.now.to_f].to_json)
+        @@redis.expire(_key, _ttl)
+        Ramaze::Log.debug("Timer pushed and TTL set to %s for %s to %s (stack level is now %s)" % 
+          [ _ttl,
+            event_name, 
+            _key,
             @@redis.llen(_key) ])
       end
 
@@ -145,7 +146,7 @@ module Ramaze
           event(wat, args.merge(:time => Time.now-Time.at(wen)))
         else
           Ramaze::Log.error("Unable to pop timer in %s (no event in stack)" % _key)
-          raise RuntimeError, "Unable to pop timer in %s (no event in stack)" % _key
+          #raise RuntimeError, "Unable to pop timer in %s (no event in stack)" % _key
         end
       end
 
@@ -216,7 +217,7 @@ module Ramaze
       #       user_login(request.subset(:email, :password))
       #       if logged_in?
       #         set_name("#{user.name} #{user.surname}")
-      #         set_picture(gravatar(user.email)) if user.email 
+      #         set_picture(gravatar(user.email.to_s)) if user.email 
       #       end 
       #       ...
       #     end
@@ -231,16 +232,13 @@ module Ramaze
       #
       #
       def _key # :nodoc:
-        if ! @@sstack_key
-          if ancestral_trait[:fnord_helper_namespace]
-            @@sstack_key = ancestral_trait[:fnord_helper_namespace]
-          else 
-            @@sstack_key = Ramaze.options.app.name.to_s
-          end
-        end
-        
-        "%s.%s" % [ @@sstack_key, session.sid ]
+        "%s.%s" % [ @@sstack_key_root, session.sid ]
       end
+
+      def _ttl
+        ancestral_trait[:fnord_helper_key_ttl] || Innate::Session.options.ttl
+      end
+
       ##
       # Holds class methods
       # 
@@ -257,8 +255,8 @@ module Ramaze
         # modifying the method itself
         #
         # @param [Symbol] method the method measure
-        # @param  [Symbol] event_name the name of the event to send to Fnordmetric.
-        # @param  [Hash] args a hash of supplemental data to send
+        # @param [Symbol] event_name the name of the event to send to Fnordmetric.
+        # @param [Hash] args a hash of supplemental data to send
         #
         # @example Measuring execution time for a controller action
         #
@@ -274,17 +272,17 @@ module Ramaze
         #
         def clock(method, event_name, args = {})
           # Let's alias the original controller method to original_name
-          original = "original_%s" % method
-          alias_method original.to_sym, method.to_sym
+          original = "__fnordmetric_%s" % method
 
-          # We merge the method name in the args that will be send in the event
-          args.merge!(:method => method)
+          # We merge the method name in the args that will be sent in the event
+          args.merge!(:method => "#{self.name}##{method}")
 
-          # Let's create a shiny new method replacing the old one
-          newdef = "def %s(*a, &block) times(:%s, %s) do %s(*a, &block); end; end" % [method, event_name, args, original]
-          #newdef = "def %s(*a, &block) push_timer(:%s, %s); yield if block_given?; ensure; pop_timer; end" % [method, event_name, args, original]
-          class_eval(newdef)
-
+          self.class_eval do 
+            # Let's create a shiny new method replacing the old one
+            alias_method original, method
+            private  original
+            define_method(method) { |*a| times(event_name, args) do send(original, *a) end }
+          end
           Ramaze::Log.debug("Clo(a)cking enabled for %s (renamed as %s)" % [ method, original ])
         end
       end

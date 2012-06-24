@@ -6,4 +6,5 @@ class Maps < Controller
     @subtitle = "Tracés de l'épreuve"
     @loadmap = true
   end
+
 end

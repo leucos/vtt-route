@@ -155,10 +155,14 @@ class Users < Controller
     if request.params['pass1'] != request.params['pass2']
       flash[:error] = 'Les mots de passe ne correspondent pas.'
       redirect_referrer
-    else
-      # Password match, let's use one of them if not nil
-      data[:password] = request.params['pass1'] unless request.params['pass1'].nil?
     end
+
+    if request.params['pass1'] == '' or request.params['pass1'].nil?
+      flash[:error] = 'Le mot de passe ne peut pas être vide.'
+      redirect_referrer
+    end
+
+    data[:password] = request.params['pass1']
 
     begin
       u.update(data)
@@ -177,6 +181,7 @@ class Users < Controller
   end
 
   def send_confirmation_email(email, key)
+    #:nocov:
     body =<<EOF
 Bonjour,
 
@@ -213,9 +218,11 @@ EOF
             :subject => '[vtt-route] Inscription reçue',
             :body => "L'utilisateur #{email} s'est inscrit.",
             :via => :sendmail)
+  #:nocov:
   end
 
-  def send_reset_email(email, key)
+  def send_reset_email(email, key) # :nocov:
+    #:nocov:
     body =<<EOF
 Bonjour,
 
@@ -253,10 +260,7 @@ EOF
             :subject => '[vtt-route] Reset envoyé',
             :body => "L'utilisateur #{email} a perdu son mot de passe.",
             :via => :sendmail)
-  end
-
-  def send_welcome_email(user)
-
+  #:nocov:
   end
 
 end

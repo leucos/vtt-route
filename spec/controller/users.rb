@@ -11,22 +11,13 @@ class Users
 
   def send_reset_email(*args)
     true
-  end  
+  end
 end
-
-#User.delete
-#User.create(PARAMS.reject{|k| k == 'HTTP_REFERER'} )
 
 describe "The Users controller" do
   behaves_like :rack_test
 
-  #before do
-    #Ramaze::Helper::UserHelper.user_login(creds)
-  #end
-
- # after do
- #   Profile.delete
- # end
+  VttRoute.options.state = :inscriptions
 
   # Index redirects to login
   should "redirect to login on index" do
@@ -43,25 +34,63 @@ describe "The Users controller" do
     nok.css("form").attribute('action').value.should == "/users/save"
   end
 
-  # Issues a logout
-  should "be able to logout" do
-    get('/users/logout').status.should == 200
-    nok = Nokogiri::HTML(last_response.body)
-    nok.css("div.alert-success").text.should =~ /Déconnecté/
+  # mmm, how to ?
+  # Be able to login
+#  should "be able to login" do
+#    post('/users/login').status.should == 200
+#    nok = Nokogiri::HTML(last_response.body)
+#    nok.css("div.alert-success").text.should =~ /xxDéconnecté/
+#  end
 
-    # Show login form at /users/login/
-    get('/users/login').status.should == 200
-    nok = Nokogiri::HTML(last_response.body)
-    nok.css("form").attribute('action').value.should == "/users/login"    
-  end
+# optionned stuff can't be changed
+#  should "not be able to login in preinscription state" do 
+#    oldstate = VttRoute.options.state
+#    VttRoute.options.state = :preinsciption
+#
+#    VttRoute.options.state.should.equal :preinsciption
+#    get('/users/login').status.should == 200
+#    last_response.body.should =~ /La connexion à votre profil sera disponible à partir du 15 juin./
+#
+#    VttRoute.options.state = oldstate
+#  end
 
   # Saves new users
   should "save users" do
-    post('/users/save', { :email => 'dookie@example.org', 
-                          :pass1 => 'wookie', 
+    post('/users/save', { :email => 'dookie@example.org',
+                          :pass1 => 'wookie',
                           :pass2 => 'wookie'} ).status.should == 200
     User[:email => 'dookie@example.org'].should.not.be.nil
     User[:email => 'dookie@example.org'].delete
+  end
+
+  # Refuse to save user without email
+  should "not save users without email" do
+    post('/users/save', { :email => '', 
+                          :pass1 => 'wookie', 
+                          :pass2 => 'wookie'} ).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert-error").text.should =~ /Ce champ doit être renseigné/
+  end
+
+ # Refuse to save user without passwords
+  should "not save users without passwords" do
+    post('/users/save', { :email => 'dookie@example.org', 
+                          :pass1 => '', 
+                          :pass2 => ''} ).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert-error").text.should =~ /Le mot de passe ne peut pas être vide/
+  end
+
+ # Refuse to save user without matching passwords
+  should "not save users if password do not match" do
+    post('/users/save', { :email => 'dookie@example.org', 
+                          :pass1 => 'wookie', 
+                          :pass2 => 'wiikoo'} ).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("div.alert-error").text.should =~ /Les mots de passe ne correspondent pas./
   end
 
   # Let users confirm keys

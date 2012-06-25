@@ -9,7 +9,7 @@ class User < Sequel::Model
   def validate
     super
     validates_unique :email, :message => "Cette adresse email est déjà utilisée." #" Voulez vous vous <a href='#{Users.r(:login)}'>connecter</a>?"
-    validates_presence :password_hash, :message => 'Ce champ doit être renseigné'
+    validates_presence [ :email, :password_hash ], :message => 'Ce champ doit être renseigné'
   end
 
   def before_create
@@ -41,20 +41,23 @@ class User < Sequel::Model
 
     user = self[:email => creds['email']]
 
+    if user.nil? 
+      Ramaze::Log.info("Login failure : wrong password")
+      return false
+    end
+
     if !user.confirmed
       Ramaze::Log.info("Login failure : account not confirmed")
       return false
     end
 
-    if !user.nil? and user.password == creds['password']
+    if user.password == creds['password']
       # No need to have a confirmation key is user can log
       user.confirmation_key = nil
       Ramaze::Log.info("Login success")
       return user
-    else
-      Ramaze::Log.info("Login failure : wrong password")
-      return false
     end
+
   end
 
 end

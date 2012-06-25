@@ -2,6 +2,7 @@
 coverage/
 log/
 tmp/
+vendor/*
 vttroute-*.db
 db/schema.rb
 config/database.rb

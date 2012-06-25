@@ -34,13 +34,20 @@ describe "The Users controller" do
     nok.css("form").attribute('action').value.should == "/users/save"
   end
 
-  # mmm, how to ?
-  # Be able to login
-#  should "be able to login" do
-#    post('/users/login').status.should == 200
-#    nok = Nokogiri::HTML(last_response.body)
-#    nok.css("div.alert-success").text.should =~ /xxDéconnecté/
-#  end
+  should "be able to login" do
+    # Be able to login
+    new_user = {  :email  => 'wookie@example.org',
+                  :password => 'wootwoot' }
+    u = User.create(new_user)
+    u.confirmed = true
+    u.save
+
+    post('/users/login', new_user).status.should == 302
+    follow_redirect!
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("h2#subtitle").text.should == "Profil"
+    u.delete
+  end
 
 # optionned stuff can't be changed
 #  should "not be able to login in preinscription state" do 

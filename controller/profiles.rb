@@ -28,13 +28,13 @@ class Profiles < Controller
   def index
     @title = 'Espace participants'
     @subtitle = 'Profil'
-    
+
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile
       FIELD_NAMES.each_key do |f|
         data_for( f.to_s, user.profile[f] )
       end
-      
+
       dte = user.profile.birth
       ['day','month','year'].each { |t| data_for("dob-#{t}", dte.send(t)) }
     end

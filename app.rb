@@ -5,6 +5,11 @@
 require 'rubygems'
 require 'ramaze'
 
+# Version
+class VttRoute
+  Version = "0.0.7"
+end
+
 # Make sure that Ramaze knows where you are
 Ramaze.options.roots = [__DIR__]
 

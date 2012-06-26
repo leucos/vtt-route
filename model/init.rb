@@ -6,6 +6,13 @@
 
 Sequel.extension(:pagination)
 
+
+# The migration extension is needed in order to run migrations.
+Sequel.extension(:migration)
+
+# Migrate the database
+Sequel::Migrator.run(DB, __DIR__('../db/migrations'))
+
 require 'bcrypt'
 require 'securerandom'
 

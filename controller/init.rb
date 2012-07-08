@@ -48,5 +48,6 @@ require __DIR__('main')
 require __DIR__('users')
 require __DIR__('profiles')
 require __DIR__('maps')
+require __DIR__('teams')
 require __DIR__('backoffice')
 

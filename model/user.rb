@@ -2,7 +2,10 @@
 #
 class User < Sequel::Model
   plugin :validation_helpers
+
+  # Table relationships
   one_to_one :profile
+  one_to_one :team
 
   include BCrypt
 
@@ -18,7 +21,7 @@ class User < Sequel::Model
   end
 
   def set_confirmation_key
-    self.confirmation_key = SecureRandom.hex(16)
+    self.confirmation_key = SecureRandom.urlsafe_base64(24)
     self.created_at ||= Time.now
   end
 

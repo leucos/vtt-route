@@ -6,10 +6,6 @@ class Profile < Sequel::Model
 
   include BCrypt
 
-  
-  one_to_many :partner, :key => :peer, :class => self
-  many_to_one :user
-
   def before_create
     self.created_at ||= Time.now
     super

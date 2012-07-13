@@ -4,8 +4,10 @@ class User < Sequel::Model
   plugin :validation_helpers
 
   # Table relationships
-  one_to_one :profile
-  one_to_one :team
+  one_to_one :profile  
+  one_to_many :route_team, :class => :Team, :key => :route_id
+  one_to_many :vtt_team, :class => :Team, :key => :vtt_id
+
 
   include BCrypt
 

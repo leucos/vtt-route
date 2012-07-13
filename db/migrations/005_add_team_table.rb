@@ -25,9 +25,10 @@ Sequel.migration do
 
   down do
     drop_table(:teams)
+    drop_table(:teams_users)
     alter_table(:profiles) do
       add_column :event, String, :size=>255, :null=>false
-    end
+     end
   end
 end
 

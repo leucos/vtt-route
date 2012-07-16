@@ -1,0 +1,211 @@
+<h2>#{@subtitle}</h2>
+
+<?r if @team.nil? ?>
+  <p class="lead">Vous n'appartenez à aucune équipe</p>
+  <p>Vous pouvez créer une équipe, ou rejoindre une équipe existante</p>
+  <a class="btn btn-primary" data-toggle="modal" href="#add_team" href="">Créer une équipe</a>
+  <a class="btn" data-toggle="modal" href="#team" href="">Rejoindre une équipe</a>
+<?r else ?>
+  <div class="well">
+    <p class="lead">#{@team.name}</p>
+    <p><em>"#{@team.description}"</em></p>
+    #{"<p>Handi</p>" if @team.handi}
+    <p><span class="label label-info">VTT</span> #{@team.vtt ? @team.vtt.display_name : "<em>Libre</em>"}
+    </p>
+    <p><span class="label label-info">Route</span> #{@team.route ? @team.route.display_name : "<em>Libre</em>"}</p>
+    <p>
+      <a class="btn" href="#"><i class="icon-check"></i> Inviter dans l'équipe</a>
+      <a class="btn btn-warning" href="#{Teams.r(:swap, @team.id)}"><i class="icon-refresh"></i> Inverser les rôles</a>
+      <a class="btn btn-danger" href="#{Teams.r(:leave, @team.id)}"><i class="icon-share icon-white"></i> Quitter l'équipe</a>
+    </p>
+  </div>
+<?r end ?>
+
+<!-- modal : add_team -->
+<div class="modal hide fade" id="add_team" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Équipe</h3>
+  </div>
+
+  <div class="modal-body">
+
+    <form class="form-horizontal well" method="post" action="#{Teams.r(:save)}">
+      <fieldset class="control-group errors">
+        <!-- nom -->
+        <div class="control-group #{ class_for :name }">
+          <label class="control-label" for="name"><strong>Nom de l'équipe</strong></label>
+          <div class="controls">
+            <input type="text" 
+              id="name" 
+              name="name"
+              class="input-xlarge"  
+              value="#{ data_for('name') }"
+              placeholder="Les Vélociraptors" />
+          </div>
+        </div>
+        <div class="control-group #{ class_for :description }">
+          <label class="control-label" for="description"><strong>Description de l'équipe</strong></label>
+          <div class="controls">
+            <textarea class="input-xlarge" id="emergency_contact" name="description" rows="3" placeholder="Les joyeux dinosaures de la pédale" >#{ data_for 'description' }</textarea>
+          </div>
+        </div>
+
+        <!-- handi -->
+        <div class="control-group #{ class_for :handi }">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" name="handi" id="handi" value="true">
+              Un des équipiers est handi
+              </label>
+          </div>
+        </div>
+        <!-- handi -->
+
+        <!-- open -->
+        <div class="control-group hide" style="display:none;" id="open_team">
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" name="open" id="open" value="true">
+              Je cherche un équipier
+              </label>
+          </div>
+        </div>
+        <!-- open -->
+
+        <!-- type -->
+        <div class="control-group">
+          <label class="control-label" for="race_type"><strong>Épreuve</strong></label>
+          <div class="controls">
+            <select id="race_type" name="race_type">
+              #{  a = ""
+                  ['Solo', 'Duo', 'Tandem'].each do |e|
+                    if data_for('race_type') == e
+                      a << "<option selected='selected'>#{e}</option>"
+                    else
+                      a <<"<option>#{e}</option>"
+                    end
+                  end
+                  a
+                }
+            </select>
+            <a data-toggle="modal" href="#aide-epreuves"><i class="icon-question-sign"></i></a>
+          </div>
+        </div> 
+        <!-- type -->
+
+        <!-- part -->
+        <div class="control-group #{ class_for :part } hide" style="display:none;" id="part_selection">
+          <label class="control-label" for="part"><strong>Je fais la partie</strong></label>
+          <div class="controls">
+            <label class="radio">
+              <input type="radio" id="part" name="part" value="VTT" #{ "checked" if data_for('part') and data_for('part')[0] == 'v' }>VTT
+            </label>
+            <label class="radio">
+              <input type="radio" id="part" name="part" value="Route" #{ "checked" if data_for('part') and data_for('part')[0] == 'r' }>Route
+            </label>
+          </div>
+        </div>      
+        <!-- part -->
+
+      </fieldset>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-warning" name="create">Créer</button>
+        </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Annuler</a>
+  </div>
+
+</div>
+<!-- modal : add_team -->
+
+<!-- modal : join_team -->
+<div class="modal hide fade" id="add_team" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Équipe</h3>
+  </div>
+
+  <div class="modal-body">
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Annuler</a>
+  </div>
+</div>
+<!-- modal : join_team -->
+
+<!-- modal : explication des épreuves -->
+<div class="modal hide fade" id="aide-epreuves" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Aide concernant les épreuves</h3>
+  </div>
+
+  <div class="modal-body">
+    <h3>Comment choisir son épreuve ?</h3>
+    <p>Pour participer au challenge VTT-Route, vous avez plusieurs possibilités :
+    </p>
+    <dl>
+      <dt>Seul</dt><dd>vous effectuez la partie VTT, puis enchainez la partie route.</dd>
+      <dt>Duo</dt><dd>vous effectuez la partie VTT ou route, et votre co-équipièr(e) effectue l'autre partie.</dd>
+      <dt>Tandem</dt><dd>vous enchaînez les epreuves VTT et route en tandem, avec le même co-équipier.</dd>
+    </dl>
+
+    <p>Si vous participez à une épreuve avec un co-équipier, vous devrez choisir entre la partie VTT et la partie
+    route.</p>
+    <p>Vous devrez ensuite entrer son adresse e-mail dans votre profil</p>
+    <p>Votre co-équipier devra effectuer les opérations inverses</p>
+
+    <p>Si vous ou votre équipier participez en handi, vous pouvez cocher la case 'handi'. Votre équipe sera aussi classée en section handi.</p>
+
+    <h3>Exemple</h3>
+    <p>Vous êtes en VTT handisport, et votre co-équipier effectue la partie route :</p>
+    <ul>
+      <li>sélectionnez <em>Handi-section VTT</em></li>
+      <li>saisissez l'adresse email de votre co-équipier dans votre profil (cette fonctionnalité sera disponible pendant l'été 2012)</li>
+      <li>votre co-équipier sélectionne <em>Handi-section Route</em></li>
+      <li>votre co-équipier saisit votre adresse email dans son profil (cette fonctionnalité sera disponible pendant l'été 2012)</li>
+    </ul>
+
+    <h3>Trouver un équipier</h3>
+    <p>Si vous n'avez pas d'équipier(e) en vue, vous pouvez poster une annonce de recherche, ou chercher
+    dans les annonces postées (cette fonctionnalité sera disponible pendant l'été 2012).</p>
+
+    <h3>Je n'ai rien compris !</h3>
+    <p>Si vous avez une question, n'hésitez pas à contacter <a href="mailto:info@challengevttroute.fr">l'organisation</a></p>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+  </div>
+
+</div>
+<!-- modal : aide epreuves -->
+
+<!-- Display 'part' if Duo is selected -->
+<script type='text/javascript'>
+  $(function() {
+    $('#race_type').change(function() {
+      console.log($('#race_type').val())
+      if ($('#race_type').val() == 'Duo') {
+        $('#part_selection').show()
+        $('#open_team').show()
+      } else { 
+        $('#part_selection').hide()
+        if ($('#race_type').val() == 'Tandem') {
+          $('#open_team').show()
+        } else {   
+          $('#open_team').hide()
+        }
+      }
+
+    })
+  });
+</script>

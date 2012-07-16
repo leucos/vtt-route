@@ -10,9 +10,10 @@ module Ramaze
       def logged_in?
         true
       end
-#      def _would_login?(creds)
-#        return User.first
-#      end
+      def user
+      #_would_login?(creds)
+        return User.first
+      end
     end
   end
 end
@@ -54,7 +55,6 @@ describe "The Profiles controller" do
     :country           => { :value => "Fox", :mandatory => true },
     :org               => { :value => "ASSLC", :mandatory => false },
     :licence           => { :value => 54321, :mandatory => false },
-    :event             => { :value => "Solo", :mandatory => true },
     :phone             => { :value => "01 23 45 67 89", :mandatory => true },
     :emergency_contact => { :value => "Marcel\n01 02 03 04 05", :mandatory => true },
     :accept            => { :value => true, :mandatory => true },
@@ -86,12 +86,7 @@ describe "The Profiles controller" do
         # Passwords are not refilled
         next if k == :pass or k == :emergency_contact
 
-        # Event field is a dropdon and needs a special treament
-        if k == :event
-          nok.xpath("//*[@id='event']/option[@selected='selected']").text.should =~ /#{v}/i
-        else
-          nok.xpath("//*[@id='#{k}']").first["value"].should =~ /#{v}/i
-        end
+        nok.xpath("//*[@id='#{k}']").first["value"].should =~ /#{v}/i
       end
     end
   end
@@ -106,24 +101,5 @@ describe "The Profiles controller" do
     nok = Nokogiri::HTML(last_response.body)
     nok.css("div.alert").text.should =~ /Profil mis à jour/
   end
-
-  # Refuses solo for yob > 1995
-  should "refuse solo event for users born after 1995" do
-    form[:"dob-year"] = 1996
-    post('/profiles/save', form, PARAMS).status.should == 302
-    follow_redirect!
-    nok = Nokogiri::HTML(last_response.body)
-    nok.css("div.alert").text.should =~ /Impossible de participer en Solo pour les moins de 17 ans/
-  end
-
-  # Refuses solo for yob > 1995
-  should "accept solo event for users born before or in 1995" do
-    form[:"dob-year"] = 1995
-    post('/profiles/save', form, PARAMS).status.should == 302
-    follow_redirect!
-    nok = Nokogiri::HTML(last_response.body)
-    nok.css("div.alert").text.should =~ /Profil mis à jour/
-  end
-
 end
 

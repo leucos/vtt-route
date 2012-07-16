@@ -7,7 +7,7 @@ require 'ramaze'
 
 # Version
 class VttRoute
-  Version = "0.0.7"
+  Version = "0.1.0"
 end
 
 # Make sure that Ramaze knows where you are

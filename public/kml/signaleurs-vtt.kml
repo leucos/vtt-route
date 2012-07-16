@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>signaleurs-vtt.kml</name>
+	<StyleMap id="msn_caution">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution00</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_caution1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_caution10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution00</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_caution">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_caution0">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<StyleMap id="msn_caution0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution2</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_caution20">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution30</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_caution2">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<StyleMap id="msn_caution2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution20</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_caution">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_caution30">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_caution3">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_caution00">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution20">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution0">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution1">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution3">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_caution1">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution2">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sn_caution00">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/caution.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<p align="left" style="white-space:nowrap;"><font size="+1"><b>$[name]</b></font></p> <p align="left">$[description]</p>]]></text>
+		</BalloonStyle>
+	</Style>
+	<StyleMap id="msn_caution3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_caution1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_caution1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder id="Waypoints">
+		<name>vtt-wpts-clean</name>
+		<open>1</open>
+		<Placemark>
+			<name>Signaleur</name>
+			<LookAt>
+				<longitude>4.410951926912729</longitude>
+				<latitude>45.70650085355059</latitude>
+				<altitude>0</altitude>
+				<heading>1.538045819449635</heading>
+				<tilt>23.39388812835561</tilt>
+				<range>786.7796622178514</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution3</styleUrl>
+			<Point>
+				<coordinates>4.408829465488894,45.70585473996822,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.434525515053057</longitude>
+				<latitude>45.71943009312069</latitude>
+				<altitude>0</altitude>
+				<heading>0.002027356736024208</heading>
+				<tilt>0</tilt>
+				<range>984.8914005566653</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.431754700445652,45.71917409077126,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.430438866426266</longitude>
+				<latitude>45.71821173937181</latitude>
+				<altitude>0</altitude>
+				<heading>1.551994961011607</heading>
+				<tilt>23.39263844585049</tilt>
+				<range>283.8940715102062</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution3</styleUrl>
+			<Point>
+				<coordinates>4.431249927691754,45.71869352253995,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.430438866426266</longitude>
+				<latitude>45.71821173937181</latitude>
+				<altitude>0</altitude>
+				<heading>1.551994961011607</heading>
+				<tilt>23.39263844585049</tilt>
+				<range>283.8940715102062</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution3</styleUrl>
+			<Point>
+				<coordinates>4.431007758591221,45.7187218853508,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.402532154887996</longitude>
+				<latitude>45.71500373848716</latitude>
+				<altitude>0</altitude>
+				<heading>-0.02087307175943611</heading>
+				<tilt>0</tilt>
+				<range>1561.767415682878</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.396674700686819,45.71497769700928,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.405094257686717</longitude>
+				<latitude>45.71975027302477</latitude>
+				<altitude>0</altitude>
+				<heading>1.533837324099612</heading>
+				<tilt>15.45198722310508</tilt>
+				<range>805.1834859757915</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution0</styleUrl>
+			<Point>
+				<coordinates>4.402250157599936,45.71876327630536,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.424318887968417</longitude>
+				<latitude>45.7261436867128</latitude>
+				<altitude>0</altitude>
+				<heading>1.547698514109483</heading>
+				<tilt>0</tilt>
+				<range>1156.45830211331</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution</styleUrl>
+			<Point>
+				<coordinates>4.420513832062179,45.72343260654355,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.426828031471568</longitude>
+				<latitude>45.72834670928133</latitude>
+				<altitude>0</altitude>
+				<heading>1.549495122989872</heading>
+				<tilt>0</tilt>
+				<range>2133.549453744524</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution</styleUrl>
+			<Point>
+				<coordinates>4.423608310067298,45.72304227441482,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.438793975673344</longitude>
+				<latitude>45.72987682172811</latitude>
+				<altitude>0</altitude>
+				<heading>0.005083754154375269</heading>
+				<tilt>0</tilt>
+				<range>608.8455363793196</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.437647548305391,45.72955342944626,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.441044474304716</longitude>
+				<latitude>45.73105800946107</latitude>
+				<altitude>0</altitude>
+				<heading>1.560632595237802</heading>
+				<tilt>21.82741437584217</tilt>
+				<range>1342.514255708096</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution2</styleUrl>
+			<Point>
+				<coordinates>4.437361421229776,45.72954645741854,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.450353108975936</longitude>
+				<latitude>45.71919499474978</latitude>
+				<altitude>0</altitude>
+				<heading>0.01112289380555242</heading>
+				<tilt>13.72893868040908</tilt>
+				<range>113.2086752108252</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution20</styleUrl>
+			<Point>
+				<coordinates>4.449984920044512,45.718995447105,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.454617539445411</longitude>
+				<latitude>45.73352711064745</latitude>
+				<altitude>0</altitude>
+				<heading>0.01641471794507848</heading>
+				<tilt>0</tilt>
+				<range>789.7329459412737</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.452635671121914,45.73303944246347,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.458691425586187</longitude>
+				<latitude>45.73382649510851</latitude>
+				<altitude>0</altitude>
+				<heading>0.01933202917210896</heading>
+				<tilt>0</tilt>
+				<range>747.3134464276329</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.459570961509258,45.73423626144556,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<longitude>4.441986301305825</longitude>
+				<latitude>45.7333501464895</latitude>
+				<altitude>0</altitude>
+				<heading>-0.01276824448910847</heading>
+				<tilt>11.18616396908952</tilt>
+				<range>256.2303407211578</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution1</styleUrl>
+			<Point>
+				<coordinates>4.441129991534433,45.73336671348483,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.462823443761508</longitude>
+				<latitude>45.73448143018679</latitude>
+				<altitude>0</altitude>
+				<heading>0.0222910168152399</heading>
+				<tilt>0</tilt>
+				<range>575.886232366154</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.466082850627983,45.73427518474916,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.462824501609695</longitude>
+				<latitude>45.7363791769975</latitude>
+				<altitude>0</altitude>
+				<heading>0.02229177437325782</heading>
+				<tilt>0</tilt>
+				<range>556.9296430678901</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.46643934913765,45.73722904740654,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.462824501609695</longitude>
+				<latitude>45.7363791769975</latitude>
+				<altitude>0</altitude>
+				<heading>0.02229177436811155</heading>
+				<tilt>0</tilt>
+				<range>556.9296430524045</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.465549024030083,45.73729581432956,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Signaleur</name>
+			<open>1</open>
+			<LookAt>
+				<gx:TimeStamp><when>2012-06-01T16:36:38Z</when>
+</gx:TimeStamp>
+				<longitude>4.458691425586187</longitude>
+				<latitude>45.73382649510851</latitude>
+				<altitude>0</altitude>
+				<heading>0.01933202917210896</heading>
+				<tilt>0</tilt>
+				<range>747.3134464276329</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_caution10</styleUrl>
+			<Point>
+				<coordinates>4.459603237206238,45.73370332006612,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

@@ -2,7 +2,12 @@
 #
 class User < Sequel::Model
   plugin :validation_helpers
-  one_to_one :profile
+
+  # Table relationships
+  one_to_one :profile  
+  one_to_many :route_team, :class => :Team, :key => :route_id
+  one_to_many :vtt_team, :class => :Team, :key => :vtt_id
+
 
   include BCrypt
 
@@ -18,8 +23,16 @@ class User < Sequel::Model
   end
 
   def set_confirmation_key
-    self.confirmation_key = SecureRandom.hex(16)
+    self.confirmation_key = SecureRandom.urlsafe_base64(24)
     self.created_at ||= Time.now
+  end
+
+  def display_name
+    if self.profile
+      "#{self.profile.surname} #{self.profile.name}"
+    else
+      self.email
+    end
   end
 
   def password

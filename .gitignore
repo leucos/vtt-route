@@ -1,5 +1,7 @@
 .bundle
+.tags*
 coverage/
+doc/
 log/
 tmp/
 vendor/*

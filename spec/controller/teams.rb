@@ -7,21 +7,26 @@ require 'ramaze/helper/user'
 User.delete
 Team.delete
 
-# module Ramaze
-#   module Helper
-#     module UserHelper
 
-#       def logged_in?
-#         true
-#       end
+module Ramaze
+  module Helper
+    module UserHelper
+      def team_logged_in?
+        true
+      end
 
-#       def user
-#         User[:email=>'bonnie@example.org']
-#       end
+      def team_user
+        User[:email=>'bonnie@example.org']
+      end
 
-#     end
-#   end
-# end
+      alias real_logged_in? logged_in?
+      alias logged_in? team_logged_in?
+
+      alias real_user user
+      alias user team_user
+    end
+  end
+end
 
 describe "The Teams controller" do
   behaves_like :rack_test
@@ -31,21 +36,6 @@ describe "The Teams controller" do
   @him = User.create(:email=> 'clyde@example.org', :password => 'xyz')
   @him.refresh
 
-  module Ramaze
-    module Helper
-      module UserHelper
-
-        def logged_in?
-          true
-        end
-
-        def user
-          User[:email=>'bonnie@example.org']
-        end
-
-      end
-    end
-  end
 
   after do
     Team.delete
@@ -245,3 +235,11 @@ describe "The Teams controller" do
 
 end
 
+module Ramaze
+  module Helper
+    module UserHelper
+      alias logged_in? real_logged_in?
+      alias user real_user
+    end
+  end
+end

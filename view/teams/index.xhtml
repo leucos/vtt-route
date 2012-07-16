@@ -2,9 +2,10 @@
 
 <?r if @team.nil? ?>
   <p class="lead">Vous n'appartenez à aucune équipe</p>
-  <p>Vous pouvez créer une équipe, ou rejoindre une équipe existante</p>
+  <p>Vous pouvez créer une équipe, ou rejoindre une équipe existante <em>("Rejoindre une équipe" sera disponible courant Aôut)</em></p>
+  <p>Si vous créez une équipe, vous pourrez inviter un co-équipier. Pour cela, votre co-équipier doit déjà être inscrit sur le site.</p> 
   <a class="btn btn-primary" data-toggle="modal" href="#add_team" href="">Créer une équipe</a>
-  <a class="btn" data-toggle="modal" href="#team" href="">Rejoindre une équipe</a>
+  <a class="btn disabled" data-toggle="modal" href="#team" href="">Rejoindre une équipe</a>
 <?r else ?>
   <div class="well">
     <p class="lead">#{@team.name}</p>
@@ -14,9 +15,9 @@
     </p>
     <p><span class="label label-info">Route</span> #{@team.route ? @team.route.display_name : "<em>Libre</em>"}</p>
     <p>
-      <a class="btn" href="#"><i class="icon-check"></i> Inviter dans l'équipe</a>
+      <a class="btn" data-toggle="modal" href="#invite"><i class="icon-check"></i> Inviter dans l'équipe</a>
       <a class="btn btn-warning" href="#{Teams.r(:swap, @team.id)}"><i class="icon-refresh"></i> Inverser les rôles</a>
-      <a class="btn btn-danger" href="#{Teams.r(:leave, @team.id)}"><i class="icon-share icon-white"></i> Quitter l'équipe</a>
+      <a class="btn btn-danger" data-toggle="modal" href="#leave_team"><i class="icon-share icon-white"></i> Quitter l'équipe</a>
     </p>
   </div>
 <?r end ?>
@@ -122,6 +123,65 @@
 
 </div>
 <!-- modal : add_team -->
+
+<?r if @team ?>
+<!-- modal : leave_team -->
+<div class="modal hide fade" id="leave_team" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Quitter l'équipe</h3>
+  </div>
+
+  <div class="modal-body">
+    <p>Êtes vous sûr de vouloir quitter cette équipe ?</p>
+    Si vous êtes le seul membre, l'équipe sera supprimée.
+    S'il reste un autre membre, vous ne pourrez pas rejoindre l'équipe à moins d'u être invité.
+  </div>
+
+  <div class="modal-footer">
+    <a class="btn btn-danger" href="#{Teams.r(:leave, @team.id)}"><i class="icon-share icon-white"></i> Sûr, je veux quitter l'équipe</a>
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Annuler</a>
+  </div>
+
+</div>
+<!-- modal : leave_team -->
+
+<!-- model : invite -->
+<div class="modal hide fade" id="invite" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Inviter un co-équipier</h3>
+  </div>
+
+  <div class="modal-body">
+    Vous pouvez inviter un co-équipier en entrant son email ci-dessous.
+    Si cet utilisateur est enregistré chez nous, il recevra un email d'invitation et pourra vous rejoindre !
+  
+    <form class="form-horizontal well" method="post" action="#{Teams.r(:invite)}/#{@team.id}">
+      <fieldset class="control-group errors">
+        <!-- email -->
+        <div class="control-group #{ class_for :name }">
+          <label class="control-label" for="email"><strong>Email de la persone à inviter</strong></label>
+          <div class="controls">
+            <input type="text" 
+              id="invite-email" 
+              name="email"
+              class="input-xlarge"  
+              value=""
+              placeholder="partenaire@example.com" />
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-warning" name="invite-action">Inviter</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- model : invite -->
+<?r end ?>
 
 <!-- modal : join_team -->
 <div class="modal hide fade" id="add_team" style="display:none;">

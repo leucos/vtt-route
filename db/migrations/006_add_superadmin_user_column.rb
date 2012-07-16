@@ -1,7 +1,8 @@
 # encoding: utf-8
-# 005_add_team_table.rb
 #
-# Adds a team table and removes event column in profile
+# 006_add_superadmin_user_column.rb
+#
+# Adds a superadmin column in users table
 #
 
 Sequel.migration do

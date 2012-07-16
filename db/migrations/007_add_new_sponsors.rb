@@ -1,7 +1,8 @@
 # encoding: utf-8
-# 00è_add_new_sponsors.rb
 #
-# Adds a sponsors table
+# 007_add_new_sponsors.rb
+#
+# Adds new sponsors
 #
 
 Sequel.migration do

@@ -12,6 +12,9 @@ class Team < Sequel::Model
     validates_presence [ :name, :event_version, :race_type ], :message => 'Ce champ doit être renseigné'
   end
 
+  def generate_invite_key
+    self.invite_key = SecureRandom.urlsafe_base64(24)
+  end
 
   def is_in?(u)
     self.vtt_id == u.id || route_id == u.id

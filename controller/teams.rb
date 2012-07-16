@@ -93,14 +93,34 @@ class Teams < Controller
 
   def swap(team_id)
     t = Team[team_id]
-    if (t.vtt_id != user.id and t.route_id != user.id)
-      flash[:error] = "Vous n'êtes pas dans cette équipe !"
-      redirect_referrer
-    end
+    
+    check_access(t)
 
     t.vtt_id, t.route_id = t.route_id, t.vtt_id
     t.save
     flash[:success] = "Rôles inversés"
+    redirect_referrer
+  end
+
+  def invite(team_id)
+    t = Team[team_id]
+    t.generate_invite_key
+    t.save
+
+    p = request.params['email']
+    check_access(t)
+
+    if p
+      peer= User[:email => p]
+
+      if peer
+        send_invite(user.display_name, peer, t)
+        flash[:success] = "L'invitation à bien été envoyée à <strong>%s</strong>" % p
+      else
+        flash[:error] = "Désolé, je ne connais personne à cette adresse."
+      end        
+    end
+
     redirect_referrer
   end
 
@@ -111,10 +131,42 @@ class Teams < Controller
   def leave(team_id)
     t = Team[team_id]
 
-    check_access(Team[team_id])
+    check_access(t)
 
     t.remove_from_team(user)
     redirect Teams.r(:index)
+  end
+
+  def confirm(email, id, key)
+    t = Team[:id => id, :invite_key => key]
+    u = User[:email => email]
+
+    if !t
+      flash[:error] = "Pas d'invitation à ce numéro" 
+      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_such_record) 
+      redirect_referrer
+    end
+    if !u
+      flash[:error] = "Pas d'invitation pour cet email" 
+      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_such_email) 
+      redirect_referrer
+    end
+
+    if t.vtt_id and t.route_id  
+      flash[:error] = "Désolé, la place est prise" 
+      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_room_left) 
+      redirect_referrer
+    end
+
+    if t.vtt_id 
+      t.route_id = u.id
+    else
+      t.vtt_id = u.id
+    end
+
+    t.save
+    flash[:success] = "Féclicitations, vous avez été ajouté à l'équipe !" 
+    redirect route(:index)
   end
 
   private
@@ -127,4 +179,46 @@ class Teams < Controller
     end
   end
 
+  def send_invite(from, email, team)
+    #:nocov:
+    body =<<EOF
+Bonjour,
+
+#{from} souhaite vous inviter dans son équipe "#{team.name}".
+
+Si vous désirez vous joindre à lui, il suffit de cliquer sur ce lien  :
+
+#{VttRoute.options.myurl}/#{r(:confirm, email, team.id, team.invite_key)}
+
+Dans le cas contraire, vous pouvez simplement ignorer ce message.
+
+En cas de difficultés, vous pouvez nous contacter en cliquant sur 'Répondre'
+ou en écrivant à : info@challengevttroute.fr
+
+Cordialement,
+
+L'équipe du challenge VTT-Route
+--
+Challenge VTT-Route
+info@challengevttroute.fr
+EOF
+
+  Ramaze::Log.info("sending invite email to #{email}");
+  event(:email_sent, :type => :invite)
+  Pony.mail(:to => email,
+            :from => 'info@challengevttroute.fr',
+            :subject => 'Invitation dans une équipe du challenge VTT-Route',
+            :body => body,
+            :via => :sendmail)
+
+  event(:email_sent, :type => :administrative)
+  Pony.mail(:to => VttRoute.options.admin_email,
+            :from => 'info@challengevttroute.fr',
+            :subject => '[vtt-route] Invitation envoyée',
+            :body => "L'utilisateur #{from} a invité #{email} dans l'équipe #{team.id}",
+            :via => :sendmail)
+  #:nocov:
+  end
 end
+
+

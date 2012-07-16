@@ -85,6 +85,8 @@
             <ul class="nav">
               <li><a href="/">Accueil</a></li>
               <li class="divider-vertical"></li>
+              <li><a href="/misc/plaquette_jcp.pdf">Flyer</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="/maps/">Tracés</a></li>
               <li class="divider-vertical"></li>
               <li class="dropdown">
@@ -190,7 +192,7 @@
         <div id="sponsors">
           <div id="sponsors_elements">
             <?r Sponsor.each do |s| ?>
-            <a href="#{s.url}" style="display: block; float: left;" rel="popover" data-content="" data-original-title="#{html_escape s.name}" alt="#{s.name}"><img src="/#{s.logo}" width="150" height="75" /></a>
+            <a href="#{s.url}" style="display: block; float: left;" rel="popover" data-content="#{html_escape s.description}" data-original-title="#{html_escape s.name}" alt="#{html_escape s.name}"><img src="/#{s.logo}" width="150" height="75" /></a>
             <?r end ?>
           </div>
           <div class="clearfix"></div>

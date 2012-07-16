@@ -27,6 +27,14 @@ class User < Sequel::Model
     self.created_at ||= Time.now
   end
 
+  def display_name
+    if self.profile
+      "#{self.profile.surname} #{self.profile.name}"
+    else
+      self.email
+    end
+  end
+
   def password
     @password ||= Password.new(password_hash)
   end

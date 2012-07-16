@@ -4,6 +4,10 @@ require_relative '../helper'
 require 'nokogiri'
 require 'ramaze/helper/user'
 
+Profile.delete
+User.delete
+Team.delete
+
 class Users
   def send_confirmation_email(*args)
     true
@@ -17,12 +21,19 @@ end
 describe "The Users controller" do
   behaves_like :rack_test
 
+
+  after do
+    User.delete
+  end
+
   VttRoute.options.state = :inscriptions
 
   # Index redirects to login
   should "redirect to login on index" do
     get('/users/').status.should == 302
+
     follow_redirect!
+
     nok = Nokogiri::HTML(last_response.body)
     nok.css("form").attribute('action').value.should == "/users/login"
   end
@@ -43,7 +54,9 @@ describe "The Users controller" do
     u.save
 
     post('/users/login', new_user).status.should == 302
+
     follow_redirect!
+
     nok = Nokogiri::HTML(last_response.body)
     nok.css("h2#subtitle").text.should == "Profil"
     u.delete

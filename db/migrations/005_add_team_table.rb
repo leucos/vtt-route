@@ -14,6 +14,7 @@ Sequel.migration do
         TrueClass :handi, :default => false
         enum :race_type, :elements => ['Solo', 'Duo', 'Tandem'], :null => false
         String :event_version, :null => false
+        FixNum :plate
         foreign_key :vtt_id, :users
         foreign_key :route_id, :users
       end

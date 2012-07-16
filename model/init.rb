@@ -12,7 +12,7 @@ require 'securerandom'
 # Require settings
 Ramaze::Log.debug("Requiring models")
 
-Dir.glob('model/*.rb').each do |file|
+Dir.glob(Ramaze.options.roots.first + '/model/*.rb').each do |file|
  file = file.match(/model\/(.*)\.rb/)[1]
   next if file == "init"
   Ramaze::Log.debug("Loading model #{file}")

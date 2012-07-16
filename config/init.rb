@@ -1,7 +1,7 @@
 # Require settings
 Ramaze::Log.debug("Requiring configs")
 
-Dir.glob('config/*.rb').each do |file|
+Dir.glob(Ramaze.options.roots.first + '/config/*.rb').each do |file|
  file = file.match(/config\/(.*)\.rb/)[1]
   next if file == "init"
   Ramaze::Log.debug("Loading config #{file}")

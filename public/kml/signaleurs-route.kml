@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>signaleurs-route.kml</name>
+	<StyleMap id="waypoint">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#waypoint_n</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#waypoint_h0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_icon61">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="waypoint_n">
+		<IconStyle>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="waypoint_n0">
+		<IconStyle>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="waypoint_h">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="waypoint_h0">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="waypoint0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#waypoint_n0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#waypoint_h</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_icon61">
+		<IconStyle>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pal4/icon61.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="msn_icon61">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_icon61</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_icon61</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder>
+		<name>Waypoints</name>
+		<open>1</open>
+		<Placemark>
+			<name>051</name>
+			<TimeStamp><when>2012-06-01T16:40:26Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.467328,45.738184,626.83</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>052</name>
+			<TimeStamp><when>2012-06-01T16:40:36Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.467471646950169,45.73888274401881,630.54</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>052</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T16:40:36Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.467959881655508,45.73893903158476,630.54</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S53</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T16:41:39Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.468597635486622,45.74830226179449,591.48</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S53</name>
+			<TimeStamp><when>2012-06-01T16:41:39Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.468577,45.748022,591.48</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>053</name>
+			<TimeStamp><when>2012-06-01T16:42:36Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.476865,45.747457,576.6</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S54</name>
+			<TimeStamp><when>2012-06-01T16:46:19Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.493979916225896,45.75729621203256,538.11</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S54</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T16:46:19Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.493711558282109,45.75741825401454,538.11</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S54</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T16:51:04Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.472470170534103,45.78617629915507,633.89</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>S54</name>
+			<TimeStamp><when>2012-06-01T16:51:04Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.472089559132653,45.78619215761024,633.89</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>054</name>
+			<TimeStamp><when>2012-06-01T16:52:01Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.467571,45.79008,659.21</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>055</name>
+			<TimeStamp><when>2012-06-01T16:52:16Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.466368,45.79005,667.42</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>056</name>
+			<TimeStamp><when>2012-06-01T16:52:32Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.465601,45.791124,664.17</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>057</name>
+			<TimeStamp><when>2012-06-01T16:52:43Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.465705,45.792263,663.55</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>058</name>
+			<TimeStamp><when>2012-06-01T16:53:40Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.456609158116638,45.79918118603544,704.51</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>059</name>
+			<TimeStamp><when>2012-06-01T16:54:13Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.451559,45.798697,722.05</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>060</name>
+			<TimeStamp><when>2012-06-01T16:55:18Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.44266,45.793339,728.1900000000001</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>061</name>
+			<TimeStamp><when>2012-06-01T16:55:29Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.440264,45.79363299999999,731.58</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>062</name>
+			<TimeStamp><when>2012-06-01T16:57:27Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.425124,45.792272,689.17</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>263</name>
+			<TimeStamp><when>2012-06-01T17:00:04Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.426242001897781,45.80435827727752,710.38</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>263</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:00:04Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.426020456291643,45.80450812478789,710.38</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>263</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:00:04Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint</styleUrl>
+			<Point>
+				<coordinates>4.4261,45.80431099999999,710.38</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>063</name>
+			<TimeStamp><when>2012-06-01T17:01:55Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.406109947285927,45.81228388876611,736.24</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>740 M</name>
+			<TimeStamp><when>2012-06-01T17:02:30Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.41071236065588,45.81003003145992,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>064</name>
+			<TimeStamp><when>2012-06-01T17:02:44Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.405136,45.812934,728.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>065</name>
+			<TimeStamp><when>2012-06-01T17:06:48Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.388860398671326,45.78467556425227,549.66</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>066</name>
+			<TimeStamp><when>2012-06-01T17:09:11Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.3691,45.773692,525.88</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>067</name>
+			<TimeStamp><when>2012-06-01T17:09:23Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.368873,45.77320799999999,512.77</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>068</name>
+			<TimeStamp><when>2012-06-01T17:09:34Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.368271,45.772816,512.85</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>269</name>
+			<TimeStamp><when>2012-06-01T17:10:38Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.373789369241438,45.77237904130856,489.8</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>269</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:10:38Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.37414233180642,45.77241304159187,489.8</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>269</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:10:38Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint</styleUrl>
+			<Point>
+				<coordinates>4.374126,45.772241,489.8</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>069</name>
+			<TimeStamp><when>2012-06-01T17:11:25Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.382170232512264,45.77376827053097,500.59</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>069</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:11:25Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.38196622243831,45.77364348673667,500.59</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>070</name>
+			<TimeStamp><when>2012-06-01T17:15:17Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.402324,45.75238199999999,578.6799999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>071</name>
+			<TimeStamp><when>2012-06-01T17:17:21Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.42359,45.75217900000001,598.34</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>072</name>
+			<TimeStamp><when>2012-06-01T17:18:17Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.446027583328749,45.75375385665237,603.27</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>072</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:18:17Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.445931010953497,45.75349402996999,603.27</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>072</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:18:17Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.429030880175762,45.75178995581865,603.27</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>069</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:11:25Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint</styleUrl>
+			<Point>
+				<coordinates>4.381431,45.773645,500.59</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>073</name>
+			<TimeStamp><when>2012-06-01T17:20:49Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.461087,45.74352799999999,628.8099999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>074</name>
+			<TimeStamp><when>2012-06-01T17:21:17Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.46303927504737,45.74092342037166,617.05</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>075</name>
+			<TimeStamp><when>2012-06-01T17:21:47Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.463278,45.73857300000001,603.42</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>076</name>
+			<TimeStamp><when>2012-06-01T17:21:59Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.463177781711625,45.73853011172045,602.48</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>072</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:18:17Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.445931010953497,45.75349402996999,603.27</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>076</name>
+			<open>1</open>
+			<TimeStamp><when>2012-06-01T17:21:59Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.464490468195394,45.7384456367807,602.48</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>377</name>
+			<TimeStamp><when>2012-06-01T17:22:11Z</when>
+</TimeStamp>
+			<styleUrl>#msn_icon61</styleUrl>
+			<Point>
+				<coordinates>4.464393205908229,45.73830296869829,601.02</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>077</name>
+			<TimeStamp><when>2012-06-01T17:22:37Z</when>
+</TimeStamp>
+			<styleUrl>#waypoint0</styleUrl>
+			<Point>
+				<coordinates>4.465966,45.73897899999999,594.5</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

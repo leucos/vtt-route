@@ -31,8 +31,8 @@ class Teams < Controller
 
   def save
     data = request.subset(:name, :description, :race_type, 
-                          :vtt_id, :route_id, :event_version,
-                          :part, :open)
+                          :vtt_id, :route_id,
+                          :handi, :part, :open)
 
     data['event_version'] = VttRoute.options.edition
 
@@ -98,7 +98,7 @@ class Teams < Controller
 
     t.vtt_id, t.route_id = t.route_id, t.vtt_id
     t.save
-    flash[:success] = "Rôles inversés"
+    # flash[:success] = "Rôles inversés"
     redirect_referrer
   end
 
@@ -110,15 +110,19 @@ class Teams < Controller
     p = request.params['email']
     check_access(t)
 
-    if p
-      peer= User[:email => p]
+    if p.nil?
+      flash[:error] = "Adresse email non fournie"
+      event(:edge_case, :controller => "Teams#invite", :type => :email_not_provided)
+    end
 
-      if peer
-        send_invite(user.display_name, p, t)
-        flash[:success] = "L'invitation à bien été envoyée à <strong>%s</strong>" % p
-      else
-        flash[:error] = "Désolé, je ne connais personne à cette adresse."
-      end        
+    peer = User[:email => p]
+
+    flash[:error] = "Désolé, je ne connais personne à cette adresse." unless peer
+    flash[:error] = "Désolé, cette personne a déjà une équipe." if peer.has_team?
+
+    if !flash[:error]
+      send_invite(user.display_name, p, t)
+      flash[:success] = "L'invitation à bien été envoyée à <strong>%s</strong>" % p
     end
 
     redirect_referrer

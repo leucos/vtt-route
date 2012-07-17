@@ -8,15 +8,14 @@
   <a class="btn disabled" data-toggle="modal" href="#team" href="">Rejoindre une équipe</a>
 <?r else ?>
   <div class="well">
-    <p class="lead">#{@team.name}</p>
+    <p class="lead">#{@team.name} <span class="badge badge-inverse">#{@team.race_type}</span>#{'<i class="icon-plus-sign"></i><span class="badge badge-info">Handi</span>' if @team.handi}</p>
     <p><em>"#{@team.description}"</em></p>
-    #{"<p>Handi</p>" if @team.handi}
-    <p><span class="label label-info">VTT</span> #{@team.vtt ? @team.vtt.display_name : "<em>Libre</em>"}
+    <p><span class="label label-info">#{@team.race_type == 'Tandem' ? 'Équipier' : 'VTT'}</span> #{@team.vtt ? @team.vtt.display_name : "<em>Libre</em>"}
     </p>
-    <p><span class="label label-info">Route</span> #{@team.route ? @team.route.display_name : "<em>Libre</em>"}</p>
+    <p><span class="label label-info">#{@team.race_type == 'Tandem' ? 'Équipier' : 'Route'}</span> #{@team.route ? @team.route.display_name : "<em>Libre</em>"}</p>
     <p>
-      <a class="btn" data-toggle="modal" href="#invite"><i class="icon-check"></i> Inviter dans l'équipe</a>
-      <a class="btn btn-warning" href="#{Teams.r(:swap, @team.id)}"><i class="icon-refresh"></i> Inverser les rôles</a>
+      <a class="btn #{@team.has_free_spot? ? '" data-toggle="modal" href="#invite""' : 'disabled"'}><i class="icon-check"></i> Inviter dans l'équipe</a>
+      <a class="btn btn-warning #{@team.race_type != 'Tandem' ? "\" href=\"#{Teams.r(:swap, @team.id)}\"" : 'disabled"'}><i class="icon-refresh"></i> Inverser les rôles</a>
       <a class="btn btn-danger" data-toggle="modal" href="#leave_team"><i class="icon-share icon-white"></i> Quitter l'équipe</a>
     </p>
   </div>
@@ -49,7 +48,7 @@
         <div class="control-group #{ class_for :description }">
           <label class="control-label" for="description"><strong>Description de l'équipe</strong></label>
           <div class="controls">
-            <textarea class="input-xlarge" id="emergency_contact" name="description" rows="3" placeholder="Les joyeux dinosaures de la pédale" >#{ data_for 'description' }</textarea>
+            <textarea class="input-xlarge" id="team_description" name="description" rows="3" placeholder="Les joyeux dinosaures de la pédale" >#{ data_for 'description' }</textarea>
           </div>
         </div>
 

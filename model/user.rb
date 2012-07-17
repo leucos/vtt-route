@@ -44,6 +44,10 @@ class User < Sequel::Model
     self.password_hash = @password
   end
 
+  def has_team?
+    !(vtt_team_dataset.empty? and route_team.empty?)
+  end
+
   def self.authenticate(creds)
     Ramaze::Log.info("Login attempt with %s | %s" % [ creds['email'], creds['password'] ] )
 

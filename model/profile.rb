@@ -22,9 +22,6 @@ class Profile < Sequel::Model
                         :phone, :gender, :birth, :emergency_contact ],
                         :message => 'Ce champ doit être renseigné'
     validates_exact_length 5, :zip, :message => 'Ce code postal est invalide'
-    #validates_min_length 1, :emergency_contact, :message => 'Ce champ doit être rempli'
-    # No Solo for young men
-    errors.add(:event, 'Impossible de participer en Solo pour les moins de 17 ans') if birth and birth.year > 1995 
   end
 
   def age_at_event

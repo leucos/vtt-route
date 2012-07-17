@@ -114,7 +114,7 @@ class Teams < Controller
       peer= User[:email => p]
 
       if peer
-        send_invite(user.display_name, peer, t)
+        send_invite(user.display_name, p, t)
         flash[:success] = "L'invitation à bien été envoyée à <strong>%s</strong>" % p
       else
         flash[:error] = "Désolé, je ne connais personne à cette adresse."
@@ -188,7 +188,7 @@ Bonjour,
 
 Si vous désirez vous joindre à lui, il suffit de cliquer sur ce lien  :
 
-#{VttRoute.options.myurl}/#{r(:confirm, email, team.id, team.invite_key)}
+#{VttRoute.options.myurl}/#{Teams.r(:confirm, email, team.id, team.invite_key)}
 
 Dans le cas contraire, vous pouvez simplement ignorer ce message.
 

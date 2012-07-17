@@ -165,7 +165,7 @@ class Teams < Controller
     end
 
     t.save
-    flash[:success] = "Féclicitations, vous avez été ajouté à l'équipe !" 
+    flash[:success] = "Félicitations, vous avez été ajouté à l'équipe !" 
     redirect Teams.r(:index)
   end
 

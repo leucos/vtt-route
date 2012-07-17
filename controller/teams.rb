@@ -118,7 +118,7 @@ class Teams < Controller
     peer = User[:email => p]
 
     flash[:error] = "Désolé, je ne connais personne à cette adresse." unless peer
-    flash[:error] = "Désolé, cette personne a déjà une équipe." if peer.has_team?
+    flash[:error] = "Désolé, cette personne a déjà une équipe." if peer and peer.has_team?
 
     if !flash[:error]
       send_invite(user.display_name, p, t)

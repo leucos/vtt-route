@@ -43,6 +43,7 @@ class Users < Controller
         event(:login_failed)
         response.status = 302
         response.headers['Location'] = r(:login)
+        flash[:error] = "Erreur d'identifiant ou de mot de passe"
         #redirect r(:login)
       end
 

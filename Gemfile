@@ -29,4 +29,6 @@ group :development do
   gem 'nokogiri'
   gem 'lolcommits'
   gem 'sqlite3'
+  gem 'capybara'
+  #gem 'capybara-screenshot'
 end

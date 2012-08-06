@@ -1,46 +1,47 @@
 # encoding: UTF-8
 #
+
 require_relative '../helper'
 require 'capybara'
 require 'capybara/dsl'
-require 'capybara-screenshot'
+#require 'capybara-screenshot'
 
-module Bacon
-  module SpecDoxCapybaraScreenshotOutput
-    include SpecDoxOutput
+# module Bacon
+#   module SpecDoxCapybaraScreenshotOutput
+#     include SpecDoxOutput
 
-    def handle_requirement(description)
-      print "- #{description}"
-      error = yield
-      if !error.empty? 
-        if Capybara::Screenshot.autosave_on_failure
-          filename_prefix = Capybara::Screenshot.filename_prefix_for(:bacon, description)
-          saver = Capybara::Screenshot::Saver.new(Capybara, Capybara.page, true, filename_prefix)
-          saver.save
-          Counter[:screenshots]+=1
-          puts "Saved in #{saver.screenshot_path}"
-        end
-        print " [#{error}]"
-      end
-      puts
-    end
+#     def handle_requirement(description)
+#       print "- #{description}"
+#       error = yield
+#       if !error.empty? 
+#         if Capybara::Screenshot.autosave_on_failure
+#           filename_prefix = Capybara::Screenshot.filename_prefix_for(:bacon, description)
+#           saver = Capybara::Screenshot::Saver.new(Capybara, Capybara.page, true, filename_prefix)
+#           saver.save
+#           Counter[:screenshots]+=1
+#           puts "Saved in #{saver.screenshot_path}"
+#         end
+#         print " [#{error}]"
+#       end
+#       puts
+#     end
 
-    def handle_summary
-      print ErrorLog  if Backtraces
-      puts "%d specifications (%d requirements), %d failures, %d errors, %d screenshots taken" %
-      Counter.values_at(:specifications, :requirements, :failed, :errors, :screenshots)
-      puts "(screenshots saved in %s)" % Capybara::Screenshot.capybara_root if Counter[:screenshots]
-    end
-  end
-end
+#     def handle_summary
+#       print ErrorLog  if Backtraces
+#       puts "%d specifications (%d requirements), %d failures, %d errors, %d screenshots taken" %
+#       Counter.values_at(:specifications, :requirements, :failed, :errors, :screenshots)
+#       puts "(screenshots saved in %s)" % Capybara::Screenshot.capybara_root if Counter[:screenshots]
+#     end
+#   end
+# end
 
-Bacon.extend(Bacon::SpecDoxCapybaraScreenshotOutput)
+#Bacon.extend(Bacon::SpecDoxCapybaraScreenshotOutput)
+Bacon.extend(Bacon::SpecDoxOutput)
 
 Capybara.configure do |c|
   c.default_driver = :selenium
   c.app            = Ramaze.middleware
   c.save_and_open_page_path = File.join(Ramaze.options.roots.first, 'tmp/')
-  puts c.save_and_open_page_path
 end
 
 shared :capybara do
@@ -69,6 +70,6 @@ describe 'Testing Ramaze' do
     click_button 'connect'
 
     page.current_path.should == '/profiles/index'
-    page.has_content?('Profqsjkhdkjil').should == true
+    page.has_content?('Profil').should == true
   end
 end

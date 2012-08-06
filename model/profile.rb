@@ -25,15 +25,32 @@ class Profile < Sequel::Model
   end
 
   def age_at_event
-    (EVENT_DATE - self.birth).to_f/365
+    EVENT_DATE.year - self.birth.year - (self.birth.change(:year => EVENT_DATE.year) > EVENT_DATE ? 1 : 0)
   end
 
-  def needs_certificate?
-    ! (self.federation && self.licence)
+  def certificate_required?
+    self.federation == "Non licencié" || self.licence.blank?
   end
 
-  def needs_authorization?
+  def authorization_required?
     age_at_event < 18
   end
+
+  def payment_required?
+    true
+  end
+
+  def certificate_received?
+    self.payment_received
+  end
+
+  def authorization_received?
+    self.payment_received
+  end
+
+  def payment_received?
+    self.payment_received
+  end
+
 
 end

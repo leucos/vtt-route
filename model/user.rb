@@ -48,6 +48,10 @@ class User < Sequel::Model
     !(vtt_team_dataset.empty? and route_team.empty?)
   end
 
+  def team
+    vtt_team.first || route_team.first
+  end
+
   def self.authenticate(creds)
     Ramaze::Log.info("Login attempt with %s | %s" % [ creds['email'], creds['password'] ] )
 

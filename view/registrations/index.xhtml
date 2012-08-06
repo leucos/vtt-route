@@ -6,25 +6,30 @@ Comme dans toutes les courses, en fonction de votre age, de votre situation, et 
 
   <div class="span6">
     <div class="well">
-      <div class="alert alert-error">
-        Nous n'avons pas reçu le true en question
-        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
-      </div>
 
-      <div class="alert alert-error">
-        On l'a pas vu
+      <?r @pieces.each do |p| ?>
+      <div id="div-#{p[:type]}" class="alert alert-#{ p[:status] ? "success" : "error" }">
+        <strong>#{ p[:name].capitalize }</strong> : pièce non reçue 
+        <?r if p[:status] ?>
+        <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
+        <?r else ?>
         <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+        <?r end ?>
       </div>
+      <?r end ?>
 
-      <div class="alert alert-success">
-        Nous avons bien reçu le trucs
+      <?r if user.has_team? ?>    
+      <div id="div-team" class="alert alert-success">
+        <strong>Équipe</strong>: vous êtes dans l'équipe #{Teams.a(user.team.name, :index)}
         <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
       </div>
-
-      <div class="alert alert-success">
-        Nous avons bien reçu le truc
-        <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
+      <?r else ?>
+      <div id="div-team" class="alert alert-error">
+        <strong>Équipe</strong>: vous n'êtes dans aucune équipe
+        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
       </div>
+      <?r end ?>
+
     </div>
   </div>
 

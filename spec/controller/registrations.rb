@@ -11,18 +11,29 @@ module Ramaze
         true
       end
       def user
-      #_would_login?(creds)
         return User.first
       end
     end
   end
 end
 
-# Post params
-PARAMS = { :email=> 'mb@mbnet.fr', :password => 'xyz' }  
-
 User.delete
-User.create(PARAMS.reject{|k| k == 'HTTP_REFERER'} )
+uid = User.create({ :email=> 'mb@mbnet.fr', :password => 'xyz' })
+uid.profile = Profile.create ({
+  :name              => 'Cumin',
+  :surname           => 'Bernard',
+  :gender            => 'male',
+  :birth             => Date.parse("1990-1-1"),
+  :address1          => "Lapierre",
+  :address2          => "Specialized",
+  :zip               => 12345,
+  :city              => "Sunn",
+  :country           => "Fox",
+  :org               => "ASSLC",
+  :licence           => 54321,
+  :phone             => "89",
+  :emergency_contact => "Marcel"
+      })
 
 describe "The Registrations controller" do
   behaves_like :rack_test
@@ -30,27 +41,24 @@ describe "The Registrations controller" do
   should 'display missing authorizaton for users under 18' do
     get('/registrations/index').status.should == 200
     nok = Nokogiri::HTML(last_response.body)
-    nok.css("div > div > input").first[:id].should == "Autorisation parentale"
+    nok.css("div#div-authorization.alert-error").should.not.be.nil
   end
-
-/html/body/div[2]/div[2]/div/div/div/div[1]
-
 
   should 'display missing payment' do
     get('/registrations/index').status.should == 200
     nok = Nokogiri::HTML(last_response.body)
-    nok.css("div > div > input").first[:id].should == "Règlement manquant"
+    nok.css("div#div-payment.alert-error").should.not.be.nil
   end
 
   should 'display missing team' do
     get('/registrations/index').status.should == 200
     nok = Nokogiri::HTML(last_response.body)
-    nok.css("div > div > input").first[:id].should == "name"
+    nok.css("div#div-team.alert-error").should.not.be.nil
   end
 
   should 'display missing certificate' do
     get('/registrations/index').status.should == 200
     nok = Nokogiri::HTML(last_response.body)
-    nok.css("div > div > input").first[:id].should == "name"
+    nok.css("div#div-certificate.alert-error").should.not.be.nil
   end
 end

@@ -47,8 +47,11 @@ class Users < Controller
         #redirect r(:login)
       end
 
-
-      redirect Profiles.r(:index)
+      if (user.profile)
+        redirect Registrations.r(:index)
+      else
+        redirect Profiles.r(:index)
+      end        
     end
   end
   clock :login, :performance

@@ -68,6 +68,7 @@ describe "The Profiles controller" do
     form.each_pair { |ik,iv| form[ik] = iv[:value] }
 
     Profile.delete
+    
     should "refuse forms without a #{f} field" do
       post('/profiles/save', form, PARAMS).status.should == 302
       follow_redirect!

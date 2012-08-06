@@ -4,6 +4,7 @@ require_relative '../helper'
 require 'nokogiri'
 require 'ramaze/helper/user'
 
+Profile.delete
 User.delete
 Team.delete
 

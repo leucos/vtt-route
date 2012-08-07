@@ -8,7 +8,7 @@ describe "The Controller base controller" do
   behaves_like :rack_test
 
   should "show custom 404" do
-    get("/omg_this_page_doesnt_exist").status.should == 404
+    get("/omg_this_page_doesnt_exist").status.should == 200
 
     nok = Nokogiri::HTML(last_response.body)
     nok.css("div.alert").first.text.should =~ /Désolé, cette page n'existe pas/i

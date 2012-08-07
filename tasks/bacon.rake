@@ -9,7 +9,7 @@ task :bacon do
   SimpleCov.start do
     add_group "Models", "model/"
     add_group "Controllers", "controller/"
-    add_group "Helpers", "helper/"
+    add_filter "helper/"
     add_filter "spec/"
     add_filter "vendor/"
     add_filter "config"

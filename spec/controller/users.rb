@@ -35,6 +35,8 @@ describe "The Users controller" do
     follow_redirect!
 
     nok = Nokogiri::HTML(last_response.body)
+#    puts last_response.body
+#    pp nok.inspect
     nok.css("form").attribute('action').value.should == "/users/login"
   end
 

@@ -25,10 +25,6 @@ class Teams < Controller
     @team = Team.filter[{:vtt_id => user.id, :route_id => user.id}.sql_or]
   end
 
-  def create
-    @subtitle = "Créer une équipe"
-  end
-
   def save
     data = request.subset(:name, :description, :race_type, 
                           :vtt_id, :route_id,

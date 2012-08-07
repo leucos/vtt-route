@@ -104,3 +104,11 @@ describe "The Profiles controller" do
   end
 end
 
+module Ramaze
+  module Helper
+    module UserHelper
+      alias logged_in? real_logged_in?
+      alias user real_user
+    end
+  end
+end

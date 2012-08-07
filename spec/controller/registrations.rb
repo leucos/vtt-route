@@ -7,12 +7,19 @@ require 'ramaze/helper/user'
 module Ramaze
   module Helper
     module UserHelper
-      def logged_in?
+      def team_logged_in?
         true
       end
-      def user
-        return User.first
+
+      def team_user
+        User.first
       end
+
+      alias real_logged_in? logged_in?
+      alias logged_in? team_logged_in?
+
+      alias real_user user
+      alias user team_user
     end
   end
 end
@@ -23,14 +30,14 @@ uid.profile = Profile.create ({
   :name              => 'Cumin',
   :surname           => 'Bernard',
   :gender            => 'male',
-  :birth             => Date.parse("1990-1-1"),
+  :birth             => Date.parse("1998-1-1"),
   :address1          => "Lapierre",
   :address2          => "Specialized",
   :zip               => 12345,
   :city              => "Sunn",
   :country           => "Fox",
-  :org               => "ASSLC",
-  :licence           => 54321,
+  :org               => nil,
+  :licence           => nil,
   :phone             => "89",
   :emergency_contact => "Marcel"
       })
@@ -62,3 +69,13 @@ describe "The Registrations controller" do
     nok.css("div#div-certificate.alert-error").should.not.be.nil
   end
 end
+
+module Ramaze
+  module Helper
+    module UserHelper
+      alias logged_in? real_logged_in?
+      alias user real_user
+    end
+  end
+end
+

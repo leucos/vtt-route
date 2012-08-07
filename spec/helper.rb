@@ -8,3 +8,4 @@ puts "Running specs using database #{DB.opts[:database]}\n"
 DB.tables.each do |t|
   DB[t].delete unless t == :schema_info
 end
+

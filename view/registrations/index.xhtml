@@ -4,32 +4,45 @@
 Comme dans toutes les courses, en fonction de votre age, de votre situation, et du types de course, vous devrez nous fournir certains éléments (certificat médical, autorisation parentale, etc...).</p>
 <p><span class="badge badge-default">Note</span> Cette page liste les éléments que vous devez nous faire parvenir. Si nous les avons bien reçus; il seront affichés en vert.</p>
 
-  <div class="span6">
-    <div class="well">
+<div class="span6">
+  <div class="well">
 
-      <?r @pieces.each do |p| ?>
-      <div id="div-#{p[:type]}" class="alert alert-#{ p[:status] ? "success" : "error" }">
-        <strong>#{ p[:name].capitalize }</strong> : pièce non reçue 
-        <?r if p[:status] ?>
-        <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
-        <?r else ?>
-        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
-        <?r end ?>
-      </div>
-      <?r end ?>
-
-      <?r if user.has_team? ?>    
-      <div id="div-team" class="alert alert-success">
-        <strong>Équipe</strong>: vous êtes dans l'équipe #{Teams.a(user.team.name, :index)}
-        <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
-      </div>
+    <?r @pieces.each do |p| ?>
+    <div id="div-#{p[:type]}" class="alert alert-#{ p[:status] ? "success" : "error" }">
+      <strong>#{ p[:name].capitalize }</strong> : pièce non reçue 
+      <?r if p[:status] ?>
+      <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
       <?r else ?>
-      <div id="div-team" class="alert alert-error">
-        <strong>Équipe</strong>: vous n'êtes dans aucune équipe
-        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
-      </div>
+      <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
       <?r end ?>
-
     </div>
+    <?r end ?>
+
+    <?r if user.has_team? ?>    
+    <div id="div-team" class="alert alert-success">
+      <strong>Équipe</strong>: vous êtes dans l'équipe #{Teams.a(user.team.name, :index)}
+      <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
+    </div>
+    <?r else ?>
+    <div id="div-team" class="alert alert-error">
+      <strong>Équipe</strong>: vous n'êtes dans aucune équipe
+      <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+    </div>
+    <?r end ?>
   </div>
+</div>
+
+<div class="span5">
+  <p />
+  <h4>Les pièces doivent nous être envoyées à l'adresse suivante :</h4>
+  <p />
+  <div>
+  <address>
+    <strong>Challenge VTT-Route</strong><br />
+    Association Sportive Collège Saint Laurent<br />
+    Rue Côte Pinay<br />
+    69930 Saint Laurent de Chamousset<br />
+  </address>
+  </div>
+</div>
 

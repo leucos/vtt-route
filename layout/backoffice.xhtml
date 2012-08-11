@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Challenge VTT-Route - Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Challenge VTT et route, seul ou en duo, parrainé par Jean-Christophe Péraud">
+    <meta name="keywords" content="challenge, vtt, route, saint laurent, jean-christophe péraud, vélo, course">
+    <meta name="author" content="Association Sportive su Collège Saint Laurent">
+
+    <!-- Le styles -->
+    #{css('bootstrap.min')}
+    #{css('bootstrap-responsive.min')}
+    #{css('caroufredsel')}
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+
+      }
+      .navbar .nav.pull-right .dropdown-menu { 
+        left: auto; 
+        right: 0; 
+        &:before { 
+          left: auto; 
+          right: 12px; 
+        } 
+        &:after { 
+          left: auto; 
+          right: 13px; 
+        } 
+      } 
+    </style>
+
+
+    <!-- scripts -->
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Let's load a bunch of stuff in live mode -->
+    <?r if ENV['RACK_ENV'] == 'live' ?>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <?r else ?>
+    #{js('jquery')}
+    <?r end ?>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+  </head>
+
+  <body>
+
+    <!-- navbar -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+<!--           <a class="brand" href="/">Challenge VTT-Route</a> -->
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="/">Accueil</a></li>
+              <li class="divider-vertical"></li>
+              <li><a href="/misc/plaquette_jcp.pdf">Flyer</a></li>
+              <li class="divider-vertical"></li>
+              <li><a href="/maps/">Tracés</a></li>
+              <li class="divider-vertical"></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Liens <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.facebook.com/events/471962059484942/"><img src="/images/facebook-icon.png">Evènement Facebook</a></li>
+                  <li><a href="http://www.jeanchristopheperaud.fr/">Site de Jean-Christophe</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <ul class="nav pull-right">
+
+            <?r if user and logged_in? ?> 
+              <?r if user.profile ?>
+              <li><a href="#{Registrations.r(:index)}">Mon Inscription</a></li>
+              <?r end ?>
+              <li><a href="#{Teams.r(:index)}">Mon Équipe</a></li>
+              <li><a href="#{Profiles.r(:index)}">Mon Profil</a></li>
+              <li class="divider"></li>
+              <li><a href="#{Users.r(:logout)}">Déconnexion</a></li>
+            <?r else ?>
+              <li><a href="#{Users.r(:create)}">Inscription</a></li>
+              <li class="divider-vertical"></li>
+              <li><a href="#{Users.r(:login)}">Connexion</a></li>
+            <?r end ?>
+              <li class="divider-vertical"></li>
+              <li><div style="margin-top: 10px;"><div class="g-plusone" data-size="small" data-annotation="none"></div></div></li>
+              <li class="divider-vertical"></li>
+              <?r if user and user.profile ?>
+              <?r   message = "Je participe au challenge VTT-Route !" ?>
+              <?r else ?>
+              <?r   message = "Un petit coup de pub pour le challenge VTT-Route !" ?>
+              <?r end ?>
+              <li><div style="margin-top: 8px;"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.challengevttroute.fr" data-text="#{message}" data-lang="fr" data-hashtags="vttroute">Tweeter</a></div></li> 
+              <li>
+<!--               <?r if user and user.profile ?>
+              #{user.profile.surname} #{user.profile.name} 
+              <?r end ?> -->
+              </li>
+            </ul>            
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div>
+    <!-- navbar -->
+
+    <script type="text/javascript">
+      $(function() {
+        $('.dropdown-toggle').dropdown();
+      });
+    </script>
+
+
+
+    <!-- main pane -->
+    <div class="container">
+
+      <div class="row-fluid">        
+        <!-- main content -->
+        <div class="span12">
+
+        <!-- flash -->
+          <?r [:success, :error, :info].each do |type| ?>
+            <?r if flash[type] ?>
+            <?r   local = { :success => "Succès", :error => "Erreur", :info => "Information" } ?>
+          <div class="alert alert-block alert-#{type} fade in">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">#{ local[type] }</h4>
+            #{flash[type]}
+          </div>
+
+            <?r end ?>
+          <?r end ?>
+
+          #{@content}
+
+        </div>
+        <!-- main content -->
+
+      </div>
+      <!-- row -->
+
+      <!-- page bottom -->
+      <div class="span12">
+        <p />
+      </div>
+      
+      <hr>
+
+      <footer align="center">
+        <p>Propulsé par <a href="http://ramaze.net" target="_new">Ramaze</a> /
+          HTML5 boilerplate par Twitter <a href="http://twitter.github.com/bootstrap/index.html" target="_new">Bootstrap</a> /
+          Hébergement <a href="http://lstilde.org/" target="_new">ls~</a>
+        </p>
+        <p>&copy; Association Sportive Collège Saint Laurent 2012 / 
+        <a data-toggle="modal" href="#mentions">Mentions l&eacute;gales</a> / 
+        <a data-toggle="modal" href="#reglement">Règlement</a> / 
+        <a href="mailto:info@challengevttroute.fr">Contact</a></p>
+      </footer>
+
+      <hr>
+
+    </div> <!-- /container -->
+
+    <!-- modal : mentions légales -->
+    <div class="modal hide fade" id="mentions" style="display:none;">
+
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Mentions l&eacute;gales</h3>
+      </div>
+
+      <div class="modal-body">
+        <p> Ce site est le site officiel du Challenge VTT-Route géré par l'Association Sportive
+        Saint Laurent.
+        </p>
+
+        <p> Il répond aux noms de domaines suivants : 
+          <ul>
+            <li>www.challengevttroute.fr</li>
+            <li>www.challengevttroute.com</li>
+            <li>www.challengevttroute.org</li>
+          </ul>
+        </p>
+
+        <p>La version actuellement en fonctionnement est la <strong>v#{VttRoute::Version}</strong>, et 
+          disponible sur <a href="#{VttRoute.options.github}">GitHub</a>.</p>
+
+        <dl>
+          <dt>Responsable de la publication</dt><dd>Bernard Cumin</dd>
+          <dt>Crédits photographiques</dt><dd>???</dd>
+          <dt>Réalisation technique</dt><dd>Association ls~</dd>
+          <dt>Hébergement</dt><dd>Association ls~</dd>
+        </dl>
+
+        <p> Ce site web est la propriété de l'Association Sportive Saint Laurent :
+        la structure générale, ainsi que les textes, images
+        animées ou non, et tous les éléments composant ce site web sont propriété de
+        l'Association Sportive Saint Laurent.
+        </p>
+
+        <p> Toute reproduction totale ou partielle de son contenu, ainsi que toute
+        extraction d'une partie substantielle de la base de données qu'il contient est
+        interdite, sans autorisation expresse et préalable de l'Association Sportive Saint
+        Laurent. Toute exploitation non autorisée du site ou de son contenu, des
+        informations qui y sont divulguées engageraient la responsabilité de
+        l'utilisateur et constitueraient une contrefaçon sanctionnée par les articles
+        L. 335-2 et suivants du Code de la Propriété Intellectuelle.
+        </p>
+
+        <p> L'utilisation et la collecte des données par ce site est effectué dans le 
+          cadre de la dispense n°7 de la CNIL.
+          Néammoins, en conformité avec l'article 3 de la loi &raquo; informatique et Libertés &raquo; du 6
+        janvier 1978, vous disposez d'un droit d'accès, de modification, de
+        rectification et de suppression des données nominatives qui vous concernent.</p>
+        <p>
+        Vous pouvez exercer ce droit en vous adressant à :
+        </p>
+
+        <address>
+          <strong>Association Sportive Collège Saint Laurent</strong><br>
+          Rue Côte Pinay<br>
+          69930 Saint Laurent de Chamousset<br>
+          <abbr title="Phone">Tel:</abbr> +33-(0)607582880
+        </address>
+
+        <p> Les éléments contenus dans ce document sont susceptibles d'évoluer ; ils sont
+        donnés à titre d'information et en aucun cas ne peuvent être considérés comme
+        contractuels.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+      </div>
+
+    </div>
+    <!-- modal : mentions légales -->
+
+    <!-- modal : règlement -->
+    <div class="modal hide fade" id="reglement" style="display:none;">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Règlement</h3>
+      </div>
+
+      <div class="modal-body">
+        <h2>Règlement du challenge VTT-Route 2012</h2>
+        
+        <p>La participation au challenge VTT-Route 2012 implique l'acceptation sans réserve du présent règlement. Tout participant ne respectant pas le règlement pendant l'épreuve sera immédiatement mis hors-course.</p>
+
+        <h3>Organisateur</h3>
+        Le challenge est organisé par :
+        <address>
+          <strong>Association Sportive Collège Saint Laurent</strong><br>
+          Rue Côte Pinay<br>
+          69930 Saint Laurent de Chamousset<br>
+          <abbr title="Phone">Tel:</abbr> +33-(0)607582880
+        </address>
+        
+        <h3>Sécurité</h3>
+        <p>Le port du casque est <strong>obligatoire</strong>. Les participants sans casque ne seront pas autorisés à prendre le départ des épreuves.</p>
+        <p>Les participants s'engagent à respecter le code de la route</p>
+        <p>Les participants respecteront la nature et les passages privés</p>
+
+        <h3>Remboursement</h3>
+        <p>Le remboursement de l'épreuve ne pourra se faire que sur présentation d'un certificat médical justifiant l'inaptitude aux épreuves</p>
+
+        <h3>Droit à l'image</h3>
+        <p>Le participant autorise l'organisateur à utiliser toute image de l'epreuve ou il figure, quel que soit le dédia de diffusion (presse, internet, ...)</p>
+
+        <h3>Inscriptions</h3>
+        <p>Les frais d'inscriptions sont de 15€ par participant.</p>
+        <p>Les inscriptions sont ouvertes jusqu'au 19 octobre 2012 inclus. Toute inscription reçue ultérieurement ne sera pas traitée</p>
+        <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2021.</p>
+        <p><strong>Aucune inscription ne sera traitée sur place.</strong></p>
+        <p>Les participants s'engagent à fournir des informations exactes pour l'inscription.</p> 
+
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-primary">Fermer</a>
+      </div>
+    </div>
+    <!-- modal : règlement -->
+
+    <!-- javascript -->
+
+    <!-- +1 button -->
+    <script type="text/javascript">
+      window.___gcfg = {lang: 'fr'};
+
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
+
+    <!-- twitter button -->
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
+
+
+
+    <script type='text/javascript'>
+      /*  CarouFredSel: an infinite, circular jQuery carousel.
+        Configuration created by the "Configuration Robot"
+        at caroufredsel.frebsite.nl
+      */
+      $(function() {
+        $("#sponsors_elements").carouFredSel({
+          padding: [0, 0, 40, 0],
+          scroll: {
+            items: 4,
+            fx: "slide",
+            pauseOnHover: true
+          } /*,
+          prev    : {
+            button  : "#sponsors_elements_prev",
+            key     : "left"
+          },
+          next    : {
+            button  : "#sponsors_elements_next",
+            key     : "right"
+          },
+          pagination  : "#sponsors_elements_pag" */
+        });
+      });
+    </script>
+
+    <!-- Enable popovers -->
+    <script type='text/javascript'>
+      $(function() {
+        $('a[rel="popover"]').popover();
+      });
+    </script>
+
+    <?r if @loadmap ?>
+    #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
+    <?r end ?>
+
+    #{js('bootstrap.min')}
+
+  </body>
+</html>
+

@@ -1,13 +1,16 @@
 class Backoffice < Controller
   helper :paginate
+  layout :backoffice
 
   before_all do
-    #redirect_referrer unless logged_in? and user.admin
+    if !logged_in? or !user.admin
+      event(:edge_case, :controller => "Backoffice#before_all", :type => :acces_denied) 
+      redirect_referrer
+    end
   end
 
   def index
     @subscribers = paginate(User.filter(:admin=>false, :superadmin=>false))
-    #@subscribers = paginate(User)
   end
 end
 

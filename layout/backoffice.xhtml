@@ -12,7 +12,6 @@
     <!-- Le styles -->
     #{css('bootstrap.min')}
     #{css('bootstrap-responsive.min')}
-    #{css('caroufredsel')}
 
     <style type="text/css">
       body {
@@ -144,6 +143,12 @@
 
             <?r end ?>
           <?r end ?>
+          <h2>#{@inscrits} inscrits - #{@equipes} équipes</h2> 
+          <div class="progress progress-striped
+            active">
+            <div class="bar"
+              style="width: #{@avancement}%;"></div>
+          </div>
 
           #{@content}
 
@@ -285,7 +290,7 @@
         <h3>Inscriptions</h3>
         <p>Les frais d'inscriptions sont de 15€ par participant.</p>
         <p>Les inscriptions sont ouvertes jusqu'au 19 octobre 2012 inclus. Toute inscription reçue ultérieurement ne sera pas traitée</p>
-        <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2021.</p>
+        <p>La date limite de réception des pièces justificatives (certificat médical, autorisation parentale, etc...) est fixée au 26 octobre 2012.</p>
         <p><strong>Aucune inscription ne sera traitée sur place.</strong></p>
         <p>Les participants s'engagent à fournir des informations exactes pour l'inscription.</p> 
 

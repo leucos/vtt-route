@@ -22,9 +22,13 @@ class Profile < Sequel::Model
                         :phone, :gender, :birth, :emergency_contact ],
                         :message => 'Ce champ doit être renseigné'
     validates_exact_length 5, :zip, :message => 'Ce code postal est invalide'
+    errors.add(:birth, "Vous n'avez pas l'âge minimum requis") if age_at_event < 15
   end
 
   def age_at_event
+    # We might not have all the fields populated here
+    # since we're called from validate
+    return 0 unless self.birth
     EVENT_DATE.year - self.birth.year - (self.birth.change(:year => EVENT_DATE.year) > EVENT_DATE ? 1 : 0)
   end
 

@@ -8,35 +8,57 @@ require 'ramaze/helper/user'
 module Ramaze
   module Helper
     module UserHelper
-      def team_logged_in?
+      def backoffice_logged_in?
         true
       end
 
-      def team_user
+      def backoffice_user
         User[:email=>'bonnie@example.org']
       end
 
       alias real_logged_in? logged_in?
-      alias logged_in? team_logged_in?
+      alias logged_in? backoffice_logged_in?
 
       alias real_user user
-      alias user team_user
+      alias user backoffice_user
     end
   end
 end
 
+me = User.create(:email=> 'bonnie@example.org', :password => 'xyz', :admin => true)
+me.profile = Profile.create ({
+  :name              => 'Nimcu',
+  :surname           => 'Dranreb',
+  :gender            => 'male',
+  :birth             => Date.parse("1988-1-1"),
+  :address1          => "Lapierre",
+  :address2          => "Specialized",
+  :zip               => 12345,
+  :city              => "Sunn",
+  :country           => "Fox",
+  :org               => "ASSLC",
+  :licence           => 54321,
+  :phone             => "89",
+  :emergency_contact => "Marcel"
+})
 
 describe "The Backoffice controller" do
   behaves_like :rack_test
 
   # Shows list of subscribers in index
-  should "show list of subscribers in index" do
+  should "show list of subscribers in index for logged in admins" do
     get('/backoffice/').status.should == 200
-  #  nok = Nokogiri::HTML(last_response.body)
-  #  nok.css("form").attribute('action').value.should == "/users/login"
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("#table-subscribers").should.not.be.nil
   end
 
-
+  should "not show list of subscribers in index for non admins" do
+    me.admin = false
+    me.save
+    get('/backoffice/').status.should == 302
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("#table-subscribers").should.be.empty
+  end
 end
 
 module Ramaze
@@ -47,3 +69,17 @@ module Ramaze
     end
   end
 end
+
+describe "The Backoffice controller" do
+  behaves_like :rack_test
+
+  should "not show list of subscribers in index for non-logged" do
+    get('/backoffice/').status.should == 302
+    nok = Nokogiri::HTML(last_response.body)
+    nok.css("#table-subscribers").should.be.empty
+  end
+end
+
+me.profile.delete
+me.delete
+

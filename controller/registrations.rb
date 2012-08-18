@@ -5,7 +5,7 @@
 # It will print out what information is missing
 # to accept it
 class Registrations < Controller
-  ELEMENTS = { :certificate => "certificat",
+  ELEMENTS = { :certificate => "certificat médical",
                :authorization => "autorisation parentale",
                :payment => "règlement" }
 

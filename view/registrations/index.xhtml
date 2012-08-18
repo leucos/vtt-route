@@ -12,7 +12,9 @@ Cette page liste les éléments que vous devez nous faire parvenir. Si nous les 
       <?r if p[:status] ?>
       <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
       <?r else ?>
-      <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+      <a href="#" rel="popover" class="pull-right" data-content="#{html_escape p[:description]}" data-original-title="#{html_escape p[:name].capitalize}" alt="#{html_escape p[:name].capitalize}">
+        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+      </a>
       <?r end ?>
     </div>
     <?r end ?>
@@ -25,7 +27,9 @@ Cette page liste les éléments que vous devez nous faire parvenir. Si nous les 
     <?r else ?>
     <div id="div-team" class="alert alert-error">
       <strong>Équipe</strong>: vous n'êtes dans aucune équipe
-      <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+      <a href="#" rel="popover" class="pull-right" data-content="Quel que soit le mode de course (Solo, Duo, Tandem), vous devez créer une équipe !" data-original-title="Équipe" alt="Équipe">
+        <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+      </a>
     </div>
     <?r end ?>
   </div>

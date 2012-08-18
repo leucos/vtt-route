@@ -8,7 +8,6 @@ class Backoffice < Controller
     :css   => {
       :disabled => 'disabled',
       :prev     => 'previous',
-    # and so on.
     }
   }
 

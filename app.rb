@@ -7,7 +7,7 @@ require 'ramaze'
 
 # Version
 class VttRoute
-  Version = "0.1.2"
+  Version=`git describe --always --tag`.chomp
 end
 
 # Make sure that Ramaze knows where you are

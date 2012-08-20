@@ -5,10 +5,8 @@
 require 'rubygems'
 require 'ramaze'
 
-# Version
-class VttRoute
-  Version=`git describe --always --tag`.chomp
-end
+require __DIR__('lib/vtt_route')
+require __DIR__('lib/mail_worker')
 
 # Make sure that Ramaze knows where you are
 Ramaze.options.roots = [__DIR__]

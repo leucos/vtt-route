@@ -15,6 +15,9 @@ gem 'bcrypt-ruby'
 gem 'redis'
 gem 'fnordmetric'
   #:git => 'https://github.com/hewo/fnordmetric.git', :branch => 'master'
+gem 'sidekiq'
+gem 'slim'
+gem 'sprockets'
 
 group :development do
   gem 'rdoc'

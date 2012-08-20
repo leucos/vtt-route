@@ -68,7 +68,9 @@ class Users < Controller
 
     check_and_save_user(u, request.params['email'])
 
-    send_confirmation_email(u.email, u.confirmation_key)
+    VttRoute::Confirmer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, u.confirmation_key)}")
+    event(:email_sent, :type => :confirm)
+
     flash[:success] = 'Utilisateur créé'
     @subtitle = 'Email de vérification envoyé'
     @title = 'Inscription'

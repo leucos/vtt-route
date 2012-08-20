@@ -30,5 +30,7 @@ end
 # Set the default task to running all the bacon specifications
 task :default => [ :bacon ]
 
-multitask :start => [ 'metrics:start', 'server:start' ]
-multitask :stop => [ 'metrics:stop', 'server:stop' ]
+desc "Starts the whole suite"
+multitask :start => [ 'fnordmetric:start', 'server:start', 'sidekiq:workers:start', 'sidekiq:web:start' ]
+desc "Stops the whole suite"
+multitask :stop => [ 'fnordmetric:stop', 'server:stop', 'sidekiq:workers:stop', 'sidekiq:web:stop' ]

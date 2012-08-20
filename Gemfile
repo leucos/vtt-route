@@ -18,6 +18,7 @@ gem 'fnordmetric'
 gem 'sidekiq'
 gem 'slim'
 gem 'sprockets'
+gem 'daemons'
 
 group :development do
   gem 'rdoc'

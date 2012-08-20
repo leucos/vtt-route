@@ -169,6 +169,7 @@ DEPENDENCIES
   bcrypt-ruby
   bundler
   capybara
+  daemons
   fnordmetric
   foreman
   json

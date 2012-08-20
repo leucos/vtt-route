@@ -236,7 +236,8 @@ widget 'Performance', {
 end
 
 
-
-
-FnordMetric.standalone
-
+FnordMetric::Web.new(:port => ARGV[0])
+#FnordMetric::Acceptor.new(:protocol => :tcp, :port => 2323)
+FnordMetric::Acceptor.new({})
+FnordMetric::Worker.new
+FnordMetric.run

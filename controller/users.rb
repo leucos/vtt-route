@@ -68,7 +68,8 @@ class Users < Controller
 
     check_and_save_user(u, request.params['email'])
 
-    VttRoute::Confirmer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, u.confirmation_key)}")
+    #MailWorker::Confirmer.perform_async
+    send_confirmation_email(u.email, u.confirmation_key)
     event(:email_sent, :type => :confirm)
 
     flash[:success] = 'Utilisateur créé'
@@ -111,6 +112,7 @@ class Users < Controller
       flash[:error] = "Désolé, vous n'avez pas confirmé votre compte. Veuillez suivre les instructions reçues par email"
       event(:edge_case, :controller => "Users#lostpassword", :type => :failed_not_confirmed) 
 
+      #MailWorker::Confirmer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, u.confirmation_key)}")
       send_confirmation_email(u.email, u.confirmation_key)
       redirect_referrer
     end
@@ -118,7 +120,9 @@ class Users < Controller
     # Now we can generate a request
     u.set_confirmation_key
     u.save
+
     send_reset_email(u.email, u.confirmation_key)
+
     flash[:success] = "Veuillez vérifier votre messagerie pour réinitialiser votre mot de passe"
     redirect MainController.r(:/)
   end
@@ -187,86 +191,11 @@ class Users < Controller
   end
 
   def send_confirmation_email(email, key)
-    #:nocov:
-    body =<<EOF
-Bonjour,
-
-Afin de valider votre inscription au challenge VTT-Route, merci de bien
-vouloir suivre ce lien :
-
-#{VttRoute.options.myurl}/#{r(:confirm, key)}
-
-Vous pourrez ensuite inviter un coéquipier si vous participez à un 
-challenge par équipes.
-
-En cas de difficultés, vous pouvez nous contacter en cliquant sur 'Répondre'
-ou en écrivant à : info@challengevttroute.fr
-
-Cordialement,
-
-L'équipe du challenge VTT-Route
---
-Challenge VTT-Route
-info@challengevttroute.fr
-EOF
-
-  Ramaze::Log.info("sending validation email to #{email}");
-  event(:email_sent, :type => :subscription)
-  Pony.mail(:to => email,
-            :from => 'info@challengevttroute.fr',
-            :subject => 'Inscription au challenge VTT-Route',
-            :body => body,
-            :via => :sendmail)
-
-  event(:email_sent, :type => :administrative)
-  Pony.mail(:to => VttRoute.options.admin_email,
-            :from => 'info@challengevttroute.fr',
-            :subject => '[vtt-route] Inscription reçue',
-            :body => "L'utilisateur #{email} s'est inscrit.",
-            :via => :sendmail)
-  #:nocov:
+    MailWorker::Confirmer.perform_async(email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, key)}")
   end
 
-  def send_reset_email(email, key) # :nocov:
-    #:nocov:
-    body =<<EOF
-Bonjour,
-
-Apparemment, vous avez perdu votre mot de passe. Ne vous inquiétez
-pas, ça nous arrive à tous. Vous pouvez le ré-initialiser en vous
-rendant à cette adresse :
-
-#{VttRoute.options.myurl}/#{r(:lost_password, key)}
-
-Si vous n'avez pas perdu votre mot de passe, quelqu'un doit faire une
-mauvaise blague. Dans ce cas, vous pouvez ignorer ce message.
-
-En cas de difficultés, vous pouvez nous contacter en cliquant sur
-'Répondre' ou en écrivant à : info@challengevttroute.fr
-
-Cordialement,
-
-L'équipe du challenge VTT-Route
---
-Challenge VTT-Route
-info@challengevttroute.fr
-EOF
-
-  Ramaze::Log.info("sending reset email to #{email}");
-  event(:email_sent, :type => :password_reset)
-  Pony.mail(:to => email,
-            :from => 'info@challengevttroute.fr',
-            :subject => 'Mot de passe perdu sur challenge VTT-Route',
-            :body => body,
-            :via => :sendmail)
-
-  event(:email_sent, :type => :administrative)
-  Pony.mail(:to => VttRoute.options.admin_email,
-            :from => 'info@challengevttroute.fr',
-            :subject => '[vtt-route] Reset envoyé',
-            :body => "L'utilisateur #{email} a perdu son mot de passe.",
-            :via => :sendmail)
-  #:nocov:
+  def send_reset_email(email, key)
+    MailWorker::Reseter.perform_async(email, "#{VttRoute.options.myurl}/#{r(:lost_password, key)}")
   end
 
 end

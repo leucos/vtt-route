@@ -1,9 +1,9 @@
 pid: tmp/pids/thin.pid
 log: log/thin.log
 timeout: 30
-max_conns: 10
-port: 5000
-max_persistent_conns: 5
+max_conns: 100
+port: 7000
+max_persistent_conns: 50
 servers: 1
 address: 0.0.0.0
 daemonize: true

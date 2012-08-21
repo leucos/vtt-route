@@ -47,8 +47,6 @@ end
 
 
   class Confirmer < MailWorker
-
-
     def perform(email, confirm_url)
       subject = 'Inscription au challenge VTT-Route'
       body =<<EOF
@@ -79,8 +77,8 @@ EOF
   end
 
   class Reseter < MailWorker
-
-    def send_reset_email(email, key) 
+    def perform(email, url) 
+      subject = 'Mot de passe perdu sur challenge VTT-Route'
       body =<<EOF
 Bonjour,
 
@@ -88,7 +86,7 @@ Apparemment, vous avez perdu votre mot de passe. Ne vous inquiétez
 pas, ça nous arrive à tous. Vous pouvez le ré-initialiser en vous
 rendant à cette adresse :
 
-#{VttRoute.options.myurl}/#{r(:lost_password, key)}
+#{url}
 
 Si vous n'avez pas perdu votre mot de passe, quelqu'un doit faire une
 mauvaise blague. Dans ce cas, vous pouvez ignorer ce message.
@@ -104,7 +102,7 @@ Challenge VTT-Route
 info@challengevttroute.fr
 EOF
       
-      send_email(:type => "reset", :subject => subject, :body => body)
+      send_email(:type => "reset", :subject => subject, :to => email, :body => body)
     end
   end
 

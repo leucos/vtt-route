@@ -13,37 +13,38 @@ Sidekiq.configure_server do |config|
     config.redis = { :namespace => 'org.chalengevttroute.www.sidekiq' }
 end
 
-class MailWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: "high"
+module MailUtils
+  class MailWorker
+    include Sidekiq::Worker
+    sidekiq_options queue: "high"
 
-  # Usage : send_email(:type=>:validation, :to ..., :from ...)
-  def send_email(options)
-    options.merge!(:from => MailWorker::From,
-                  :type => :unknown,
-                  :charset => 'utf-8',
-                  :via => MailWorker::Via) { |key, v1, v2| v1 }
+    # Usage : send_email(:type=>:validation, :to ..., :from ...)
+    def send_email(options)
+      options.merge!(:from => MailUtils::From,
+                    :type => :unknown,
+                    :charset => 'utf-8',
+                    :via => MailUtils::Via) { |key, v1, v2| v1 }
 
-    $stdout.write options.inspect
+      $stdout.write options.inspect
 
-    type = options.delete(:type)
+      type = options.delete(:type)
 
-    Pony.mail(options)
+      Pony.mail(options)
 
-    # Send email to admin
-    options.merge!(:from => MailWorker::From,
-                  :subject => "[#{type}] #{options[:subject]}",
-                  :to => MailWorker::AdminEmail,
-                  :type => :administrative,
-                  :body => "Email sent to #{options[:to]}",
-                  :charset => 'utf-8',
-                  :via => MailWorker::Via)
+      # Send email to admin
+      options.merge!(:from => MailUtils::From,
+                    :subject => "[#{type}] #{options[:subject]}",
+                    :to => MailUtils::AdminEmail,
+                    :type => :administrative,
+                    :body => "Email sent to #{options[:to]}",
+                    :charset => 'utf-8',
+                    :via => MailUtils::Via)
 
-    Pony.mail(options)
+      Pony.mail(options)
 
 
+    end
   end
-end
 
 
   class Confirmer < MailWorker
@@ -106,3 +107,41 @@ EOF
     end
   end
 
+  class Reminder < MailWorker
+    def perform(email, missing, url) 
+      subject = 'Rappel pour votre inscription sur Challenge VTT-Route'
+      body =<<EOF
+Bonjour,
+
+Vous vous êtes récemment inscrit sur le site de challenge VTT-Route et nous vous
+en remercions.
+
+Cependant, votre inscription ne sera effective que lorsque la totalité des éléments requis seront fournis.
+
+Pour que votre inscription soit prise en compte, merci de vérifie rles éléments suivants :
+
+#{
+missing.each do |m|
+
+end
+}
+
+
+Vous pouvez vérifier l'éatt de votre inscription à cette adresse :
+
+#{url}
+
+En cas de difficultés, vous pouvez nous contacter en cliquant sur 'Répondre' ou
+en écrivant à : info@challengevttroute.fr
+
+Cordialement,
+
+L'équipe du challenge VTT-Route -- Challenge VTT-Route
+info@challengevttroute.fr
+EOF
+      
+      send_email(:type => "reset", :subject => subject, :to => email, :body => body)
+    end
+  end
+
+end

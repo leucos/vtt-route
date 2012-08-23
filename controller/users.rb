@@ -191,11 +191,11 @@ class Users < Controller
   end
 
   def send_confirmation_email(email, key)
-    MailWorker::Confirmer.perform_async(email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, key)}")
+    MailUtils::Confirmer.perform_async(email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, key)}")
   end
 
   def send_reset_email(email, key)
-    MailWorker::Reseter.perform_async(email, "#{VttRoute.options.myurl}/#{r(:lost_password, key)}")
+    MailUtils::Reseter.perform_async(email, "#{VttRoute.options.myurl}/#{r(:lost_password, key)}")
   end
 
 end

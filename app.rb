@@ -6,7 +6,7 @@ require 'rubygems'
 require 'ramaze'
 
 require __DIR__('lib/vtt_route')
-require __DIR__('lib/mail_worker')
+require __DIR__('lib/mail_utils')
 
 # Make sure that Ramaze knows where you are
 Ramaze.options.roots = [__DIR__]

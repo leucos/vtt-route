@@ -3,7 +3,7 @@
 
 SIDEKIQ_WEB_PORT=1234
 
-class MailWorker
+module MailUtils
   From = 'info@challengevttroute.fr'
   AdminEmail = 'mb@mbnet.fr'
   Via = :sendmail

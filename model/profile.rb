@@ -56,5 +56,27 @@ class Profile < Sequel::Model
     self.payment_received
   end
 
+  def missing
+    elements = {  :certificate    => { :name => "certificat médical", 
+                                       :description => "Sans licence sportive, vous devez fournir un certificat médical." },
+                  :authorization  => { :name => "autorisation parentale",
+                                       :description => "Vous êtes mineur, une autorisation parentale est requise." },
+                  :payment        => { :name => "règlement",
+                                       :description => "Le règlement doit nous parvenir à l'avance." },
+                  :team           => { :name => "équipe",
+                                       :description => "Vous n'êtes dans aucune équipe" }
 
+                }
+
+    pieces = Array.new
+
+    [ :certificate, :authorization, :payment ].each do |p|
+      pieces << {  :type => p, 
+                    :name => elements[p][:name], 
+                    :description => elements[p][:description],
+                    :status => self.send(p.to_s + "_received?") } if (self.send(p.to_s + "_required?"))
+    end
+    pieces
+  end
 end
+

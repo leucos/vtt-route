@@ -30,5 +30,28 @@ class Backoffice < Controller
 
     @subscribers = paginate(u)
   end
+
+  def remind_all
+    User.each do |u|
+      do_remind(u)
+    end
+  end
+
+  def remind(id=nil)
+    if !id
+      flash[:error] = "Utilisateur non fourni"
+      redirect_referer
+    end
+
+    flash[:info] = "Not implemented"
+    redirect_referer
+  end
+
+  private
+
+  def do_remind(user)
+    # Send reminder to id
+
+  end
 end
 

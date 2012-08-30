@@ -30,7 +30,7 @@ class Profiles < Controller
     @subtitle = 'Profil'
 
     Ramaze::Log.info("Sending job to sidekiq")
-    MailWorker.perform_async(10)
+    MailUtils::MailWorker.perform_async(10)
 
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile

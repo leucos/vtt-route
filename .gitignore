@@ -1,5 +1,7 @@
 .bundle
 .tags*
+.trash
+.yardoc
 coverage/
 doc/
 log/

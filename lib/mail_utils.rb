@@ -109,6 +109,12 @@ EOF
 
   class Reminder < MailWorker
     def perform(email, missing, url) 
+
+      inner_message = ""
+      missing.each_key do |m|
+        inner_message << "* " + missing[m]['element'].capitalize + "\n\n" + missing[m]['message'] + "\n"
+      end
+      
       subject = 'Rappel pour votre inscription sur Challenge VTT-Route'
       body =<<EOF
 Bonjour,
@@ -118,16 +124,11 @@ en remercions.
 
 Cependant, votre inscription ne sera effective que lorsque la totalité des éléments requis seront fournis.
 
-Pour que votre inscription soit prise en compte, merci de vérifie rles éléments suivants :
+Pour que votre inscription soit prise en compte, merci de vérifier les éléments suivants :
 
-#{
-missing.each do |m|
+#{inner_message}
 
-end
-}
-
-
-Vous pouvez vérifier l'éatt de votre inscription à cette adresse :
+Vous pouvez vérifier l'état de votre inscription à cette adresse :
 
 #{url}
 

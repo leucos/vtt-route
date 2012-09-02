@@ -95,19 +95,6 @@
               <li class="divider-vertical"></li>
               <li><a href="#{Users.r(:login)}">Connexion</a></li>
             <?r end ?>
-              <li class="divider-vertical"></li>
-              <li><div style="margin-top: 10px;"><div class="g-plusone" data-size="small" data-annotation="none"></div></div></li>
-              <li class="divider-vertical"></li>
-              <?r if user and user.profile ?>
-              <?r   message = "Je participe au challenge VTT-Route !" ?>
-              <?r else ?>
-              <?r   message = "Un petit coup de pub pour le challenge VTT-Route !" ?>
-              <?r end ?>
-              <li><div style="margin-top: 8px;"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.challengevttroute.fr" data-text="#{message}" data-lang="fr" data-hashtags="vttroute">Tweeter</a></div></li> 
-              <li>
-<!--               <?r if user and user.profile ?>
-              #{user.profile.surname} #{user.profile.name} 
-              <?r end ?> -->
               </li>
             </ul>            
           </div><!-- /.nav-collapse -->
@@ -143,12 +130,16 @@
 
             <?r end ?>
           <?r end ?>
-          <h2>#{@inscrits} inscrits - #{@equipes} équipes</h2> 
-          <div class="progress progress-striped
-            active">
-            <div class="bar"
-              style="width: #{@avancement}%;"></div>
-          </div>
+
+          <ul class="nav nav-tabs">
+            <li #{"class='active'" if @caller[:method]=="users"}><a href="#{Backoffice.r(:users)}">Inscrits</a></li>
+            <li #{"class='active'" if @caller[:method]=="noprofile"}><a href="#{Backoffice.r(:noprofile)}">Sans profil</a></li>
+            <li #{"class='active'" if @caller[:method]=="teams"}><a href="#{Backoffice.r(:teams)}">Equipes</a></li>
+            <li #{"class='active'" if @caller[:method]=="tools"}><a href="#{Backoffice.r(:tools)}">Outils</a></li>
+            <li #{"class='active'" if @caller[:method]=="statistics"}><a href="#{Backoffice.r(:statistics)}">Statistiques</a></li>
+          </ul>
+          
+          <h2 id="subtitle">#{@subtitle}</h2>
 
           #{@content}
 
@@ -319,34 +310,6 @@
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
     </script>
 
-
-
-    <script type='text/javascript'>
-      /*  CarouFredSel: an infinite, circular jQuery carousel.
-        Configuration created by the "Configuration Robot"
-        at caroufredsel.frebsite.nl
-      */
-      $(function() {
-        $("#sponsors_elements").carouFredSel({
-          padding: [0, 0, 40, 0],
-          scroll: {
-            items: 4,
-            fx: "slide",
-            pauseOnHover: true
-          } /*,
-          prev    : {
-            button  : "#sponsors_elements_prev",
-            key     : "left"
-          },
-          next    : {
-            button  : "#sponsors_elements_next",
-            key     : "right"
-          },
-          pagination  : "#sponsors_elements_pag" */
-        });
-      });
-    </script>
-
     <!-- Enable popovers -->
     <script type='text/javascript'>
       $(function() {
@@ -354,12 +317,8 @@
       });
     </script>
 
-    <?r if @loadmap ?>
-    #{js('https://maps.googleapis.com/maps/api/js?sensor=false')}
-    <?r end ?>
-
     #{js('bootstrap.min')}
-
+    #{js('users-ajax')}
   </body>
 </html>
 

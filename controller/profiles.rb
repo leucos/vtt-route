@@ -29,9 +29,6 @@ class Profiles < Controller
     @title = 'Espace participants'
     @subtitle = 'Profil'
 
-    Ramaze::Log.info("Sending job to sidekiq")
-    MailUtils::MailWorker.perform_async(10)
-
     # Quite ugly, but we don't want to use 'if's in view
     if user.profile
       FIELD_NAMES.each_key do |f|

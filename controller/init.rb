@@ -36,7 +36,6 @@ class Controller < Ramaze::Controller
     #   Keep in mind that render_file takes a full path -
     #   so you should use something like 'Ramaze.options.views[0]'
     #   to get at your view directory
-    flash[:error] = "Désolé, cette page n'existe pas"
     event(:status_404)
     render_file("#{Ramaze.options.views[0]}/error_404.xhtml")
   end

@@ -1,0 +1,11 @@
+---
+Duplication:
+  exclude:
+  - Reminder#perform
+  - MailUtils::MailWorker#self.send_email
+FeatureEnvy:
+  exclude:
+  - MailUtils::Reminder#perform
+
+
+

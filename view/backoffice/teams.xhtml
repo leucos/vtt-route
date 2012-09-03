@@ -6,13 +6,28 @@
     <thead>
       <tr>
         <th>Nom</th>
+        <th>Type</th>
+        <th>Participants</th>
+        <th>Plaque</th>
       </tr>
     </thead>
     <tbody>
       <?r @teams.each do |s| ?>
-      <tr>
+<!--      <tr #{'style="background-color: #CC2222;"' if s.has_free_spot?}> -->
+      <tr style="background-color: #CC2222;">
         <!-- Name col -->
-        <td>#{s.name}</td>
+        <td style="vertical-align: middle;">#{s.name}</td>
+        <!-- Type col -->
+        <td style="vertical-align: middle;"><span class="badge badge-inverse">#{s.race_type}</span>#{'<i class="icon-plus-sign"></i><span class="badge badge-info">Handi</span>' if s.handi}</p></td>
+        <!-- Participants col -->
+        <td style="vertical-align: middle;#{'background-color: #F2DEDE;' if s.has_free_spot?}">
+          <ul>
+            <li><strong>VTT</strong> : #{s.vtt ? s.vtt.display_name : "<em>libre</em>"}</li>
+            <li><strong>Route</strong> : #{s.route ? s.route.display_name : "<em>libre</em>"}</li>
+          </ul>
+        </td>
+        <!-- Type col -->
+        <td>#{s.plate}</td>
       </tr>
       <?r end ?>
     </tbody>

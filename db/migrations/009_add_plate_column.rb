@@ -8,6 +8,7 @@ Sequel.migration do
   up do
     transaction do
       alter_table(:teams) do
+        drop_column :plate
         add_column :plate, Fixnum
       end
     end

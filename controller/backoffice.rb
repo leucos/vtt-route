@@ -46,7 +46,8 @@ class Backoffice < Controller
 
   def noprofile
     p = Profile.select(:id)
-    u = User.where(:id => p).invert
+    u = User.where(:id => p).invert.filter(:admin=>false, :superadmin=>false)
+
     @subtitle = "#{u.count} inscrits sans profil"
     @subscribers = paginate(u)
   end

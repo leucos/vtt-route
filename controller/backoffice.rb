@@ -35,6 +35,7 @@ class Backoffice < Controller
     if (!request.xhr?)
       u = User.filter(:admin=>false, :superadmin=>false)
       @subscribers = paginate(u)
+      @subtitle = "#{u.count} inscrits"
     else
       Ramaze::Log.info("got ajax request")
       u = User.filter(:admin=>false, :superadmin=>false).select(:id)
@@ -46,7 +47,7 @@ class Backoffice < Controller
   def noprofile
     p = Profile.select(:id)
     u = User.where(:id => p).invert
-
+    @subtitle = "#{u.count} inscrits sans profil"
     @subscribers = paginate(u)
   end
 
@@ -57,6 +58,7 @@ class Backoffice < Controller
 
   def teams
     @teams = paginate(Team)
+    @subtitle = "#{@teams.count} équipes"
   end
 
   def tools
@@ -84,9 +86,13 @@ class Backoffice < Controller
   end
 
   def remind_all
+    sent = 0
     User.each do |u|
-      do_remind(u)
+      sent += 1 if do_remind(u).count > 0
     end
+    
+    flash[:info] = "#{sent} rappels envoyés"
+    redirect_referrer
   end
 
   def remind(id=nil)
@@ -97,15 +103,19 @@ class Backoffice < Controller
 
     u = User[id]
 
-    if !user
+    if !u
       flash[:error] = "Utilisateur inconnu"
       redirect_referer
     end
 
-    flash[:info] = "Rappel envoyé à #{u.email} pour : "
-
     do_remind(u).each do |what|
       flash[:info] << what.to_s
+    end
+
+    if flash[:info]
+      flash[:info] = "Rappel envoyé à #{u.email} pour : #{flash[:info]}"
+    else
+      flash[:info] = "Aucun rappel nécessaire"
     end
 
     redirect_referer
@@ -128,7 +138,10 @@ class Backoffice < Controller
 EOF
     end
 
-    MailUtils::Reminder.perform_async(u.email, missing, "#{VttRoute.options.myurl}/#{Registrations.r(:index)}")
+    if missing.count > 0
+      Ramaze::Log.info "Sending reminder to #{u.email}"
+      MailUtils::Reminder.perform_async(u.email, missing, "#{VttRoute.options.myurl}/#{Registrations.r(:index)}")
+    end
 
     missing.keys
   end

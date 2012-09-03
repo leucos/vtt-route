@@ -109,7 +109,7 @@ class Backoffice < Controller
     end
 
     do_remind(u).each do |what|
-      flash[:info] << what.to_s
+      flash[:info] = flash[:info].to_s + what.to_s
     end
 
     if flash[:info]

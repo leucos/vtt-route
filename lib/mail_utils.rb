@@ -1,5 +1,8 @@
 # encoding: UTF-8
 #
+# Mail related utils
+#
+
 require 'sidekiq'
 require 'pony'
 
@@ -13,19 +16,21 @@ Sidekiq.configure_server do |config|
     config.redis = { :namespace => 'org.chalengevttroute.www.sidekiq' }
 end
 
+# This modules handles mail related anctivities
+# It will use sidekiq under the hood to manage it's mail sending
+# business
 module MailUtils
+  # MailWorker is a base classe for sidekiq task handlers
   class MailWorker
     include Sidekiq::Worker
     sidekiq_options queue: "high"
 
     # Usage : send_email(:type=>:validation, :to ..., :from ...)
-    def send_email(options)
+    def self.send_email(options)
       options.merge!(:from => MailUtils::From,
                     :type => :unknown,
                     :charset => 'utf-8',
-                    :via => MailUtils::Via) { |key, v1, v2| v1 }
-
-      $stdout.write options.inspect
+                    :via => MailUtils::Via) { |key, first, second| first }
 
       type = options.delete(:type)
 
@@ -41,12 +46,10 @@ module MailUtils
                     :via => MailUtils::Via)
 
       Pony.mail(options)
-
-
     end
   end
 
-
+  # Confirmer sends confirmation emails
   class Confirmer < MailWorker
     def perform(email, confirm_url)
       subject = 'Inscription au challenge VTT-Route'
@@ -72,11 +75,12 @@ Challenge VTT-Route
 info@challengevttroute.fr
 EOF
     
-      send_email(:type => "confirmation", :subject => subject, :to => email, :body => body)
+      MailWorker.send_email(:type => "confirmation", :subject => subject, :to => email, :body => body)
 
     end
   end
 
+  # Reseter sends a password reset email to the specified recipient
   class Reseter < MailWorker
     def perform(email, url) 
       subject = 'Mot de passe perdu sur challenge VTT-Route'
@@ -103,16 +107,18 @@ Challenge VTT-Route
 info@challengevttroute.fr
 EOF
       
-      send_email(:type => "reset", :subject => subject, :to => email, :body => body)
+      MailWorker.send_email(:type => "reset", :subject => subject, :to => email, :body => body)
     end
   end
 
+  # Reminder send reminders to subscribers (e.g. you forgot this or
+  # that)
   class Reminder < MailWorker
     def perform(email, missing, url) 
 
       inner_message = ""
-      missing.each_key do |m|
-        inner_message << "* " + missing[m]['element'].capitalize + "\n\n" + missing[m]['message'] + "\n"
+      missing.each_key do |key|
+        inner_message << "* " + missing[key]['element'].capitalize + "\n\n" + missing[key]['message'] + "\n"
       end
       
       subject = 'Rappel pour votre inscription sur Challenge VTT-Route'
@@ -141,7 +147,7 @@ L'équipe du challenge VTT-Route -- Challenge VTT-Route
 info@challengevttroute.fr
 EOF
       
-      send_email(:type => "reset", :subject => subject, :to => email, :body => body)
+      MailWorker.send_email(:type => "remider", :subject => subject, :to => email, :body => body)
     end
   end
 

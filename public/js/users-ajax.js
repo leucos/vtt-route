@@ -5,7 +5,7 @@ $(document).ready(function(){
   $('#search').keyup(function() {
     console.log("got key up");
     var pattern = $('#search').val();
-    if (pattern.length > 3 ) {
+    if (pattern.length > 2 ) {
       $.ajax({
         url: "/backoffice/users/" + $("#search").val() + ".json",
         success: function(result){

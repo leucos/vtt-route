@@ -40,7 +40,7 @@ class Backoffice < Controller
       Ramaze::Log.info("got ajax request")
       u = User.filter(:admin=>false, :superadmin=>false).select(:id)
       p = Profile.where(:user_id => u)
-      @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).all
+      @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).all
     end
   end
 

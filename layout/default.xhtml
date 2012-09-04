@@ -112,6 +112,10 @@
               <li><a href="#{Teams.r(:index)}">Mon Équipe</a></li>
               <li><a href="#{Profiles.r(:index)}">Mon Profil</a></li>
               <li class="divider"></li>
+              <?r if user.admin ?>
+              <li><a href="#{Backoffice.r(:users)}">Administration</a></li>
+              <li class="divider"></li>
+              <?r end ?>
               <li><a href="#{Users.r(:logout)}">Déconnexion</a></li>
             <?r else ?>
               <li><a href="#{Users.r(:create)}">Inscription</a></li>

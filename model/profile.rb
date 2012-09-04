@@ -45,11 +45,11 @@ class Profile < Sequel::Model
   end
 
   def certificate_received?
-    self.payment_received
+    self.certificate_received
   end
 
   def authorization_received?
-    self.payment_received
+    self.authorization_received
   end
 
   def payment_received?

@@ -40,9 +40,9 @@
         <?r if s.profile ?>
           <?r if s.profile.authorization_required? ?>
             <?r if s.profile.authorization_received? ?>
-          <span class="badge badge-success pull-right"><i class="icon-remove icon-white"></i> Reçue</span>
+          <span id="authorization-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçue</span>
             <?r else ?>
-          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquante</span>
+          <span id="authorization-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquante</span>
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>
@@ -55,9 +55,9 @@
         <?r if s.profile ?>
           <?r if s.profile.certificate_required? ?>
             <?r if s.profile.certificate_received? ?>
-            <span class="badge badge-success pull-right"><i class="icon-remove icon-white"></i> Reçu</span>
+            <span id="certificate-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçu</span>
             <?r else ?>
-          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+          <span id="certificate-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquant</span>
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>
@@ -70,9 +70,9 @@
         <?r if s.profile ?>
           <?r if s.profile.payment_required? ?>
             <?r if s.profile.payment_received? ?>
-            <span class="badge badge-success pull-right"><i class="icon-remove icon-white"></i> Reçu</span>
+            <span id="payment-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçu</span>
             <?r else ?>
-          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+          <span id="payment-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquant</span>
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>

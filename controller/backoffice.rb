@@ -31,16 +31,40 @@ class Backoffice < Controller
                 :method => action.method }
   end
 
+  # Toggles whether a docume,t has been received or not
+  # Returns true or ""
+  def toggle_document(document, profile_id)
+    return if (!request.xhr?)
+
+    p = Profile[profile_id]
+
+    return "invalid document" unless ["payment","authorization","certificate"].include?(document)
+
+    method_received = "#{document}_received"
+    method_required = "#{document}_required?"
+
+    return "not required" unless p.send(method_required)
+
+    # Ramaze::Log.info("pre state for #{method_received} : #{p.send(method_received)}")
+
+    p.send("#{method_received}=", !p.send(method_received))
+
+    # Ramaze::Log.info("post state for #{method_received} : #{p.send(method_received)}")
+
+    p.save
+    p.send(method_received)
+  end
+
   def users(filter = nil)
-    if (!request.xhr?)
-      u = User.filter(:admin=>false, :superadmin=>false)
-      @subscribers = paginate(u)
-      @subtitle = "#{u.count} inscrits"
-    else
+    if (request.xhr?)
       Ramaze::Log.info("got ajax request")
       u = User.filter(:admin=>false, :superadmin=>false).select(:id)
       p = Profile.where(:user_id => u)
       @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).all
+    else   
+      u = User.filter(:admin=>false, :superadmin=>false)
+      @subscribers = paginate(u)
+      @subtitle = "#{u.count} inscrits"
     end
   end
 

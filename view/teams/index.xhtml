@@ -5,7 +5,6 @@
   <p>Vous pouvez créer une équipe, ou rejoindre une équipe existante <em>("Rejoindre une équipe" sera disponible courant Aôut)</em></p>
   <p>Si vous créez une équipe, vous pourrez inviter un co-équipier. Pour cela, votre co-équipier doit déjà être inscrit sur le site.</p> 
   <a class="btn btn-primary" data-toggle="modal" href="#add_team" href="">Créer une équipe</a>
-  <a class="btn disabled" data-toggle="modal" href="#team" href="">Rejoindre une équipe</a>
 <?r else ?>
   <div class="well">
     <p class="lead">#{@team.name} <span class="badge badge-inverse">#{@team.race_type}</span>#{'<i class="icon-plus-sign"></i><span class="badge badge-info">Handi</span>' if @team.handi}</p>

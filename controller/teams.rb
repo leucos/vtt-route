@@ -108,7 +108,8 @@ class Teams < Controller
 
     if p.nil?
       flash[:error] = "Adresse email non fournie"
-      event(:edge_case, :controller => "Teams#invite", :type => :email_not_provided)
+      event(:edge_case, :_message =>  "Teams#invite:email_not_provided",
+        :controller => "Teams#invite", :type => :email_not_provided)
     end
 
     peer = User[:email => p]
@@ -143,18 +144,21 @@ class Teams < Controller
 
     if !t
       flash[:error] = "Pas d'invitation à ce numéro" 
-      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_such_record) 
+      event(:edge_case, :_message => "Teams#confirm:failed_no_such_record", 
+        :controller => "Teams#confirm", :type => :failed_no_such_record) 
       redirect_referrer
     end
     if !u
       flash[:error] = "Pas d'invitation pour cet email" 
-      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_such_email) 
+      event(:edge_case, :_message => "Teams#confirm:failed_no_such_email",
+        :controller => "Teams#confirm", :type => :failed_no_such_email) 
       redirect_referrer
     end
 
     if t.vtt_id and t.route_id  
       flash[:error] = "Désolé, la place est prise" 
-      event(:edge_case, :controller => "Teams#confirm", :type => :failed_no_room_left) 
+      event(:edge_case, :_message => "Teams#confirm:failed_no_room_left",
+        :controller => "Teams#confirm", :type => :failed_no_room_left) 
       redirect_referrer
     end
 

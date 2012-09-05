@@ -22,7 +22,8 @@ class Backoffice < Controller
 
   before_all do
     if !logged_in? or !user.admin
-      event(:edge_case, :controller => "Backoffice#before_all", :type => :acces_denied) 
+      event(:edge_case, :_message => "Backoffice#before_all:acces_denied",
+        :controller => "Backoffice#before_all", :type => :acces_denied) 
       redirect_referrer
     end
 

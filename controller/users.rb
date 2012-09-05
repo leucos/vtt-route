@@ -104,13 +104,17 @@ class Users < Controller
     # No email, this user doesn't exist
     if u.nil? 
       flash[:error] = "Désolé, cet email n'existe pas"
-      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_no_email) 
+      event(:edge_case, :_message => "Users#lostpassword:failed_no_email",
+        :controller => "Users#lostpassword", :type => :failed_no_email) 
+
       redirect_referrer
     end
+
     # Account not confirmed yet
     if !u.confirmed
       flash[:error] = "Désolé, vous n'avez pas confirmé votre compte. Veuillez suivre les instructions reçues par email"
-      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_not_confirmed) 
+      event(:edge_case, :_message => "Users#lostpassword:failed_not_confirmed",
+       :controller => "Users#lostpassword", :type => :failed_not_confirmed) 
 
       #MailWorker::Confirmer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Users.r(:confirm, u.confirmation_key)}")
       send_confirmation_email(u.email, u.confirmation_key)
@@ -137,7 +141,8 @@ class Users < Controller
     if u.nil?
       @subtitle = 'Compte inexistant'
       flash[:error] = "Ce numéro de validation n'existe pas"
-      event(:edge_case, :controller => "Users#lostpassword", :type => :failed_invalid_key) 
+      event(:edge_case, :_message => "Users#lostpassword:failed_invalid_key",
+        :controller => "Users#lostpassword", :type => :failed_invalid_key) 
 
       redirect MainController.r(:/)
     end
@@ -178,7 +183,9 @@ class Users < Controller
       u.update(data)
     rescue NoMethodError => e
       flash[:error] = "Ooops, quelque chose s'est très mal passé... J'ai prévenu le responsable."
-      event(:edge_case, :controller => "Users#check_and_save_user", :type => :failed_nil_user) 
+      event(:edge_case, :_message => "Users#check_and_save_user:failed_nil_user",
+        :controller => "Users#check_and_save_user", :type => :failed_nil_user) 
+
       redirect_referrer
     rescue Sequel::ValidationFailed => e
       Ramaze::Log.info(e.inspect)

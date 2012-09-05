@@ -31,6 +31,11 @@ end
 task :default => [ :bacon ]
 
 desc "Starts the whole suite"
-multitask :start => [ 'fnordmetric:start', 'server:start', 'sidekiq:workers:start', 'sidekiq:web:start' ]
+task :start => [ 'fnordmetric:start', 'server:start', 'sidekiq:workers:start', 'sidekiq:web:start' ]
+
 desc "Stops the whole suite"
 multitask :stop => [ 'fnordmetric:stop', 'server:stop', 'sidekiq:workers:stop', 'sidekiq:web:stop' ]
+
+desc "Pulls latests master, stops, runs migrations, and start"
+task :ibelieve => [ 'stop', 'git:pull', 'db:migrate', 'start' ]
+

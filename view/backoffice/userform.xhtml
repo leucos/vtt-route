@@ -1,0 +1,143 @@
+
+<h2>#{@subtitle}</h2>
+
+<p class="lead">
+Ce formulaire vous permet d'ajouter un inscrit.
+</p>
+
+<form class="form-horizontal well" method="post" action="#{Backoffice.r(:save_user)}">
+  <fieldset class="control-group errors">
+
+    <!-- nom -->
+    <div class="control-group #{ class_for :name }">
+      <label class="control-label" for="name"><strong>Nom</strong></label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="name" name="name" value="#{ data_for 'name' }" />
+        <!--<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p> -->
+      </div>
+    </div>
+    <div class="control-group #{ class_for :surname }">
+      <label class="control-label" for="surname"><strong>Prénom</strong></label>
+      <div class="controls">
+        <input type="text" class="input-xlarge" id="surname" name="surname" value="#{ data_for 'surname' }" />
+      </div>
+    </div>
+
+    <!-- sexe -->
+    <div class="control-group #{ class_for :gender }">
+      <label class="control-label" for="gender"><strong>Sexe</strong></label>
+      <div class="controls">
+        <label class="radio">
+          <input type="radio" id="gender" name="gender" value="female" #{ "checked" if data_for('gender') and data_for('gender')[0] == 'f' }>Femme
+        </label>
+        <label class="radio">
+          <input type="radio" id="gender" name="gender" value="male" #{ "checked" if data_for('gender') and data_for('gender')[0] == 'm' }>Homme
+        </label>
+      </div>
+    </div>
+
+    <!-- date de naissance -->
+    <div class="control-group #{ class_for :birth }">
+      <label class="control-label" for="dob"><strong>Date de naissance</strong></label>
+      <div class="controls">
+        <input type="text" class="input-mini" id="dob-day" name="dob-day" placeholder="jour" value="#{ data_for 'dob-day' }" />
+        <input type="text" class="input-mini" id="dob-month" name="dob-month" placeholder="mois" value="#{ data_for 'dob-month' }" />
+        <input type="text" class="input-mini" id="dob-year" name="dob-year" placeholder="année" value="#{ data_for 'dob-year' }" />
+      </div>
+    </div> 
+    <!-- date de naissance -->
+
+    <!-- adresse -->
+    <div class="control-group #{ class_for :address1 }">
+      <label class="control-label"><strong>Adresse</strong></label>
+      <div class="controls">
+        <input class="input-xlarge" type="text" id="address1" name="address1" placeholder="Rue..." value="#{ data_for 'address1' }" />
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input class="input-xlarge" type="text" id="address2" name="address2" placeholder="Complément..." value="#{ data_for 'address2' }" />
+      </div>
+    </div>
+    <div class="control-group #{ class_for :zip } #{ class_for :city }">
+      <div class="controls">
+        <input class="input-mini" type="text" id="zip" name="zip" placeholder="CP" value="#{ data_for 'zip' }" />
+        <input class="input-large" type="text" id="city" name="city" placeholder="ville" value="#{ data_for 'city' }" />
+      </div>
+    </div>
+    <div class="control-group #{ class_for :country }">
+      <div class="controls">
+        <input class="input-xlarge" type="text" id="country" name="country" placeholder="pays" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source='["Afghanistan", "Afrique du Sud", "Albanie", "Algérie", "Allemagne", "Andorre", "Angola", "Anguilla", "Antarctique", "Antigua-et-Barbuda", "Antilles néerlandaises", "Arabie saoudite", "Argentine", "Arménie", "Aruba", "Australie", "Autriche", "Azerbaïdjan", "Bénin", "Bahamas", "Bahreïn", "Bangladesh", "Barbade", "Belau", "Belgique", "Belize", "Bermudes", "Bhoutan", "Biélorussie", "Birmanie", "Bolivie", "Bosnie-Herzégovine", "Botswana", "Brésil", "Brunei", "Bulgarie", "Burkina Faso", "Burundi", "Côte d Ivoire", "Cambodge", "Cameroun", "Canada", "Cap-Vert", "Chili", "Chine", "Chypre", "Colombie", "Comores", "Congo", "Corée du Nord", "Corée du Sud", "Costa Rica", "Croatie", "Cuba", "Danemark", "Djibouti", "Dominique", "Égypte", "Émirats arabes unis", "Équateur", "Érythrée", "Espagne", "Estonie", "États-Unis", "Éthiopie", "Finlande", "France", "Géorgie", "Gabon", "Gambie", "Ghana", "Gibraltar", "Grèce", "Grenade", "Groenland", "Guadeloupe", "Guam", "Guatemala", "Guinée", "Guinée équatoriale", "Guinée-Bissao", "Guyana", "Guyane française", "Haïti", "Honduras", "Hong Kong", "Hongrie", "Ile Bouvet", "Ile Christmas", "Ile Norfolk", "Iles Cayman", "Iles Cook", "Iles Féroé", "Iles Falkland", "Iles Fidji", "Iles Géorgie du Sud et Sandwich du Sud", "Iles Heard et McDonald", "Iles Marshall", "Iles Pitcairn", "Iles Salomon", "Iles Svalbard et Jan Mayen", "Iles Turks-et-Caicos", "Iles Vierges américaines", "Iles Vierges britanniques", "Iles des Cocos (Keeling)", "Iles mineures éloignées des États-Unis", "Inde", "Indonésie", "Iran", "Iraq", "Irlande", "Islande", "Israël", "Italie", "Jamaïque", "Japon", "Jordanie", "Kazakhstan", "Kenya", "Kirghizistan", "Kiribati", "Koweït", "Laos", "Lesotho", "Lettonie", "Liban", "Liberia", "Libye", "Liechtenstein", "Lituanie", "Luxembourg", "Macao", "Madagascar", "Malaisie", "Malawi", "Maldives", "Mali", "Malte", "Mariannes du Nord", "Maroc", "Martinique", "Maurice", "Mauritanie", "Mayotte", "Mexique", "Micronésie", "Moldavie", "Monaco", "Mongolie", "Montserrat", "Mozambique", "Népal", "Namibie", "Nauru", "Nicaragua", "Niger", "Nigeria", "Nioué", "Norvège", "Nouvelle-Calédonie", "Nouvelle-Zélande", "Oman", "Ouganda", "Ouzbékistan", "Pérou", "Pakistan", "Panama", "Papouasie-Nouvelle-Guinée", "Paraguay", "Pays-Bas", "Philippines", "Pologne", "Polynésie française", "Porto Rico", "Portugal", "Qatar", "République centrafricaine", "République démocratique du Congo", "République dominicaine", "République tchèque", "Réunion", "Roumanie", "Royaume-Uni", "Russie", "Rwanda", "Sénégal", "Sahara occidental", "Saint-Christophe-et-Niévès", "Saint-Marin", "Saint-Pierre-et-Miquelon", "Saint-Siège ", "Saint-Vincent-et-les-Grenadines", "Sainte-Hélène", "Sainte-Lucie", "Salvador", "Samoa", "Samoa américaines", "Sao Tomé-et-Principe", "Seychelles", "Sierra Leone", "Singapour", "Slovénie", "Slovaquie", "Somalie", "Soudan", "Sri Lanka", "Suède", "Suisse", "Suriname", "Swaziland", "Syrie", "Taïwan", "Tadjikistan", "Tanzanie", "Tchad", "Terres australes françaises", "Territoire britannique de l Océan Indien", "Thaïlande", "Timor Oriental", "Togo", "Tokélaou", "Tonga", "Trinité-et-Tobago", "Tunisie", "Turkménistan", "Turquie", "Tuvalu", "Ukraine", "Uruguay", "Vanuatu", "Venezuela", "Viet Nam", "Wallis-et-Futuna", "Yémen", "Yougoslavie", "Zambie", "Zimbabwe", "ex-République yougoslave de Macédoine"]' value="#{ data_for 'country' }" />
+      </div>
+    </div>
+    <!-- adresse -->
+    <script type="text/javascript">
+    $(function() {
+      $('.typeahead').typeahead()
+    });
+    </script>
+
+    <!-- téléphone -->
+    <div class="control-group #{ class_for :phone }">
+      <label class="control-label" for="phone"><strong>Téléphone</strong></label>
+      <div class="controls">
+        <input class="input-large" type="text" id="phone" name="phone" placeholder="04 ou 06 ou ..." value="#{ data_for 'phone' }" />
+      </div>
+    </div>
+    <!-- téléphone -->
+
+   <!-- club -->
+     <div class="control-group">
+      <label class="control-label" for="club">Club ou entreprise</label>
+      <div class="controls">
+        <input type="text" class="input-large" id="org" name="org" placeholder="Club, entreprise, ..." value="#{ data_for 'org' }" />
+      </div>
+    </div> 
+    <!-- club -->
+
+    <!-- licence -->
+    <div class="control-group">
+      <label class="control-label" for="club">Licence</label>
+      <div class="controls">
+        <select id="federation" name="federation">
+          #{  a = ""
+              ['Non licencié', 'FFC', 'UFOLEP', 'Autre'].each do |e|
+                if data_for('licence') == e
+                  a << "<option selected='selected'>#{e}</option>"
+                else
+                  a <<"<option>#{e}</option>"
+                end
+              end
+              a
+            }
+        </select>
+        <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ data_for 'licence' }" />
+      </div>
+    </div> 
+    <!-- licence -->
+
+    <!-- contact -->
+    <div class="control-group #{ class_for :emergency_contact }">
+      <label class="control-label" for="emergency_contact"><strong>Personne à contacter en cas d'urgence</strong></label>
+      <div class="controls">
+        <textarea class="input-xlarge" id="emergency_contact" name="emergency_contact" rows="3">#{ data_for 'emergency_contact' }</textarea>
+      </div>
+    </div> 
+    <!-- contact -->
+
+    <input type="hidden" name="id" value="1">
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" name="create">Cr&eacute;er</button>
+      <!-- <button class="btn">Cancel</button> -->
+    </div>
+
+  </fieldset>
+</form>
+
+<!-- Enable popovers -->
+<script type='text/javascript'>
+  $(function() {
+    $('a[rel="popover"]').popover();
+  });
+</script>

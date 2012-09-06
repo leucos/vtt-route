@@ -1,7 +1,8 @@
 # coding: utf-8
 
 class Backoffice < Controller
-  helper :paginate
+  helper :paginate, :form_helper
+
   layout :backoffice 
   set_layout nil => [ :userslookup ]
 
@@ -54,6 +55,85 @@ class Backoffice < Controller
 
     p.save
     p.send(method_received)
+  end
+
+  def create_user
+    render_view(:userform)
+  end
+
+  def save_user
+    data = request.subset(:userid, :name, :surname, :gender,
+                          :address1, :address2, :zip, :city, :country,
+                          :phone, :org, :licence, :event, :federation,
+                          :emergency_contact)
+
+    if data[:userid]
+      prof = Profile[:user_id => data[:userid]]
+
+      if prof.nil?
+        flash[:error] = 'Profil invalide'
+
+        redirect_referrer
+      end
+
+      operation = :update
+    else
+      usr = User.new
+      prof = Profile.new
+      operation = :create
+    end
+
+    # Now let's update the User instance
+    # Since many things can fail, we enclose this in a rescue block
+    begin
+      date_str = "%s-%s-%s" % [ request.params['dob-year'],
+                                request.params['dob-month'],
+                                request.params['dob-day'] ]
+      data[:birth] = Date.parse(date_str)
+    rescue
+      # Let Sequel handle this and report back
+      data[:birth] = nil
+    end
+
+    begin
+      prof.raise_on_typecast_failure = false
+      Ramaze::Log.info(data.inspect)
+      prof.update(data)
+
+    rescue Sequel::ValidationFailed => e
+      Ramaze::Log.info(e.inspect)
+      e.errors.each do |i|
+        error_for i[0], "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
+      end
+    end
+
+    if !request.params['accept'] and operation == :create
+      Ramaze::Log.info("Accept not checked")
+      error_for :accept, "Vous n'avez pas coché la case d'acceptation du règlement" 
+    end
+
+    if has_errors?
+      # An error occured, so let's save form data
+      # so the user doesn't have to retype everything
+      #flash[:form_data] = data
+      ['dob-day', 'dob-month', 'dob-year'].each do |d|
+        data_for d, request.params[d]
+      end
+
+      bulk_data data
+      prepare_flash
+      redirect_referrer
+    end
+
+    user.profile = prof
+    user.save
+
+    #user.profile = prof
+
+    flash[:success] = 'Profil mis à jour'
+    @title = 'Profil'
+
+    redirect Profiles.r(:index)
   end
 
   def users(filter = nil)
@@ -152,6 +232,8 @@ class Backoffice < Controller
   def do_remind(u)
     # Send reminder to user
     missing = Hash.new
+
+    return unless u.email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
 
     if !u.profile
       missing[:profile] = Hash.new

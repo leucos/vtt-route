@@ -1,11 +1,9 @@
 
-<h2>#{@subtitle}</h2>
-
 <p class="lead">
-Ce formulaire vous permet d'ajouter un inscrit.
+Ce formulaire vous permet de gérer les inscrits.
 </p>
 
-<form class="form-horizontal well" method="post" action="#{Backoffice.r(:save_user)}">
+<form class="form-horizontal well" method="post" action="#{Backoffice.r(:save_user, data_for('user_id'))}">
   <fieldset class="control-group errors">
 
     <!-- nom -->
@@ -125,10 +123,8 @@ Ce formulaire vous permet d'ajouter un inscrit.
     </div> 
     <!-- contact -->
 
-    <input type="hidden" name="id" value="1">
-
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary" name="create">Cr&eacute;er</button>
+      <button type="submit" class="btn btn-primary" name="create">#{ data_for('user_id') ? "Modifier" : "Cr&eacute;er" }</button>
       <!-- <button class="btn">Cancel</button> -->
     </div>
 

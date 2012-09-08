@@ -15,6 +15,30 @@ class Backoffice < Controller
     }
   }
 
+  TEAM_FIELD_NAMES = {
+    :name => "Nom",
+    :description => "Description",
+    :race_type => "Épreuve",
+    :vtt_id => "Participant VTT",
+    :route_id => "Participant Route"
+  }
+
+  USER_FIELD_NAMES = { :name  => "Nom",
+                  :surname => "Prénom",
+                  :gender  => "Sexe",
+                  :address1 => "Adresse",
+                  :address2 => "Complément d'adresse",
+                  :zip => "Code Postal",
+                  :city => "Ville",
+                  :country => "Pays",
+                  :phone => "Téléphone",
+                  :org => "Club ou entreprise", 
+                  :birth => "Date de naissance", 
+                  :licence => "Numéro de licence",
+                  :federation => "Fédération",
+                  :event => "Epreuve",
+                  :emergency_contact => "Personne à contacter en cas d'urgence" }
+
   provide(:json, :type => 'application/json') do |action, value|
     # "value" is the response body from our controller's method
     Ramaze::Log.info(value.to_json)
@@ -61,14 +85,42 @@ class Backoffice < Controller
     render_view(:userform)
   end
 
-  def save_user
-    data = request.subset(:userid, :name, :surname, :gender,
+  def edit_user(id=nil)
+    @title = 'Espace participants'
+    @subtitle = 'Profil'
+
+    usr = User[id] if id
+
+    if usr
+      usr = User[id]
+      data_for('user_id',id)
+    else
+      flash[:error] = 'Utilisateur inexistant'
+      redirect_referrer
+    end
+
+    # Quite ugly, but we don't want to use 'if's in view
+    if usr.profile
+      USER_FIELD_NAMES.each_key do |f|
+        data_for( f.to_s, usr.profile[f] )
+      end
+
+      dte = usr.profile.birth
+      ['day','month','year'].each { |t| data_for("dob-#{t}", dte.send(t)) }
+    end
+
+    render_view(:userform)
+  end
+
+  def save_user(id=nil)
+    data = request.subset(:name, :surname, :gender,
                           :address1, :address2, :zip, :city, :country,
                           :phone, :org, :licence, :event, :federation,
                           :emergency_contact)
 
-    if data[:userid]
-      prof = Profile[:user_id => data[:userid]]
+    if id
+      usr = User[id]
+      prof = usr.profile
 
       if prof.nil?
         flash[:error] = 'Profil invalide'
@@ -79,6 +131,10 @@ class Backoffice < Controller
       operation = :update
     else
       usr = User.new
+      data.inspect
+      usr.password = SecureRandom.urlsafe_base64(20)
+      usr.email = "P##{data['name']}/#{data['surname']}"
+      Ramaze::Log.info("setting email to #{usr.email}")
       prof = Profile.new
       operation = :create
     end
@@ -107,11 +163,6 @@ class Backoffice < Controller
       end
     end
 
-    if !request.params['accept'] and operation == :create
-      Ramaze::Log.info("Accept not checked")
-      error_for :accept, "Vous n'avez pas coché la case d'acceptation du règlement" 
-    end
-
     if has_errors?
       # An error occured, so let's save form data
       # so the user doesn't have to retype everything
@@ -125,15 +176,60 @@ class Backoffice < Controller
       redirect_referrer
     end
 
-    user.profile = prof
-    user.save
+    if operation == :create
+      usr.save
+      prof.save
+      usr.profile = prof
+    else
+      prof.save
+    end
 
-    #user.profile = prof
-
-    flash[:success] = 'Profil mis à jour'
+    flash[:success] = 'Utilisateur et profil enregistrés'
     @title = 'Profil'
 
-    redirect Profiles.r(:index)
+    redirect Backoffice.r(:users)
+  end
+
+  def create_team(uid=nil)
+    data = request.subset(:name, :description, :race_type, 
+                          :vtt_id, :route_id,
+                          :handi, :part, :open)
+
+    data['event_version'] = VttRoute.options.edition
+
+    if uid == nil or !User[uid]
+      flash[:error] = "Utilisateur introuvable"
+      redirect_referrer
+    end
+
+    case data['race_type']
+    when 'Solo'
+      data['vtt_id'] = data['route_id'] = uid
+    when 'Duo'
+      if data['part'] == 'Route'
+        data['route_id'] = uid
+      else
+        data['vtt_id'] = uid
+      end
+    when 'Tandem'
+      data['vtt_id'] = uid
+      # fuck that
+      #TODO: fixme
+    end
+
+    data.delete('part')
+    data.delete('open')
+
+    begin
+      Team.create(data)
+    rescue Sequel::ValidationFailed => e
+      Ramaze::Log.info(e.inspect)
+      e.errors.each do |i|
+        error_for i[0], "%s : %s" % [ TEAM_FIELD_NAMES[i[0]], i[1][0] ]
+      end
+    end
+
+    redirect_referrer
   end
 
   def users(filter = nil)
@@ -146,6 +242,7 @@ class Backoffice < Controller
       u = User.filter(:admin=>false, :superadmin=>false)
       @subscribers = paginate(u)
       @subtitle = "#{u.count} inscrits"
+      @free_teams = Team.where(:vtt_id => nil).or(:route_id => nil)
     end
   end
 
@@ -155,6 +252,46 @@ class Backoffice < Controller
 
     @subtitle = "#{u.count} inscrits sans profil"
     @subscribers = paginate(u)
+  end
+
+  def add_to_team(uid)
+    Ramaze::Log.info request.params["team_id"]
+    t = Team[request.params["team_id"]]
+
+    if !t 
+      flash[:error] = "Equipe inconnue"
+      redirect_referrer
+    end
+
+    free = t.has_free_spot?
+
+    if !free or ![:vtt,:route].include?(free)
+      flash[:error] = "Type d'épreuve inconnue"
+      redirect_referrer
+    end
+
+    if !t.send("#{free.to_s}_id").nil?
+      flash[:error] = "Cette place est déjà prise"
+      redirect_referrer
+    else
+      t.send("#{free.to_s}_id=", uid)
+    end
+    t.save
+  
+    redirect_referrer
+  end
+
+  def remove_from_team(tid,uid)
+    t = Team[tid]
+    u = User[uid]
+
+    if !t or !u
+      flash[:error] = "Equipe ou utilisateur inconnu"
+      redirect_referrer
+    end
+
+    t.remove_from_team(u)
+    redirect_referrer
   end
 
   def userslookup(filter = nil)
@@ -173,7 +310,6 @@ class Backoffice < Controller
 
   # def add_user
   #   values = request.subset(["name", "surname"] and blah blah blah)
-  #   u = User.create(:email => "P##{values[:name]}/#{:surname}", :password => SecureRandom.urlsafe_base64(12))
   #   u.profile = Profile.create(blah blah blah)
   # end
 

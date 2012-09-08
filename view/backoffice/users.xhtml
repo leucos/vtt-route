@@ -1,13 +1,18 @@
 
 <div class="row-fluid">
 
-  <input type="text" class="search-query" placeholder="Rechercher..." id="search" autocomplete="off" />
+  <div class="row-fluid">
+    <input type="text" class="search-query" placeholder="Rechercher..." id="search" autocomplete="off" />
+  </div>
+  <p />
+
   <div id="propositions" class="span3 well" style="display:none; position:absolute;"></div>
 
   <table id="table-subscribers" class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>
         <th>Nom</th>
+        <th>Profil</th>
         <th>Equipe</th>
         <th>Autorisation</th>
         <th>Certificat</th>
@@ -16,23 +21,29 @@
     </thead>
     <tbody>
       <?r @subscribers.each do |s| ?>
+
       <tr>
         <!-- Name col -->
-        <td>#{s.display_name} 
+        <td><a href="#{Backoffice.r(:edit_user, s.id)}" class="username">#{s.display_name}</a> 
+        </td>
+
+        <td>
           <?r if !s.profile ?>
-          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Profil manquant</span>
+          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+          <?r else ?>
+          <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
           <?r end ?>
         </td>
 
         <!-- Team col -->
         <?r if s.has_team? ?>
           <?r if s.team.has_free_spot? ?>
-        <td align="middle"><span class="badge badge-warning pull-right"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
+        <td align="middle"><span class="badge badge-warning pull-right #{s.profile ? "team-remove" : "" }" data-username="#{s.display_name}" data-userid="#{s.id}" data-teamid="#{s.team.id}"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
           <?r else ?>
-        <td><span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
+        <td><span data-username="#{s.display_name}" data-userid="#{s.id}" data-teamid="#{s.team.id}" class="badge badge-success pull-right #{s.profile ? "team-remove" : "" }"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
           <?r end ?>
         <?r else ?>
-        <td><span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Aucune</span></td>
+        <td><span data-userid="#{s.id}" class="badge badge-important pull-right #{s.profile ? "team-add" : "" }"><i class="icon-remove icon-white"></i> Aucune</span></td>
         <?r end ?>
 
         <!-- Authorization col -->
@@ -83,7 +94,166 @@
       <?r end ?>
     </tbody>
   </table>
+  <a href="#{Backoffice.r(:create_user)}" class="btn btn-primary">Ajouter une inscription</a>
   <div class="pagination-centered">
     #{@subscribers.navigation}
   </div>
 
+  
+
+
+<a href="#team-add-modal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+ 
+<!-- modal : remove from team -->
+<div class="modal hide fade" id="team-suppress-modal" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Supprimer de l'équipe</h3>
+  </div>
+
+  <div class="modal-body">
+    <div id="team-suppress-body"></div>
+    <p />
+    <div>
+      <form id="team-suppress-form" data-baseaction="#{Backoffice.r(:remove_from_team)}">
+        <button type="submit" class="btn btn-primary btn-warning" name="team-suppress-action">Supprimer</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Annuler</a>
+  </div>
+
+</div>
+<!-- modal : remove from team -->
+
+<!-- modal : add to team -->
+<div class="modal hide fade" id="team-add-modal" style="display:none;">
+
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Ajouter dans une équipe</h3>
+  </div>
+
+  <div class="modal-body">
+    <ul class="nav nav-tabs" id="team-tabs">
+      <li class="active"><a href="#existing" data-toggle="tab">Équipe existante</a></li>
+      <li><a href="#new" data-toggle="tab">Nouvelle équipe</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane active" id="existing">
+        <form id="team-add-form" class="form-horizontal well" method="post" data-baseaction="#{Backoffice.r(:add_to_team)}">
+          <fieldset class="control-group errors">
+            <div class="control-group">
+              <select name="team_id">
+                <?r @free_teams.each do |t| ?>
+                  <option value="#{t.id}">#{t.name} - #{t.description}</option>
+                <?r end ?>
+              </select>
+            </div>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-warning" name="team-add-action">Inclure</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="new">
+        <form  id="team-create-form" class="form-horizontal well" method="post" data-baseaction="#{Backoffice.r(:create_team)}">
+          <fieldset class="control-group errors">
+            <!-- nom -->
+            <div class="control-group #{ class_for :name }">
+              <label class="control-label" for="name"><strong>Nom de l'équipe</strong></label>
+              <div class="controls">
+                <input type="text" 
+                  id="name" 
+                  name="name"
+                  class="input-xlarge"  
+                  value="#{ data_for('name') }"
+                  placeholder="Les Vélociraptors" />
+              </div>
+            </div>
+            <div class="control-group #{ class_for :description }">
+              <label class="control-label" for="description"><strong>Description de l'équipe</strong></label>
+              <div class="controls">
+                <textarea class="input-xlarge" id="team_description" name="description" rows="3" placeholder="Les joyeux dinosaures de la pédale" >#{ data_for 'description' }</textarea>
+              </div>
+            </div>
+
+            <!-- handi -->
+            <div class="control-group #{ class_for :handi }">
+              <div class="controls">
+                <label class="checkbox">
+                  <input type="checkbox" name="handi" id="handi" value="true">
+                  Un des équipiers est handi
+                  </label>
+              </div>
+            </div>
+            <!-- handi -->
+
+            <!-- open -->
+            <div class="control-group hide" style="display:none;" id="open_team">
+              <div class="controls">
+                <label class="checkbox">
+                  <input type="checkbox" name="open" id="open" value="true">
+                  Je cherche un équipier
+                  </label>
+              </div>
+            </div>
+            <!-- open -->
+
+            <!-- type -->
+            <div class="control-group">
+              <label class="control-label" for="race_type"><strong>Épreuve</strong></label>
+              <div class="controls">
+                <select id="race_type" name="race_type">
+                  #{  a = ""
+                      ['Solo', 'Duo', 'Tandem'].each do |e|
+                        if data_for('race_type') == e
+                          a << "<option selected='selected'>#{e}</option>"
+                        else
+                          a <<"<option>#{e}</option>"
+                        end
+                      end
+                      a
+                    }
+                </select>
+                <a data-toggle="modal" href="#aide-epreuves"><i class="icon-question-sign"></i></a>
+              </div>
+            </div> 
+            <!-- type -->
+
+            <!-- part -->
+            <div class="control-group #{ class_for :part } hide" style="display:none;" id="part_selection">
+              <label class="control-label" for="part"><strong>Je fais la partie</strong></label>
+              <div class="controls">
+                <label class="radio">
+                  <input type="radio" id="part" name="part" value="VTT" #{ "checked" if data_for('part') and data_for('part')[0] == 'v' }>VTT
+                </label>
+                <label class="radio">
+                  <input type="radio" id="part" name="part" value="Route" #{ "checked" if data_for('part') and data_for('part')[0] == 'r' }>Route
+                </label>
+              </div>
+            </div>      
+            <!-- part -->
+
+          </fieldset>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-warning" name="create">Créer</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">Annuler</a>
+  </div>
+
+</div>
+<!-- modal : remove from team -->

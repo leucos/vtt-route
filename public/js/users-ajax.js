@@ -2,6 +2,7 @@ $(document).ready(function(){
   $('#search').focusout(function() {
     $('#propositions').hide();
   });  
+
   $('#search').keyup(function() {
     console.log("got key up");
     var pattern = $('#search').val();
@@ -22,7 +23,7 @@ $(document).ready(function(){
     }
   });
 
-  $("span.toggle-button").hover( function () {
+  $("span.toggle-button,span.team-remove,span.team-add").hover( function () {
     $(this).css('cursor','pointer');
   });
 
@@ -35,20 +36,49 @@ $(document).ready(function(){
     $.ajax({
       url: "/backoffice/toggle_document/" + method + "/" + id + ".json",
       success: function(result) {
-        if (result == true) {
+        if (result === true) {
           target.fadeOut('fast', function() {
             target.removeClass("badge-important").addClass("badge-success").fadeIn('fast');
             target.html('<i class="icon-ok icon-white"></i> Reçu');
           });
         } else {
           target.fadeOut('fast', function() {
-            target.removeClass("badge-success").addClass("badge-important").fadeIn('fast');            
+            target.removeClass("badge-success").addClass("badge-important").fadeIn('fast');
             target.html('<i class="icon-remove icon-white"></i> Manquant');
           });
         }
       }
     });
-  });  
+  });
+
+  $('span.team-remove').click(function() {
+    var target = $(this);
+    var uid = target.attr("data-userid");
+    var tid = target.attr("data-teamid");
+
+    person = target.attr("data-username");
+    team = target.text();
+
+    console.log("tid : " + tid + " uid : " + uid);
+    console.log($('#team-suppress-form').attr('data-baseaction'));
+
+    $('#team-suppress-body').html("Voulez vous supprimer " + person + " de l'équipe <strong>" + team + "</strong> ?");
+    $('#team-suppress-form').attr('action', $('#team-suppress-form').attr('data-baseaction') + "/" + tid + "/" + uid);
+
+    $('#team-suppress-modal').modal('show');
+  });
+
+  $('span.team-add').click(function() {
+    var target = $(this);
+    var uid = target.attr("data-userid");
+
+    $('#team-create-form').attr('action', $('#team-create-form').attr('data-baseaction') + "/" + uid);
+    $('#team-add-form').attr('action', $('#team-add-form').attr('data-baseaction') + "/" + uid);
+
+    console.log($('#team-add-form').attr('action'));
+    $('#team-add-modal').modal('show');
+
+  });
 
 });
 

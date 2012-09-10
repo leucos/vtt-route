@@ -120,14 +120,13 @@ class Backoffice < Controller
 
     if id
       usr = User[id]
-      prof = usr.profile
 
-      if prof.nil?
-        flash[:error] = 'Profil invalide'
-
+      if usr.nil?
+        flash[:error] = 'Utilisateur invalide'
         redirect_referrer
       end
 
+      prof = usr.profile ? usr.profile : Profile.new
       operation = :update
     else
       usr = User.new
@@ -159,7 +158,7 @@ class Backoffice < Controller
     rescue Sequel::ValidationFailed => e
       Ramaze::Log.info(e.inspect)
       e.errors.each do |i|
-        error_for i[0], "%s : %s" % [ FIELD_NAMES[i[0]], i[1][0] ]
+        error_for i[0], "%s : %s" % [ USER_FIELD_NAMES[i[0]], i[1][0] ]
       end
     end
 
@@ -182,6 +181,7 @@ class Backoffice < Controller
       usr.profile = prof
     else
       prof.save
+      usr.profile = prof
     end
 
     flash[:success] = 'Utilisateur et profil enregistrés'

@@ -29,7 +29,8 @@
 
         <td>
           <?r if !s.profile ?>
-          <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
+          <a href="#{Backoffice.r(:edit_user, s.id)}" class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</a>
+ 
           <?r else ?>
           <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
           <?r end ?>

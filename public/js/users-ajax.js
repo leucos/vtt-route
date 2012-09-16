@@ -1,23 +1,26 @@
 $(document).ready(function(){
-  $('#search').focusout(function() {
-    $('#propositions').hide();
-  });  
-
-  $('#search').keyup(function() {
+  $('#search').keyup(function(e) {
     console.log("got key up");
+    if (e.keyCode == 27) { 
+      $('#propositions').hide();
+      return;
+    }
+
     var pattern = $('#search').val();
     if (pattern.length > 2 ) {
       $.ajax({
         url: "/backoffice/users/" + $("#search").val() + ".json",
         success: function(result){
-          $('#propositions').show(function() {
-            var buf = "";
-            for (var i=0; i<result.length; i++) {
-              console.log(result[i]["values"]["name"]);
-              buf += "<p><a href=#>" + result[i]["values"]["surname"] + " " + result[i]["values"]["name"] + "</a></p>";
-            }
-            $(this).html(buf);
-          });
+          if (result.length > 0) { 
+            $('#propositions').show(function() {
+              var buf = "";
+              for (var i=0; i<result.length; i++) {
+                console.log(result[i]["values"]["name"]);
+                buf += "<p><a href=\"/backoffice/edit_user/" + result[i]["values"]["id"] + "\">" + result[i]["values"]["surname"] + " " + result[i]["values"]["name"] + "</a></p>";
+              }
+              $(this).html(buf);
+            });
+          }
         }
       });
     }

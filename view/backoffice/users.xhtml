@@ -2,7 +2,9 @@
 <div class="row-fluid">
 
   <div class="row-fluid">
-    <input type="text" class="search-query" placeholder="Rechercher..." id="search" autocomplete="off" />
+    <form action="#{Backoffice.r(:users)}" method="POST">
+      <input type="text" class="search-query" placeholder="Rechercher..." id="search" name="search" autocomplete="off" />
+    </form>
   </div>
   <p />
 
@@ -100,10 +102,6 @@
     #{@subscribers.navigation}
   </div>
 
-  
-
-
-<a href="#team-add-modal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
  
 <!-- modal : remove from team -->
 <div class="modal hide fade" id="team-suppress-modal" style="display:none;">

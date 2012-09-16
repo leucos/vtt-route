@@ -132,7 +132,7 @@ class Backoffice < Controller
       usr = User.new
       data.inspect
       usr.password = SecureRandom.urlsafe_base64(20)
-      usr.email = "P##{data['name']}/#{data['surname']}"
+      usr.email = "P/#{data['name']}-#{data['surname']}/#{SecureRandom.urlsafe_base64(4)}"
       Ramaze::Log.info("setting email to #{usr.email}")
       prof = Profile.new
       operation = :create
@@ -233,13 +233,20 @@ class Backoffice < Controller
   end
 
   def users(filter = nil)
+    Ramaze::Log.info request.inspect
+    filter = request.params["search"] if request.params.key?("search")
+
     if (request.xhr?)
       Ramaze::Log.info("got ajax request")
       u = User.filter(:admin=>false, :superadmin=>false).select(:id)
       p = Profile.where(:user_id => u)
       @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).all
     else   
-      u = User.filter(:admin=>false, :superadmin=>false)
+
+      p = Profile.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).select(:user_id)
+      u = User.where(:id => p).or(Sequel.ilike(:email, "%#{filter}%"))
+      u = u.where(:admin=>false, :superadmin=>false)
+
       @subscribers = paginate(u)
       @subtitle = "#{u.count} inscrits"
       @free_teams = Team.where(:vtt_id => nil).or(:route_id => nil)

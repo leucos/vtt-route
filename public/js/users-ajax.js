@@ -16,7 +16,7 @@ $(document).ready(function(){
               var buf = "";
               for (var i=0; i<result.length; i++) {
                 console.log(result[i]["values"]["name"]);
-                buf += "<p><a href=\"/backoffice/edit_user/" + result[i]["values"]["id"] + "\">" + result[i]["values"]["surname"] + " " + result[i]["values"]["name"] + "</a></p>";
+                buf += "<p><a href=\"/backoffice/edit_user/" + result[i]["values"]["user_id"] + "\">" + result[i]["values"]["surname"] + " " + result[i]["values"]["name"] + "</a></p>";
               }
               $(this).html(buf);
             });

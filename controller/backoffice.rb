@@ -391,7 +391,7 @@ EOF
 
     if missing.count > 0
       Ramaze::Log.info "Sending reminder to #{u.email}"
-      MailUtils::Reminder.perform_async(u.email, missing, "#{VttRoute.options.myurl}/#{Registrations.r(:index)}")
+      MailUtils::Reminder.perform_async(u.email, missing, "#{VttRoute.options.myurl}/#{Registrations.r(:index)}", user.email || "unknown")
     end
 
     missing.keys

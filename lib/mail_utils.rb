@@ -33,6 +33,7 @@ module MailUtils
                     :via => MailUtils::Via) { |key, first, second| first }
 
       type = options.delete(:type)
+      who = options.delete(:admin) || "unknown"
 
       Pony.mail(options)
 
@@ -41,7 +42,7 @@ module MailUtils
                     :subject => "[#{type}] #{options[:subject]}",
                     :to => MailUtils::AdminEmail,
                     :type => :administrative,
-                    :body => "Email sent to #{options[:to]}",
+                    :body => "Email sent to #{options[:to]} by #{who}",
                     :charset => 'utf-8',
                     :via => MailUtils::Via)
 
@@ -114,7 +115,7 @@ EOF
   # Reminder send reminders to subscribers (e.g. you forgot this or
   # that)
   class Reminder < MailWorker
-    def perform(email, missing, url) 
+    def perform(email, missing, url, admin) 
 
       inner_message = ""
       missing.each_key do |key|
@@ -143,11 +144,13 @@ en écrivant à : info@challengevttroute.fr
 
 Cordialement,
 
-L'équipe du challenge VTT-Route -- Challenge VTT-Route
+L'équipe du challenge VTT-Route
+--
+Challenge VTT-Route
 info@challengevttroute.fr
 EOF
       
-      MailWorker.send_email(:type => "remider", :subject => subject, :to => email, :body => body)
+      MailWorker.send_email(:type => "remider", :subject => subject, :to => email, :body => body, :admin => admin)
     end
   end
 

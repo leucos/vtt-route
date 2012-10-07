@@ -74,6 +74,28 @@
   
   <div class="span6">
     <div class="well">
+      <?r if user and logged_in? ?>
+
+      <p>
+        <h3>Votre profil</h3>
+        Assurez vous que votre profil est bien à jour !
+        <p><a class="btn" href="#{Profiles.r(:index)}">Voir mon profil &raquo;</a></p>
+      </p>
+
+      <p>
+        <h3>Votre inscription</h3>
+        Avons nous reçu votre règlement ? Votre certificat médical ? Vérifiez votre inscription !
+        <p><a class="btn" href="#{Registrations.r(:index)}">Etat de mon inscription &raquo;</a></p>
+      </p>
+
+      <p>
+        <h3>Votre équipe</h3>
+        Avez vous créé une équipe ? C'est nécessaire pour participer !
+        <p><a class="btn" href="#{Teams.r(:index)}">Mon équipe &raquo;</a></p>
+      </p>
+
+      <?r else ?>
+
       <p>
         <h3>Inscriptions</h3>
         Les frais de participation au challenge sont de 10€ par participant (Duo, Tandem) et 15€ en solo. Les inscriptions sont ouvertes !
@@ -91,6 +113,8 @@
         Visualisez et téléchargez les tracés route et VTT au format KML ou GPX.
         <p><a class="btn" href="maps/">Voir les tracés &raquo;</a></p>
       </p>
+
+      <?r end ?>
     </div>
   </div> 
 </div>

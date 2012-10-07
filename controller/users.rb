@@ -83,7 +83,8 @@ class Users < Controller
 
     if u.nil?
       @subtitle = 'Compte inexistant'
-      flash[:error] = "Ce numéro de confirmation n'existe pas"
+      flash[:error] = "Ce numéro de confirmation n'existe pas."
+      flash[:error] << "Peut-être avez vous déjà confirmé votre compte. Dans ce cas, il vous suffit de vous #{Users.a('connecter',:login)}."
 
       redirect MainController.r(:/)
     else

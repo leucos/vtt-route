@@ -305,8 +305,13 @@ class Backoffice < Controller
   end
 
   def teams
-    @teams = paginate(Team)
-    @subtitle = "#{@teams.count} équipes"
+    @teams = paginate(Team.order_by(:name))
+
+    catcount= Hash.new
+    tc = Team.group_and_count(:race_type).all
+    tc.map { |x| catcount[x[:race_type]] = x[:count] }
+
+    @subtitle = "#{@teams.count} équipes (#{catcount['Solo']} solo, #{catcount['Duo']} duo, #{catcount['Tandem']} tandem)"
   end
 
   def tools

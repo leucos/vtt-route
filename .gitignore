@@ -5,6 +5,8 @@
 coverage/
 doc/
 log/
+mediastore/
+public/images/pros.jpg
 tmp/
 vendor/*
 vttroute-*.db

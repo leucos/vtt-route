@@ -19,11 +19,12 @@
         <th>Autorisation</th>
         <th>Certificat</th>
         <th>Règlement</th>
+        <th>Rappel</th>
       </tr>
     </thead>
     <tbody>
       <?r @subscribers.each do |s| ?>
-
+      <?r missing = false ?>
       <tr>
         <!-- Name col -->
         <td><a href="#{Backoffice.r(:edit_user, s.id)}" class="username">#{s.display_name}</a> 
@@ -31,6 +32,8 @@
 
         <td>
           <?r if !s.profile ?>
+          <?r missing = true ?>
+
           <a href="#{Backoffice.r(:edit_user, s.id)}" class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</a>
  
           <?r else ?>
@@ -42,11 +45,14 @@
         <?r if s.has_team? ?>
           <?r if s.team.has_free_spot? ?>
         <td align="middle"><span class="badge badge-warning pull-right #{s.profile ? "team-remove" : "" }" data-username="#{s.display_name}" data-userid="#{s.id}" data-teamid="#{s.team.id}"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
+          <?r missing = true ?>
           <?r else ?>
         <td><span data-username="#{s.display_name}" data-userid="#{s.id}" data-teamid="#{s.team.id}" class="badge badge-success pull-right #{s.profile ? "team-remove" : "" }"><i class="icon-ok icon-white"></i> #{s.team.name}</span></td>
           <?r end ?>
         <?r else ?>
         <td><span data-userid="#{s.id}" class="badge badge-important pull-right #{s.profile ? "team-add" : "" }"><i class="icon-remove icon-white"></i> Aucune</span></td>
+        <?r missing = true ?>
+
         <?r end ?>
 
         <!-- Authorization col -->
@@ -57,6 +63,7 @@
           <span id="authorization-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçue</span>
             <?r else ?>
           <span id="authorization-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquante</span>
+            <?r missing = true ?>          
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>
@@ -72,6 +79,8 @@
             <span id="certificate-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçu</span>
             <?r else ?>
           <span id="certificate-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquant</span>
+          <?r missing = true ?>
+
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>
@@ -86,12 +95,18 @@
             <?r if s.profile.payment_received? ?>
             <span id="payment-#{s.profile.id}" class="badge badge-success pull-right toggle-button"><i class="icon-ok icon-white"></i> Reçu</span>
             <?r else ?>
-          <span id="payment-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquant</span>
+            <span id="payment-#{s.profile.id}" class="badge badge-important pull-right toggle-button"><i class="icon-remove icon-white"></i> Manquant</span>
+            <?r missing = true ?>
             <?r end ?>
           <?r else ?>
           <span class="badge pull-right"><i class="icon-remove icon-white"></i> N/A</span>
           <?r end ?>
         <?r end ?>
+        </td>
+        <td>
+          <?r if missing ?>
+          <a href="#{Backoffice.r(:remind, s.id)}" class="btn btn-primary" type="button">Rappel</a>
+          <?r end ?>
         </td>
       </tr>
       <?r end ?>

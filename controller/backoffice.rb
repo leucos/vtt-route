@@ -130,7 +130,6 @@ class Backoffice < Controller
       operation = :update
     else
       usr = User.new
-      data.inspect
       usr.password = SecureRandom.urlsafe_base64(20)
       usr.email = "P/#{data['name']}-#{data['surname']}/#{SecureRandom.urlsafe_base64(4)}"
       Ramaze::Log.info("setting email to #{usr.email}")
@@ -233,7 +232,6 @@ class Backoffice < Controller
   end
 
   def users(filter = nil)
-    Ramaze::Log.info request.inspect
     filter = request.params["search"] if request.params.key?("search")
 
     if (request.xhr?)
@@ -357,9 +355,12 @@ class Backoffice < Controller
       redirect_referer
     end
 
+
     do_remind(u).each do |what|
-      flash[:info] = flash[:info].to_s + what.to_s
     end
+    
+    flash[:info] = do_remind(u).join(", ")
+    #flash[:info] + to_s + what.to_s
 
     if flash[:info]
       flash[:info] = "Rappel envoyé à #{u.email} pour : #{flash[:info]}"
@@ -387,6 +388,48 @@ class Backoffice < Controller
   dans le menu ou suivez ce lien : 
   #{VttRoute.options.myurl}/#{Profiles.r(:index)}
 EOF
+    else
+      if u.profile.payment_required? and !u.profile.payment_received
+        missing[:reglement] = Hash.new
+        missing[:reglement][:element] = "nous n'avons pas reçu votre règlement"
+        missing[:reglement][:message]=<<EOF
+  Pour participer au challenge, vous devez vous acquiter de 15€ si vous participez en Solo
+  ou de 10€ par personne si vous participez en équipe (Duo, Tandem).
+EOF
+      end
+
+      if u.profile.certificate_required? and ! u.profile.certificate_received?
+        missing[:certificate] = Hash.new
+        missing[:certificate][:element] = "nous n'avons pas reçu votre certificat médical"
+        missing[:certificate][:message]=<<EOF
+  Pour participer au challenge, vous devez soit être licencié, soit nous faire parvenir un certicat médical.
+EOF
+      end
+
+      if u.profile.authorization_required? and ! u.profile.authorization_received?
+        missing[:authorization] = Hash.new
+        missing[:authorization][:element] = "nous n'avons pas reçu l'autorisation parentale"
+        missing[:authorization][:message]=<<EOF
+  Les mineurs, pour participer au challenge, doivent nous faire parvenir une autorization parentale signée.
+EOF
+      end
+
+      if u.team 
+        if u.team.has_free_spot?
+          missing[:incompleteteam] = Hash.new
+          missing[:incompleteteam][:element] = "votre équipe est incomplète"
+          missing[:incompleteteam][:message]=<<EOF
+  Pour participer au challenge, une équipe Duo ou Tandem doit être complète. Or, il n'y a personne dans votre équipe qui effectuée
+  la partie #{u.team.has_free_spot?.to_s}
+EOF
+        end
+      else
+        missing[:noteam] = Hash.new
+        missing[:noteam][:element] = "vous n'appartenez à aucune équipe"
+        missing[:noteam][:message]=<<EOF
+  Pour participer au challenge, vous devez impérativement appartenir à une équipe, même si vous participez en Solo.
+EOF
+      end
     end
 
     if missing.count > 0

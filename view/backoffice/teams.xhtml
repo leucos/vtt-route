@@ -21,12 +21,15 @@
         <!-- Participants col -->
         <td style="vertical-align: middle;#{'background-color: #F2DEDE;' if s.has_free_spot?}">
           <ul>
-            <li><strong>VTT</strong> : #{s.vtt ? s.vtt.display_name : "<em>libre</em>"}</li>
-            <li><strong>Route</strong> : #{s.route ? s.route.display_name : "<em>libre</em>"}</li>
+            <li><strong>VTT</strong> : #{s.vtt ? Backoffice.a(s.vtt.display_name, :edit_user, s.vtt_id) : "<em>libre</em>"}</li>
+            <li><strong>Route</strong> : #{s.route ? Backoffice.a(s.route.display_name, :edit_user, s.route_id) : "<em>libre</em>"}</li>
           </ul>
         </td>
         <!-- Type col -->
-        <td>#{s.plate}</td>
+        <td>
+          <input type="text" class="plate input-small" value="#{s.plate}" />
+          <span id="plate-generate-#{s.id}" class="badge badge-important plate-generate"><i class="icon-remove icon-white"></i> Générer</span>
+        </td>
       </tr>
       <?r end ?>
     </tbody>

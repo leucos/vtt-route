@@ -26,7 +26,7 @@ $(document).ready(function(){
     }
   });
 
-  $("span.toggle-button,span.team-remove,span.team-add").hover( function () {
+  $("span.toggle-button,span.team-remove,span.team-add,span.plate-generate").hover( function () {
     $(this).css('cursor','pointer');
   });
 
@@ -38,6 +38,29 @@ $(document).ready(function(){
 
     $.ajax({
       url: "/backoffice/toggle_document/" + method + "/" + id + ".json",
+      success: function(result) {
+        if (result === true) {
+          target.fadeOut('fast', function() {
+            target.removeClass("badge-important").addClass("badge-success").fadeIn('fast');
+            target.html('<i class="icon-ok icon-white"></i> Reçu');
+          });
+        } else {
+          target.fadeOut('fast', function() {
+            target.removeClass("badge-success").addClass("badge-important").fadeIn('fast');
+            target.html('<i class="icon-remove icon-white"></i> Manquant');
+          });
+        }
+      }
+    });
+  });
+
+  $('span.plate-generate').click(function() {
+    var target = $(this);
+    var parts = $(this).attr("id").split("-");
+    var id = parts[2];
+
+    $.ajax({
+      url: "/backoffice/get_plate_for/" + id + ".json",
       success: function(result) {
         if (result === true) {
           target.fadeOut('fast', function() {
@@ -83,6 +106,17 @@ $(document).ready(function(){
 
   });
 
+  $('input.plate').change(function() {
+    // ajax save in db if ok (may be just check if field has ok class)
+    // reset field to initial value if save fails
+    console.log($(this));
+  });
+
+  $('input.plate').keyup(function() {
+    // ajax check in db
+    // set field in red if failed
+    console.log($(this));
+  });
 });
 
 

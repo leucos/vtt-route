@@ -362,7 +362,8 @@ class Backoffice < Controller
   def remind_all
     sent = 0
     User.each do |u|
-      sent += 1 if do_remind(u).count > 0
+      res = do_remind(u)
+      sent += 1 if res and res.count > 0
     end
     
     flash[:info] = "#{sent} rappels envoyés"

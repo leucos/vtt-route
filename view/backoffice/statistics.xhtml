@@ -1,8 +1,26 @@
 
 <div class="row-fluid">
-  Pourcentage d'utilisateurs dans une équipe : <span class="badge">#{@avancement}</span> 
-  <div class="progress progress-striped active">
-    <div class="bar" style="width: #{@avancement}%;"></div>
+  #{@equipes} Equipes : #{@stats[:teams_stats][:solo][:count]} solos, #{@stats[:teams_stats][:duo][:count]} duos, #{@stats[:teams_stats][:tandem][:count]} tandems
+  <div class="progress active">
+    <div class="bar bar-success" style="width: #{@stats[:teams_stats][:solo][:percent]}%;"></div>
+    <div class="bar bar-warning" style="width: #{@stats[:teams_stats][:duo][:percent]}%;"></div>
+    <div class="bar bar-danger" style="width: #{@stats[:teams_stats][:tandem][:percent]}%;"></div>
+  </div>
+</div>
+
+
+<div class="row-fluid">
+  Nombre d'utilisateurs dans une équipe : <span class="badge">#{@stats[:people_in_teams][:count]}</span> 
+  <div class="progress active">
+    <div class="bar" style="width: #{@stats[:people_in_teams][:percent]}%;"></div>
+  </div>
+</div>
+
+
+<div class="row-fluid">
+  Utilisateurs ayant réglé : <span class="badge">#{@stats[:people_paid][:count]}</span> 
+  <div class="progress active">
+    <div class="bar" style="width: #{@stats[:people_paid][:percent]}%;"></div>
   </div>
 </div>
 

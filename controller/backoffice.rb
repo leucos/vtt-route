@@ -330,10 +330,32 @@ class Backoffice < Controller
     @inscrits = u.count
     @subtitle = "#{@inscrits} inscrits - #{@equipes} équipes"
 
+    @stats = Hash.new
+
     begin
-      @avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
+      @stats[:people_in_teams] = { :count => Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count }
+      @stats[:people_in_teams][:percent] = 100 * @stats[:people_in_teams][:count] / @inscrits
+      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
     rescue ZeroDivisionError
-      @avancement = 100
+      @stats[:people_in_teams][:percent] = 100
+    end
+
+    begin
+      @stats[:people_paid] = { :count => Profile.where(:payment_received => true).count  }
+      @stats[:people_paid][:percent] = 100 * @stats[:people_paid][:count] / Profile.count
+      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
+    rescue ZeroDivisionError
+      @stats[:people_paid][:percent] = 100
+    end
+
+    @stats[:teams] = Hash.new
+    tc = Team.group_and_count(:race_type).all
+    tc.map { |x| @stats[:teams][x[:race_type].downcase.to_sym] = x[:count] }  
+
+    @stats[:teams_stats] = Hash.new
+    [:solo, :duo, :tandem].each do |k|
+      @stats[:teams_stats][k] = { :count => @stats[:teams][k] } rescue 0
+      @stats[:teams_stats][k][:percent] = 100 * @stats[:teams][k]/@equipes rescue 0
     end
   end
 

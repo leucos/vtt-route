@@ -60,11 +60,11 @@ class Team < Sequel::Model
       yob = pv.birth.year
       case yob
       when 1992..EVENT_DATE.year
-        tags << :cadets
+        tags << :espoirs
       when 1972...1992
-        tags << :jeunes
+        tags << :seniors
       when 1900..1972
-        tags << :veterans
+        tags << :masters
       end
     end
 

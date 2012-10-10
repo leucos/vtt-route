@@ -8,6 +8,7 @@
         <th>Nom</th>
         <th>Type</th>
         <th>Participants</th>
+        <th>Catégorie</th>
         <th>Plaque</th>
       </tr>
     </thead>
@@ -24,6 +25,10 @@
             <li><strong>VTT</strong> : #{s.vtt ? Backoffice.a(s.vtt.display_name, :edit_user, s.vtt_id) : "<em>libre</em>"}</li>
             <li><strong>Route</strong> : #{s.route ? Backoffice.a(s.route.display_name, :edit_user, s.route_id) : "<em>libre</em>"}</li>
           </ul>
+        </td>
+        <td>
+          <?r cat = s.category ?>
+          #{cat ? "<strong>" + cat.map { |v| v.capitalize }.join('-') + "</strong>" : "<em>actuellement indéterminable</em>" }
         </td>
         <!-- Type col -->
         <td>#{s.plate}</td>

@@ -63,7 +63,7 @@ class Team < Sequel::Model
         tags << :espoirs
       when 1972...1992
         tags << :seniors
-      when 1900..1972
+      when 1900...1972
         tags << :masters
       end
     end

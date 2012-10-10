@@ -22,7 +22,8 @@ end
 
 
 <div class="row-fluid">
-  Répartition des <span class="badge">#{@stats[:complete_teams]}</span> équipes complètes :
+  Répartition des <span class="badge">#{@stats[:complete_teams]}</span> équipes complètes (espoirs : 1992..1997, seniors : 1972..1991, masters : 1900..1971) :
+
   <table class="table table-stripped table-bordered table-condensed">
     <?r Hash[@stats[:categories].sort].each_pair do |cat, cnt| ?>
     <tr>

@@ -328,14 +328,17 @@ class Backoffice < Controller
 
       csv << [ "Plaque", "Equipe", "Nom", "Prenom", "ADN", "Categorie"]
 
+      fake_plate = 0
+
       Team.each do |t|
         cat = t.category
         next unless cat
 
+        fake_plate += 1
         cname = cat.map { |v| v.capitalize }.join('-')
-
-        csv << [ t.plate, t.name, t.vtt.profile.name, t.vtt.profile.surname, t.vtt.profile.birth.year, cname]
-        csv << [ t.plate, t.name, t.route.profile.name, t.route.profile.surname, t.route.profile.birth.year, cname] if t.race_type != "Solo"
+#t.plate
+        csv << [ fake_plate, t.name, t.vtt.profile.name, t.vtt.profile.surname, t.vtt.profile.birth.year, cname]
+        csv << [ fake_plate, t.name, t.route.profile.name, t.route.profile.surname, t.route.profile.birth.year, cname] if t.race_type != "Solo"
       end
     end
 

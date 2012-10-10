@@ -52,8 +52,6 @@ class Statistics < Controller
     @stats[:subscription_dates].each do |v|
       @stats[:subscription_flotr] << [ v[:dte], v[:cnt] ]
     end
-
-    Ramaze::Log.info(@stats.inspect)
   end
 end
 

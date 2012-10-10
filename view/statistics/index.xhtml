@@ -12,7 +12,7 @@ end
 <h2 id="subtitle">#{@subtitle}</h2>
 
 <div class="row-fluid">
-  #{@equipes} Equipes : <span class="badge badge-success">#{@stats[:teams_stats][:solo][:count]}</span> solos, <span class="badge badge-info">#{@stats[:teams_stats][:duo][:count]}</span> duos, <span class="badge badge-warning">#{@stats[:teams_stats][:tandem][:count]}</span> tandems
+  <span class="badge>#{@equipes}</span> Equipes : <span class="badge badge-success">#{@stats[:teams_stats][:solo][:count]}</span> solos, <span class="badge badge-info">#{@stats[:teams_stats][:duo][:count]}</span> duos, <span class="badge badge-warning">#{@stats[:teams_stats][:tandem][:count]}</span> tandems
   <div class="progress active">
     <div class="bar bar-success" style="width: #{@stats[:teams_stats][:solo][:percent]}%;"></div>
     <div class="bar" style="width: #{@stats[:teams_stats][:duo][:percent]}%;"></div>

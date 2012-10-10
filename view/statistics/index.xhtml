@@ -12,17 +12,21 @@ end
 <h2 id="subtitle">#{@subtitle}</h2>
 
 <div class="row-fluid">
-  <span class="badge">#{@equipes}</span> Equipes : <span class="badge badge-success">#{@stats[:teams_stats][:solo][:count]}</span> solos, <span class="badge badge-info">#{@stats[:teams_stats][:duo][:count]}</span> duos, <span class="badge badge-warning">#{@stats[:teams_stats][:tandem][:count]}</span> tandems
+  <div class="well">
+  <h3><span class="badge">#{@equipes}</span> Equipes</h3>
   <div class="progress active">
     <div class="bar bar-success" style="width: #{@stats[:teams_stats][:solo][:percent]}%;"></div>
     <div class="bar" style="width: #{@stats[:teams_stats][:duo][:percent]}%;"></div>
     <div class="bar bar-warning" style="width: #{100-@stats[:teams_stats][:solo][:percent]-@stats[:teams_stats][:duo][:percent]}%;"></div>
   </div>
+  <span class="badge badge-success">#{@stats[:teams_stats][:solo][:count]}</span> solos | <span class="badge badge-info">#{@stats[:teams_stats][:duo][:count]}</span> duos | <span class="badge badge-warning">#{@stats[:teams_stats][:tandem][:count]}</span> tandems
+</div>
 </div>
 
 
 <div class="row-fluid">
-  Répartition des <span class="badge">#{@stats[:complete_teams]}</span> équipes complètes (espoirs : 1992..1997, seniors : 1972..1991, masters : 1900..1971) :
+  <div class="well">
+  <h3>Répartition des <span class="badge">#{@stats[:complete_teams]}</span> équipes complètes</h3>
 
   <table class="table table-stripped table-bordered table-condensed">
     <?r Hash[@stats[:categories].sort].each_pair do |cat, cnt| ?>
@@ -32,34 +36,43 @@ end
     </tr>
     <?r end ?>
   </table>
+  <em style="align: center;">espoirs : <span class="label">1992..1997</span> | seniors : <span class="label">1972..1991</span> | masters : <span class="label">1900..1971</span></em>
+</div>
 </div>
 
 <div class="row-fluid">
-  Inscrits avec profil : <span class="badge">#{@stats[:people_with_profile][:count]}</span> 
+  <div class="well">
+  <h3><span class="badge">#{@stats[:people_with_profile][:count]}</span> Inscrits avec profil</h3>
   <div class="progress active">
     #{high_ok_bar(@stats[:people_with_profile][:percent])}
   </div>
 </div>
+</div>
 
 
 <div class="row-fluid">
-  Nombre d'utilisateurs dans une équipe : <span class="badge">#{@stats[:people_in_teams][:count]}</span> 
+  <div class="well">
+  <h3><span class="badge">#{@stats[:people_in_teams][:count]}</span> utilisateurs dans une équipe</h3>
   <div class="progress active">
     #{high_ok_bar(@stats[:people_in_teams][:percent])}
   </div>
 </div>
-
-
-<div class="row-fluid">
-  Utilisateurs ayant réglé : <span class="badge">#{@stats[:people_paid][:count]}</span> 
-  <div class="progress active">
-    #{high_ok_bar(@stats[:people_paid][:percent])}
-  </div>
 </div>
 
 
 <div class="row-fluid">
-  Inscription journalières :
+  <div class="well">
+  <h3><span class="badge">#{@stats[:people_paid][:count]}</span> utilisateurs ayant réglé</h3> 
+  <div class="progress active">
+    #{high_ok_bar(@stats[:people_paid][:percent])}
+  </div>
+</div>
+</div>
+
+
+<div class="row-fluid">
+  <div class="well">
+  <h3>Inscription journalières</h3>
   <div id="container" style="width:900px; height:384px; margin: 8px auto;">
   </div>
 </div>

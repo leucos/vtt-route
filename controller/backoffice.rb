@@ -337,7 +337,9 @@ class Backoffice < Controller
         fake_plate += 1
         cname = cat.map { |v| v.capitalize }.join('-')
 #t.plate
-        csv << [ fake_plate, t.name, t.vtt.profile.name, t.vtt.profile.surname, t.vtt.profile.birth.year, t.route.profile.name, t.route.profile.surname, t.route.profile.birth.year, cname] if t.race_type != "Solo"
+        csv << [ fake_plate, t.name, 
+          t.vtt.profile.name.upcase, t.vtt.profile.surname.capitalize, t.vtt.profile.birth.year, 
+          t.route.profile.name.upcase, t.route.profile.surname.capitalize, t.route.profile.birth.year, cname]
       end
     end
 

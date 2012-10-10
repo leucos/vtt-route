@@ -52,7 +52,21 @@ class Statistics < Controller
     @stats[:subscription_dates].each do |v|
       @stats[:subscription_flotr] << [ v[:dte], v[:cnt] ]
     end
+
+    @stats[:categories] = Hash.new
+
+    # Compute cats
+    Team.each do |t|
+      cat = t.category
+      next unless cat
+
+      name = cat.sort.map { |v| v.capitalize }.join
+      @stats[:categories][name] += 1 rescue @stats[:categories][name] = 1
+    end
+
+    Ramaze::Log.debug @stats.inspect
   end
+  
 end
 
 

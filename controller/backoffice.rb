@@ -311,7 +311,7 @@ class Backoffice < Controller
     tc = Team.group_and_count(:race_type).all
     tc.map { |x| catcount[x[:race_type]] = x[:count] }
 
-    @subtitle = "#{@teams.count} équipes (#{catcount['Solo']} solo, #{catcount['Duo']} duo, #{catcount['Tandem']} tandem)"
+    @subtitle = "#{Team.count} équipes (#{catcount['Solo']} solo, #{catcount['Duo']} duo, #{catcount['Tandem']} tandem)"
   end
 
   def tools

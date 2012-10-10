@@ -48,7 +48,7 @@ class Statistics < Controller
 
     @stats[:subscription_flotr] = Array.new
     #@stats[:subscription_dates] = DB.fetch("select date_format(created_at,'%Y-%m-%d') as dte,count(*) as cnt from users group by date_format(created_at,'%Y-%m-%d')").all
-    @stats[:subscription_dates] = DB.fetch("select dayofyear(created_at) as dte,count(*) as cnt from users where admin=NULL and superadmin=NULL group by dayofyear(created_at)").all
+    @stats[:subscription_dates] = DB.fetch("select dayofyear(created_at) as dte,count(*) as cnt from users where admin=FALSE and superadmin=FALSE group by dayofyear(created_at)").all
     @stats[:subscription_dates].each do |v|
       @stats[:subscription_flotr] << [ v[:dte], v[:cnt] ]
     end

@@ -22,7 +22,7 @@ end
 
 
 <div class="row-fluid">
-  Répartition des équipes complètes :
+  Répartition des <span class="badge">#{@stats[:complete_teams]}</span> équipes complètes :
   <table class="table table-stripped table-bordered table-condensed">
     <?r Hash[@stats[:categories].sort].each_pair do |cat, cnt| ?>
     <tr>

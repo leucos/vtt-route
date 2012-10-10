@@ -64,6 +64,11 @@ class Statistics < Controller
       @stats[:categories][name] += 1 rescue @stats[:categories][name] = 1
     end
 
+    @stats[:complete_teams] = 0
+    @stats[:categories].each_pair do |k,v|
+      @stats[:complete_teams] += v
+    end
+
     #Ramaze::Log.debug @stats.inspect
   end
   

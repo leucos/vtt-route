@@ -1,10 +1,27 @@
+<?r def high_ok_bar(pct)
+  tag = "<div class=\"bar"
+
+  tag << " bar-success" if pct > 80
+  tag << " bar-warning" if pct < 50 and pct > 30
+  tag << " bar-danger" if pct <= 30
+  tag <<  "\" style=\"width: #{pct}%;\"></div>"
+  tag
+end
+?>
 
 <div class="row-fluid">
   #{@equipes} Equipes : #{@stats[:teams_stats][:solo][:count]} solos, #{@stats[:teams_stats][:duo][:count]} duos, #{@stats[:teams_stats][:tandem][:count]} tandems
   <div class="progress active">
     <div class="bar bar-success" style="width: #{@stats[:teams_stats][:solo][:percent]}%;"></div>
-    <div class="bar bar-warning" style="width: #{@stats[:teams_stats][:duo][:percent]}%;"></div>
-    <div class="bar bar-danger" style="width: #{@stats[:teams_stats][:tandem][:percent]}%;"></div>
+    <div class="bar" style="width: #{@stats[:teams_stats][:duo][:percent]}%;"></div>
+    <div class="bar bar-warning" style="width: #{100-@stats[:teams_stats][:solo][:percent]-@stats[:teams_stats][:duo][:percent]}%;"></div>
+  </div>
+</div>
+
+<div class="row-fluid">
+  Inscrits avec profil : <span class="badge">#{@stats[:people_with_profile][:count]}</span> 
+  <div class="progress active">
+    #{high_ok_bar(@stats[:people_with_profile][:percent])}
   </div>
 </div>
 
@@ -12,7 +29,7 @@
 <div class="row-fluid">
   Nombre d'utilisateurs dans une équipe : <span class="badge">#{@stats[:people_in_teams][:count]}</span> 
   <div class="progress active">
-    <div class="bar" style="width: #{@stats[:people_in_teams][:percent]}%;"></div>
+    #{high_ok_bar(@stats[:people_in_teams][:percent])}
   </div>
 </div>
 
@@ -20,7 +37,33 @@
 <div class="row-fluid">
   Utilisateurs ayant réglé : <span class="badge">#{@stats[:people_paid][:count]}</span> 
   <div class="progress active">
-    <div class="bar" style="width: #{@stats[:people_paid][:percent]}%;"></div>
+    #{high_ok_bar(@stats[:people_paid][:percent])}
   </div>
 </div>
 
+<div id="container" style="width:640px; height:384px; margin: 8px auto;">
+</div>
+
+<script type ='text/javascript'>
+
+$(function() {
+
+  var
+    container = document.getElementById('container'),
+    d1 = #{@stats[:subscription_flotr].to_json}, // data series
+    graph;
+
+  //console.log(d1);
+  // Draw Graph
+  graph = Flotr.draw(container, [ d1 ], {
+    xaxis: {
+      labelsAngle : 45,
+      minorTickFreq: 4
+    }, 
+    grid: {
+      minorVerticalLines: true
+    }
+  });
+});
+
+</script>

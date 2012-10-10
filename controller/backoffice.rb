@@ -240,7 +240,6 @@ class Backoffice < Controller
       p = Profile.where(:user_id => u)
       @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).all
     else   
-
       p = Profile.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).select(:user_id)
       u = User.where(:id => p).or(Sequel.ilike(:email, "%#{filter}%"))
       u = u.where(:admin=>false, :superadmin=>false)
@@ -325,7 +324,7 @@ class Backoffice < Controller
 
   def statistics
     Ramaze::Log.info("in statistics")
-    u = User.filter(:admin=>false, :superadmin=>false)
+    u = User.filter(:admin=>false, :superadmin=>false).select(:id)
     @equipes = Team.count
     @inscrits = u.count
     @subtitle = "#{@inscrits} inscrits - #{@equipes} équipes"
@@ -342,10 +341,20 @@ class Backoffice < Controller
 
     begin
       @stats[:people_paid] = { :count => Profile.where(:payment_received => true).count  }
-      @stats[:people_paid][:percent] = 100 * @stats[:people_paid][:count] / Profile.count
+      @stats[:people_paid][:percent] = 100 * @stats[:people_paid][:count] / @inscrits
       #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
     rescue ZeroDivisionError
       @stats[:people_paid][:percent] = 100
+    end
+
+    begin
+      p = Profile.where(:user_id => u)
+
+      @stats[:people_with_profile] = { :count => p.count }
+      @stats[:people_with_profile][:percent] = 100 * @stats[:people_with_profile][:count] / @inscrits
+      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
+    rescue ZeroDivisionError
+      @stats[:people_with_profile][:percent] = 0
     end
 
     @stats[:teams] = Hash.new
@@ -357,6 +366,15 @@ class Backoffice < Controller
       @stats[:teams_stats][k] = { :count => @stats[:teams][k] } rescue 0
       @stats[:teams_stats][k][:percent] = 100 * @stats[:teams][k]/@equipes rescue 0
     end
+
+    @stats[:subscription_flotr] = Array.new
+    #@stats[:subscription_dates] = DB.fetch("select date_format(created_at,'%Y-%m-%d') as dte,count(*) as cnt from users group by date_format(created_at,'%Y-%m-%d')").all
+    @stats[:subscription_dates] = DB.fetch("select dayofyear(created_at) as dte,count(*) as cnt from users group by dayofyear(created_at)").all
+    @stats[:subscription_dates].each do |v|
+      @stats[:subscription_flotr] << [ v[:dte], v[:cnt] ]
+    end
+
+    Ramaze::Log.info @stats.inspect
   end
 
   def remind_all

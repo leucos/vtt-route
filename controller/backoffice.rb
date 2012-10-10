@@ -326,7 +326,7 @@ class Backoffice < Controller
   def csv_export
     csv_string = CSV.generate do |csv|
 
-      csv << [ "Plaque", "Equipe", "Nom", "Prenom", "ADN", "Categorie"]
+      csv << [ "Plaque", "Equipe", "Nom VTT", "Prenom VTT", "ADN VTT", "Nom Route", "Prenom Route", "ADN Route", "Categorie"]
 
       fake_plate = 0
 
@@ -337,8 +337,7 @@ class Backoffice < Controller
         fake_plate += 1
         cname = cat.map { |v| v.capitalize }.join('-')
 #t.plate
-        csv << [ fake_plate, t.name, t.vtt.profile.name, t.vtt.profile.surname, t.vtt.profile.birth.year, cname]
-        csv << [ fake_plate, t.name, t.route.profile.name, t.route.profile.surname, t.route.profile.birth.year, cname] if t.race_type != "Solo"
+        csv << [ fake_plate, t.name, t.vtt.profile.name, t.vtt.profile.surname, t.vtt.profile.birth.year, t.route.profile.name, t.route.profile.surname, t.route.profile.birth.year, cname] if t.race_type != "Solo"
       end
     end
 

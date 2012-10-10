@@ -50,4 +50,5 @@ require __DIR__('registrations')
 require __DIR__('maps')
 require __DIR__('teams')
 require __DIR__('backoffice')
+require __DIR__('statistics')
 

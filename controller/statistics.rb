@@ -60,7 +60,7 @@ class Statistics < Controller
       cat = t.category
       next unless cat
 
-      name = cat.map { |v| v.capitalize }.join(/-/)
+      name = cat.map { |v| v.capitalize }.join('-')
       @stats[:categories][name] += 1 rescue @stats[:categories][name] = 1
     end
 

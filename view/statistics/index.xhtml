@@ -24,7 +24,7 @@ end
 <div class="row-fluid">
   Répartition des équipes :
   <table class="table table-stripped table-bordered table-condensed">
-    <?r @stats[:categories].each_pair do |cat, cnt| ?>
+    <?r Hash[@stats[:categories].sort].each_pair do |cat, cnt| ?>
     <tr>
       <td>#{cat}</td>
       <td><span class="badge">#{cnt}</span></td>

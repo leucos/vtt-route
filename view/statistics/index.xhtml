@@ -42,7 +42,7 @@ end
 
 <div class="row-fluid">
   <div class="well">
-  <h3><span class="badge">#{@stats[:people_with_profile][:count]}</span> Inscrits avec profil</h3>
+  <h3>Inscrits avec profil <span class="badge">#{@stats[:people_with_profile][:count]}</span> </h3>
   <div class="progress active">
     #{high_ok_bar(@stats[:people_with_profile][:percent])}
   </div>
@@ -52,7 +52,7 @@ end
 
 <div class="row-fluid">
   <div class="well">
-  <h3><span class="badge">#{@stats[:people_in_teams][:count]}</span> utilisateurs dans une équipe</h3>
+  <h3>Utilisateurs dans une équipe <span class="badge">#{@stats[:people_in_teams][:count]}</span></h3>
   <div class="progress active">
     #{high_ok_bar(@stats[:people_in_teams][:percent])}
   </div>
@@ -62,7 +62,7 @@ end
 
 <div class="row-fluid">
   <div class="well">
-  <h3><span class="badge">#{@stats[:people_paid][:count]}</span> utilisateurs ayant réglé</h3> 
+  <h3>Utilisateurs ayant réglé <span class="badge">#{@stats[:people_paid][:count]}</span></h3> 
   <div class="progress active">
     #{high_ok_bar(@stats[:people_paid][:percent])}
   </div>

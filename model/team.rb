@@ -46,14 +46,14 @@ class Team < Sequel::Model
     pr = self.route.profile 
 
     tags = Array.new
+    
+    # Add race type
+    tags << self.race_type.to_sym
 
-    tags << :handi if self.handi
     tags << :mixte if pv.gender != pr.gender
     tags << :hommes if pv.gender == "m" and  pr.gender == "m"
     tags << :femmes if pv.gender == "f" and  pr.gender == "f"
     
-    # Add race type
-    tags << self.race_type.to_sym
 
     # Solo
     if "Solo" == self.race_type
@@ -67,6 +67,8 @@ class Team < Sequel::Model
         tags << :veterans
       end
     end
+
+    tags << :handi if self.handi
 
     tags
   end

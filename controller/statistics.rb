@@ -60,11 +60,11 @@ class Statistics < Controller
       cat = t.category
       next unless cat
 
-      name = cat.sort.map { |v| v.capitalize }.join
+      name = cat.map { |v| v.capitalize }.join(/-/)
       @stats[:categories][name] += 1 rescue @stats[:categories][name] = 1
     end
 
-    Ramaze::Log.debug @stats.inspect
+    #Ramaze::Log.debug @stats.inspect
   end
   
 end

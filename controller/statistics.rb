@@ -55,7 +55,7 @@ class Statistics < Controller
 
     @stats[:age_flotr] = Array.new
     #@stats[:subscription_dates] = DB.fetch("select date_format(created_at,'%Y-%m-%d') as dte,count(*) as cnt from users group by date_format(created_at,'%Y-%m-%d')").all
-    @stats[:age_dates] = DB.fetch("select year(now())-year(birth) as yob, count(*) as cnt from profiles group by yob").all
+    @stats[:age_dates] = DB.fetch("select year(now())-year(birth) as yob, count(*) as cnt from profiles where yob > 1900 group by yob").all
     @stats[:age_dates].each do |v|
       @stats[:age_flotr] << [ v[:yob], v[:cnt] ]
     end

@@ -73,24 +73,30 @@ end
 <div class="row-fluid">
   <div class="well">
   <h3>Inscription journalières</h3>
-  <div id="container" style="width:900px; height:384px; margin: 8px auto;">
+  <div id="subscription" style="width:900px; height:384px; margin: 8px auto;">
   </div>
 </div>
 
+<div class="row-fluid">
+  <div class="well">
+  <h3>Age des inscrits</h3>
+  <div id="age" style="width:900px; height:384px; margin: 8px auto;">
+  </div>
+</div>
 
 <script type ='text/javascript'>
 
 $(function() {
 
   var
-    container = document.getElementById('container'),
-    d1 = #{@stats[:subscription_flotr].to_json}, // data series
-    graph;
+    containersub = document.getElementById('subscription'),
+    dsub = #{@stats[:subscription_flotr].to_json}, // data series
+    graphsub;
 
   //console.log(d1);
   // Draw Graph
-  graph = Flotr.draw(container,
-    [ d1 ], 
+  graphsub = Flotr.draw(containersub,
+    [ dsub ], 
     {
       bars : {
         show : true,
@@ -107,6 +113,35 @@ $(function() {
       }
     }
   );
+
+  var
+    containerage = document.getElementById('age'),
+    dage = #{@stats[:age_flotr].to_json}, // data series
+    graphage;
+
+  //console.log(d1);
+  // Draw Graph
+  graphage = Flotr.draw(containerage,
+    [ dage ], 
+    {
+      bars : {
+        show : true,
+        horizontal : false,
+        shadowSize : 0
+      },
+      mouse : {
+        track : true,
+        relative : true
+      },
+      yaxis : {
+        min : 0,
+        autoscaleMargin : 1
+      }
+    }
+  );
+
+
+
 });
 
 </script>

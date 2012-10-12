@@ -409,7 +409,8 @@ EOF
         missing[:reglement][:element] = "nous n'avons pas reçu votre règlement"
         missing[:reglement][:message]=<<EOF
   Pour participer au challenge, vous devez vous acquiter de 15€ si vous participez en Solo
-  ou de 10€ par personne si vous participez en équipe (Duo, Tandem).
+  ou de 10€ par personne si vous participez en équipe (Duo, Tandem). Merci de libeller le 
+  chèque à l'ordre de "Association Sportive Saint Laurent".
 EOF
       end
 

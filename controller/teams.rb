@@ -13,10 +13,10 @@ class Teams < Controller
     :vtt_id => "Participant VTT",
     :route_id => "Participant Route"
   }
-
-  before_all do
+  
+  before(:index, :save, :join, :swap, :invite, :list, :leave) do
     redirect_referrer unless logged_in?
-  end
+  end  
 
   def index
     @title = 'Challenge VTT-Route'

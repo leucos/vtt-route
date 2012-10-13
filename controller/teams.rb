@@ -173,7 +173,85 @@ class Teams < Controller
     redirect Teams.r(:index)
   end
 
+  def set_plate_for(team_id)
+    redirect_referrer unless user.superadmin
+    
+    Ramaze::Log.info(request.inspect)
+    Ramaze::Log.info(request.params["plateid"])
+    pid = request.params["plateid"]
+    
+    begin
+      Integer(pid)
+      old = Team[:plate => pid]
+      old.update(:plate => "") if old
+      team = Team[team_id]
+
+      team.update(:plate => pid) if team
+
+    rescue Exception => e
+      Ramaze::Log.info e.inspect
+      respond!(false.to_json, 200, 'Content-Type' => 'application/json')
+    end
+
+    #Ramaze::Log.info(!!team)
+    team = !!team
+    respond!(team.to_json, 200, 'Content-Type' => 'application/json')
+  end
+
+  def get_plate_for(team_id)
+    Ramaze::Log.info("get plate for " + team_id)
+    redirect_referrer unless user.superadmin
+
+    team = Team[team_id]
+    
+    plate = team.plate ? team.plate : generate_plate_for(team_id)
+
+    if team
+      respond!({ :status => true, :id => plate }.to_json, 200, 'Content-Type' => 'application/json')
+    else
+      respond!({ :status => false }.to_json, 200, 'Content-Type' => 'application/json')
+    end
+  end
+
+  def generate_plate_for_all
+    redirect_referrer unless user.superadmin
+
+    used = DB.fetch("select plate from teams where plate is not NULL").all.map{ |k| k[:plate] }.sort
+    no_platers = Team.where(:plate => nil).all
+
+    redirect_referrer if no_platers.count == 0
+
+    pindex = 0
+    
+    Ramaze::Log.info("starting plate generation")
+
+    no_platers.each do |t|
+      pindex += 1
+      pindex += 1 while used.include?(pindex)
+
+      t.update(:plate => pindex)
+    end
+
+    redirect_referrer
+  end
+
   private
+
+  def generate_plate_for(team_id)
+    used = DB.fetch("select plate from teams where plate is not NULL").all.map{ |k| k[:plate] }.sort
+    team = Team[team_id]
+
+    return nil unless team
+    return team.plate if team.plate
+    
+    pindex = 1
+    pindex += 1 while used.include?(pindex)
+
+    team.update(:plate => pindex)
+    pindex
+  end
+
+
 
   # Bails out and redirects if member is not member of team
   def check_access(team)

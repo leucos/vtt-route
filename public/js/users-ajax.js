@@ -54,28 +54,6 @@ $(document).ready(function(){
     });
   });
 
-  $('span.plate-generate').click(function() {
-    var target = $(this);
-    var parts = $(this).attr("id").split("-");
-    var id = parts[2];
-
-    $.ajax({
-      url: "/backoffice/get_plate_for/" + id + ".json",
-      success: function(result) {
-        if (result === true) {
-          target.fadeOut('fast', function() {
-            target.removeClass("badge-important").addClass("badge-success").fadeIn('fast');
-            target.html('<i class="icon-ok icon-white"></i> Reçu');
-          });
-        } else {
-          target.fadeOut('fast', function() {
-            target.removeClass("badge-success").addClass("badge-important").fadeIn('fast');
-            target.html('<i class="icon-remove icon-white"></i> Manquant');
-          });
-        }
-      }
-    });
-  });
 
   $('span.team-remove').click(function() {
     var target = $(this);
@@ -106,17 +84,62 @@ $(document).ready(function(){
 
   });
 
+  $('button.plate-generate').click(function() {
+    var target = $(this);
+    var tid = target.attr("data-teamid");
+    var input = $("#input-" + tid);
+    console.log("click:" + tid);
+
+    $.ajax({
+      url: "/teams/get_plate_for/" + tid,
+      success: function(result) {
+        console.log(result);
+        console.log(result['id']);
+
+        if (result['status'] === true) {
+          input.val(result['id']);
+          input.fadeOut('slow', function() {
+            input.removeClass("error").addClass("success").fadeIn('slow');
+          });
+        } else {
+          input.fadeOut('slow', function() {
+            input.removeClass("success").addClass("error").fadeIn('slow');
+          });
+        }
+      }
+    });
+  });
+
   $('input.plate').change(function() {
     // ajax save in db if ok (may be just check if field has ok class)
     // reset field to initial value if save fails
-    console.log($(this));
+    //$(this).addClass("success");
+    var target = $(this);
+    var tid = target.attr("data-teamid");
+    var pid = target.val();
+    var group = $("#group-" + tid)
+    console.log("change:" + tid);
+
+    $.ajax({
+      type: 'POST',
+      url: "/teams/set_plate_for/" + tid,
+      data: "plateid=" + pid,
+      success: function(result) {
+        console.log(result);
+        if (result === true) {
+          group.fadeOut('slow', function() {
+            group.removeClass("error").addClass("success").fadeIn('slow');
+          });
+        } else {
+          group.fadeOut('slow', function() {
+            group.removeClass("success").addClass("error").fadeIn('slow');
+          });
+        }
+      }
+    });
+
   });
 
-  $('input.plate').keyup(function() {
-    // ajax check in db
-    // set field in red if failed
-    console.log($(this));
-  });
 });
 
 

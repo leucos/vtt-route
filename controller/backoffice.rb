@@ -323,23 +323,56 @@ class Backoffice < Controller
   #   u.profile = Profile.create(blah blah blah)
   # end
 
-  def csv_export
+  def csv_export_chrono
     csv_string = CSV.generate do |csv|
 
       csv << [ "Plaque", "Equipe", "Nom VTT", "Prenom VTT", "ADN VTT", "Nom Route", "Prenom Route", "ADN Route", "Categorie"]
 
-      fake_plate = 0
-
-      Team.each do |t|
+      Team.order_by(:plate).each do |t|
         cat = t.category
         next unless cat
 
-        fake_plate += 1
         cname = cat.map { |v| v.capitalize }.join('-')
-#t.plate
-        csv << [ fake_plate, t.name, 
+        csv << [ t.plate, t.name, 
           t.vtt.profile.name.upcase, t.vtt.profile.surname.capitalize, t.vtt.profile.birth.year, 
           t.route.profile.name.upcase, t.route.profile.surname.capitalize, t.route.profile.birth.year, cname]
+      end
+    end
+
+    respond!(csv_string, 200, 'Content-Type' => 'text/csv')
+  end
+  
+  def csv_export_retrait
+    csv_string = CSV.generate do |csv|
+
+      csv << [ "Nom", "Prénom", "ADN", "Manquant", "Catégorie", "Plaque", "Nom Part", "Prenom Part", "ADN Part"]
+
+      Profile.order_by(:name).each do |p|
+        u = User[p.user_id]
+        next if u.superadmin or u.admin
+        next unless u.team and !u.team.has_free_spot?
+
+        missing = Array.new
+
+        missing << :paiement if u.profile.payment_required? and !u.profile.payment_received
+        missing << :certif if u.profile.certificate_required? and !u.profile.certificate_received
+        missing << :authoris if u.profile.authorization_required? and !u.profile.authorization_received
+        miss = missing.join('+').upcase
+        miss = "OK" if miss == ""
+
+        t = u.team
+        next unless t
+        cat = t.category
+        next unless cat
+        cname = cat.map { |v| v.capitalize }.join('-')
+ 
+        other_id = (t.vtt_id == u.id ? t.route_id : t.vtt_id )
+        o = User[other_id].profile
+
+
+        csv << [ p.name.upcase, p.surname.capitalize, p.birth.year, miss, cname, t.plate,
+          o.name.upcase, o.surname.capitalize, o.birth.year
+        ]
       end
     end
 

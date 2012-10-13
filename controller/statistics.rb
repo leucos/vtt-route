@@ -11,9 +11,12 @@ class Statistics < Controller
     @stats = Hash.new
 
     begin
+      count = Team.where(:race_type => "Solo").count +
+      Team.exclude(:race_type => "Solo").exclude(:route_id => nil).count +
+      Team.exclude(:race_type => "Solo").exclude(:vtt_id => nil).count
+
       @stats[:people_in_teams] = { :count => Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count }
       @stats[:people_in_teams][:percent] = 100 * @stats[:people_in_teams][:count] / @inscrits
-      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
     rescue ZeroDivisionError
       @stats[:people_in_teams][:percent] = 100
     end
@@ -21,7 +24,6 @@ class Statistics < Controller
     begin
       @stats[:people_paid] = { :count => Profile.where(:payment_received => true).count  }
       @stats[:people_paid][:percent] = 100 * @stats[:people_paid][:count] / @inscrits
-      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
     rescue ZeroDivisionError
       @stats[:people_paid][:percent] = 100
     end
@@ -31,7 +33,6 @@ class Statistics < Controller
 
       @stats[:people_with_profile] = { :count => p.count }
       @stats[:people_with_profile][:percent] = 100 * @stats[:people_with_profile][:count] / @inscrits
-      #@avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
     rescue ZeroDivisionError
       @stats[:people_with_profile][:percent] = 0
     end
@@ -47,14 +48,12 @@ class Statistics < Controller
     end
 
     @stats[:subscription_flotr] = Array.new
-    #@stats[:subscription_dates] = DB.fetch("select date_format(created_at,'%Y-%m-%d') as dte,count(*) as cnt from users group by date_format(created_at,'%Y-%m-%d')").all
     @stats[:subscription_dates] = DB.fetch("select dayofyear(created_at) as dte,count(*) as cnt from users where admin=FALSE and superadmin=FALSE group by dayofyear(created_at)").all
     @stats[:subscription_dates].each do |v|
       @stats[:subscription_flotr] << [ v[:dte], v[:cnt] ]
     end
 
     @stats[:age_flotr] = Array.new
-    #@stats[:subscription_dates] = DB.fetch("select date_format(created_at,'%Y-%m-%d') as dte,count(*) as cnt from users group by date_format(created_at,'%Y-%m-%d')").all
     @stats[:age_dates] = DB.fetch("select year(now())-year(birth) as age, count(*) as cnt from profiles where year(birth) > 1900 group by age").all
     @stats[:age_dates].each do |v|
       @stats[:age_flotr] << [ v[:age], v[:cnt] ]
@@ -76,7 +75,6 @@ class Statistics < Controller
       @stats[:complete_teams] += v
     end
 
-    #Ramaze::Log.debug @stats.inspect
   end
   
 end

@@ -29,7 +29,8 @@ class Profile < Sequel::Model
     # We might not have all the fields populated here
     # since we're called from validate
     return 0 unless self.birth
-    EVENT_DATE.year - self.birth.year - (self.birth.change(:year => EVENT_DATE.year) > EVENT_DATE ? 1 : 0)
+#    EVENT_DATE.year - self.birth.year - (self.birth.change(:year => EVENT_DATE.year) > EVENT_DATE ? 1 : 0)
+    EVENT_DATE.year - self.birth.year
   end
 
   def certificate_required?

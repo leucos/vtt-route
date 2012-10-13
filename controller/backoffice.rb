@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'csv'
 
 class Backoffice < Controller
   helper :paginate, :form_helper
@@ -240,7 +241,6 @@ class Backoffice < Controller
       p = Profile.where(:user_id => u)
       @subscribers = p.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).all
     else   
-
       p = Profile.where(Sequel.ilike(:name, "%#{filter}%")).or(Sequel.ilike(:surname, "%#{filter}%")).select(:user_id)
       u = User.where(:id => p).or(Sequel.ilike(:email, "%#{filter}%"))
       u = u.where(:admin=>false, :superadmin=>false)
@@ -305,8 +305,13 @@ class Backoffice < Controller
   end
 
   def teams
-    @teams = paginate(Team)
-    @subtitle = "#{@teams.count} équipes"
+    @teams = paginate(Team.order_by(:name))
+
+    catcount= Hash.new
+    tc = Team.group_and_count(:race_type).all
+    tc.map { |x| catcount[x[:race_type]] = x[:count] }
+
+    @subtitle = "#{Team.count} équipes (#{catcount['Solo']} solo, #{catcount['Duo']} duo, #{catcount['Tandem']} tandem)"
   end
 
   def tools
@@ -318,24 +323,34 @@ class Backoffice < Controller
   #   u.profile = Profile.create(blah blah blah)
   # end
 
-  def statistics
-    Ramaze::Log.info("in statistics")
-    u = User.filter(:admin=>false, :superadmin=>false)
-    @equipes = Team.count
-    @inscrits = u.count
-    @subtitle = "#{@inscrits} inscrits - #{@equipes} équipes"
+  def csv_export
+    csv_string = CSV.generate do |csv|
 
-    begin
-      @avancement = 100*(Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count)/@inscrits 
-    rescue ZeroDivisionError
-      @avancement = 100
+      csv << [ "Plaque", "Equipe", "Nom VTT", "Prenom VTT", "ADN VTT", "Nom Route", "Prenom Route", "ADN Route", "Categorie"]
+
+      fake_plate = 0
+
+      Team.each do |t|
+        cat = t.category
+        next unless cat
+
+        fake_plate += 1
+        cname = cat.map { |v| v.capitalize }.join('-')
+#t.plate
+        csv << [ fake_plate, t.name, 
+          t.vtt.profile.name.upcase, t.vtt.profile.surname.capitalize, t.vtt.profile.birth.year, 
+          t.route.profile.name.upcase, t.route.profile.surname.capitalize, t.route.profile.birth.year, cname]
+      end
     end
+
+    respond!(csv_string, 200, 'Content-Type' => 'text/csv')
   end
 
   def remind_all
     sent = 0
     User.each do |u|
-      sent += 1 if do_remind(u).count > 0
+      res = do_remind(u)
+      sent += 1 if res and res.count > 0
     end
     
     flash[:info] = "#{sent} rappels envoyés"
@@ -394,7 +409,8 @@ EOF
         missing[:reglement][:element] = "nous n'avons pas reçu votre règlement"
         missing[:reglement][:message]=<<EOF
   Pour participer au challenge, vous devez vous acquiter de 15€ si vous participez en Solo
-  ou de 10€ par personne si vous participez en équipe (Duo, Tandem).
+  ou de 10€ par personne si vous participez en équipe (Duo, Tandem). Merci de libeller le 
+  chèque à l'ordre de "Association Sportive Saint Laurent".
 EOF
       end
 

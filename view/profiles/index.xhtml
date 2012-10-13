@@ -98,18 +98,7 @@ Ce formulaire vous permet de fournir les renseignements nécessaires à votre in
     <div class="control-group">
       <label class="control-label" for="club">Licence</label>
       <div class="controls">
-        <select id="federation" name="federation">
-          #{  a = ""
-              ['Non licencié', 'FFC', 'UFOLEP', 'Autre'].each do |e|
-                if data_for('licence') == e
-                  a << "<option selected='selected'>#{e}</option>"
-                else
-                  a <<"<option>#{e}</option>"
-                end
-              end
-              a
-            }
-        </select>
+        <input type="text" class="input-large" id="federation" name="federation" placeholder="UFOLEP, FFC, ..." value="#{ data_for 'federation' }" />     
         <input type="text" class="input-large" id="licence" name="licence" placeholder="Numéro de licence" value="#{ data_for 'licence' }" />
       </div>
     </div> 

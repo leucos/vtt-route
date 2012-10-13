@@ -35,6 +35,44 @@ class Team < Sequel::Model
     end
   end
 
+  def category
+    # Can't say if team not full
+    return nil if has_free_spot?
+
+    # Can't say if both profiles are not set
+    return nil unless self.vtt.profile and self.route.profile 
+
+    pv = self.vtt.profile
+    pr = self.route.profile 
+
+    tags = Array.new
+    
+    # Add race type
+    tags << self.race_type.to_sym
+
+    tags << :mixte if pv.gender != pr.gender
+    tags << :hommes if pv.gender == "m" and  pr.gender == "m"
+    tags << :femmes if pv.gender == "f" and  pr.gender == "f"
+    
+
+    # Solo
+    if "Solo" == self.race_type
+      yob = pv.birth.year
+      case yob
+      when 1992..EVENT_DATE.year
+        tags << :espoirs
+      when 1972...1992
+        tags << :seniors
+      when 1900...1972
+        tags << :masters
+      end
+    end
+
+    tags << :handi if self.handi
+
+    tags
+  end
+
   def remove_from_team(u)
     if is_in?(u)
       self.vtt_id = nil if self.vtt_id == u.id

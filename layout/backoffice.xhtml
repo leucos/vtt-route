@@ -136,7 +136,7 @@
             <li #{"class='active'" if @caller[:method]=="noprofile"}><a href="#{Backoffice.r(:noprofile)}">Sans profil</a></li>
             <li #{"class='active'" if @caller[:method]=="teams"}><a href="#{Backoffice.r(:teams)}">Equipes</a></li>
             <li #{"class='active'" if @caller[:method]=="tools"}><a href="#{Backoffice.r(:tools)}">Outils</a></li>
-            <li #{"class='active'" if @caller[:method]=="statistics"}><a href="#{Backoffice.r(:statistics)}">Statistiques</a></li>
+            <li #{"class='active'" if @caller[:method]=="statistics"}><a href="#{Statistics.r(:index)}">Statistiques</a></li>
           </ul>
           
           <h2 id="subtitle">#{@subtitle}</h2>
@@ -319,6 +319,7 @@
 
     #{js('bootstrap.min')}
     #{js('users-ajax')}
+    #{js('flotr2.min')}
   </body>
 </html>
 

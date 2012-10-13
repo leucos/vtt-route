@@ -122,7 +122,7 @@ EOF
         inner_message << "* " + missing[key]['element'].capitalize + "\n\n" + missing[key]['message'] + "\n"
       end
       
-      subject = 'Rappel pour votre inscription sur Challenge VTT-Route'
+      subject = 'Challenge VTT-Route : plus que 7 jours pour finaliser votre inscription'
       body =<<EOF
 Bonjour,
 
@@ -130,6 +130,7 @@ Vous vous êtes récemment inscrit sur le site de challenge VTT-Route et nous vo
 en remercions.
 
 Cependant, votre inscription ne sera effective que lorsque la totalité des éléments requis seront fournis.
+Attention : ces éléments doivent nous parvenir avant la clôture des inscriptions (20 octobre).
 
 Pour que votre inscription soit prise en compte, merci de vérifier les éléments suivants :
 

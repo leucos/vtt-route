@@ -11,11 +11,11 @@ class Statistics < Controller
     @stats = Hash.new
 
     begin
-      count = Team.where(:race_type => "Solo").count +
-      Team.exclude(:race_type => "Solo").exclude(:route_id => nil).count +
-      Team.exclude(:race_type => "Solo").exclude(:vtt_id => nil).count
-
-      @stats[:people_in_teams] = { :count => Team.where(:vtt_id => nil).count + Team.exclude(:route_id => nil).count }
+      count = 
+      @stats[:people_in_teams] = { :count => Team.where(:race_type => "Solo").count +
+        Team.exclude(:race_type => "Solo").exclude(:route_id => nil).count +
+        Team.exclude(:race_type => "Solo").exclude(:vtt_id => nil).count
+      }
       @stats[:people_in_teams][:percent] = 100 * @stats[:people_in_teams][:count] / @inscrits
     rescue ZeroDivisionError
       @stats[:people_in_teams][:percent] = 100

@@ -8,10 +8,12 @@ Cette page liste les éléments que vous devez nous faire parvenir. Si nous les 
 
     <?r @pieces.each do |p| ?>
     <div id="div-#{p[:type]}" class="alert alert-#{ p[:status] ? "success" : "error" }">
-      <strong>#{ p[:name].capitalize }</strong> : pièce non reçue 
+      <strong>#{ p[:name].capitalize }</strong> : 
       <?r if p[:status] ?>
+      pièce reçue
       <span class="badge badge-success pull-right"><i class="icon-ok icon-white"></i> Ok</span>
       <?r else ?>
+      pièce non reçue 
       <a href="#" rel="popover" class="pull-right" data-content="#{html_escape p[:description]}" data-original-title="#{html_escape p[:name].capitalize}" alt="#{html_escape p[:name].capitalize}">
         <span class="badge badge-important pull-right"><i class="icon-remove icon-white"></i> Manquant</span>
       </a>

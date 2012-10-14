@@ -26,7 +26,7 @@ $(document).ready(function(){
     }
   });
 
-  $("span.toggle-button,span.team-remove,span.team-add").hover( function () {
+  $("span.toggle-button,span.team-remove,span.team-add,span.plate-generate").hover( function () {
     $(this).css('cursor','pointer');
   });
 
@@ -54,6 +54,7 @@ $(document).ready(function(){
     });
   });
 
+
   $('span.team-remove').click(function() {
     var target = $(this);
     var uid = target.attr("data-userid");
@@ -80,6 +81,62 @@ $(document).ready(function(){
 
     console.log($('#team-add-form').attr('action'));
     $('#team-add-modal').modal('show');
+
+  });
+
+  $('button.plate-generate').click(function() {
+    var target = $(this);
+    var tid = target.attr("data-teamid");
+    var input = $("#input-" + tid);
+    console.log("click:" + tid);
+
+    $.ajax({
+      url: "/teams/get_plate_for/" + tid,
+      success: function(result) {
+        console.log(result);
+        console.log(result['id']);
+
+        if (result['status'] === true) {
+          input.val(result['id']);
+          input.fadeOut('slow', function() {
+            input.removeClass("error").addClass("success").fadeIn('slow');
+          });
+        } else {
+          input.fadeOut('slow', function() {
+            input.removeClass("success").addClass("error").fadeIn('slow');
+          });
+        }
+      }
+    });
+  });
+
+  $('input.plate').change(function() {
+    // ajax save in db if ok (may be just check if field has ok class)
+    // reset field to initial value if save fails
+    //$(this).addClass("success");
+    var target = $(this);
+    var tid = target.attr("data-teamid");
+    var pid = target.val();
+    var group = $("#group-" + tid)
+    console.log("change:" + tid);
+
+    $.ajax({
+      type: 'POST',
+      url: "/teams/set_plate_for/" + tid,
+      data: "plateid=" + pid,
+      success: function(result) {
+        console.log(result);
+        if (result === true) {
+          group.fadeOut('slow', function() {
+            group.removeClass("error").addClass("success").fadeIn('slow');
+          });
+        } else {
+          group.fadeOut('slow', function() {
+            group.removeClass("success").addClass("error").fadeIn('slow');
+          });
+        }
+      }
+    });
 
   });
 

@@ -31,12 +31,25 @@
           #{cat ? "<strong>" + cat.map { |v| v.capitalize }.join('-') + "</strong>" : "<em>actuellement indéterminable</em>" }
         </td>
         <!-- Type col -->
-        <td>#{s.plate}</td>
+        <td>
+          <div id="group-#{s.id}" class="control-group">
+            <input type="text" class="plate input-small" data-teamid="#{s.id}" id="input-#{s.id}" value="#{s.plate}" />
+            <button data-teamid="#{s.id}" id="plate-generate-#{s.id}" class="btn plate-generate">
+             Générer
+            </button>
+          </div>
+        </td>
       </tr>
       <?r end ?>
     </tbody>
   </table>
+
+  <div>
+    <a href="/teams/generate_plate_for_all" class="btn btn-warning">Générer toutes les plaques</a>
+  </div>
+
   <div class="pagination-centered">
     #{@teams.navigation}
   </div>
 
+</div>

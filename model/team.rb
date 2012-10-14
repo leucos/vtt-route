@@ -40,7 +40,7 @@ class Team < Sequel::Model
     return nil if has_free_spot?
 
     # Can't say if both profiles are not set
-    return nil unless self.vtt.profile and self.route.profile 
+    return nil unless self.vtt and self.vtt.profile and self.route and self.route.profile 
 
     pv = self.vtt.profile
     pr = self.route.profile 

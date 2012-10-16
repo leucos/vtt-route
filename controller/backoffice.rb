@@ -349,6 +349,7 @@ class Backoffice < Controller
 
       Profile.order_by(:name).each do |p|
         u = User[p.user_id]
+        next unless u
         next if u.superadmin or u.admin
         next unless u.team and !u.team.has_free_spot?
 

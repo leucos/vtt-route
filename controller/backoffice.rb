@@ -391,6 +391,18 @@ class Backoffice < Controller
     redirect_referrer
   end
 
+  def inform_all
+    sent = 0
+    User.each do |u|
+      res = do_inform(u)
+      sent += 1 if res and res.count > 0
+    end
+    
+    flash[:info] = "#{sent} infos envoyées"
+    redirect_referrer
+  end
+
+  end
   def remind(id=nil)
     if !id
       flash[:error] = "Utilisateur non fourni"
@@ -405,8 +417,8 @@ class Backoffice < Controller
     end
 
 
-    do_remind(u).each do |what|
-    end
+    #do_remind(u).each do |what|
+    #end
     
     flash[:info] = do_remind(u).join(", ")
     #flash[:info] + to_s + what.to_s
@@ -421,6 +433,12 @@ class Backoffice < Controller
   end
 
   private
+
+  def do_inform(u)
+    return unless u.email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
+    return unless u.email == "mblanc@erasme.org" or u.email == "mb@mbnet.fr"
+    MailUtils::Informer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Programme.r(:index)}", user.email || "unknown")
+  end
 
   def do_remind(u)
     # Send reminder to user

@@ -122,7 +122,7 @@ EOF
         inner_message << "* " + missing[key]['element'].capitalize + "\n\n" + missing[key]['message'] + "\n"
       end
       
-      subject = 'Challenge VTT-Route : plus que 7 jours pour finaliser votre inscription'
+      subject = 'Challenge VTT-Route : plus que 2 jours pour finaliser votre inscription'
       body =<<EOF
 Bonjour,
 
@@ -154,5 +154,49 @@ EOF
       MailWorker.send_email(:type => "remider", :subject => subject, :to => email, :body => body, :admin => admin)
     end
   end
+
+  # General information
+  class Informer < MailWorker
+    def perform(email, url, admin) 
+      subject = 'Le challenge approche !'
+      body =<<EOF
+Bonjour,
+
+Deux informations importantes à l'approche du Challenge :
+
+  - les participants licenciés devront impérativement présenter une 
+    licence sportive cycliste en cours de validité au retrait du dossard.
+    N'oubliez pas ! Ce serait dommage de regarder les autres partir.
+    Cependant, tout ne serait pas complètement perdu car...
+
+  - de nombreuses manifestations sont prévues le jour de l'épreuve :
+     * 3 shows de VTT trial par Bruno Janin, champion du monde,
+     * sécurité routiere pour les enfants
+     * vélos rigolos, pour les enfants jusqu'a 99 ans
+     * parcours trial, vélo électrique, spectacle de danse, buvette...
+
+En bref, le Challenge Chamousset en Lyonnais / Jean-Christophe Péraud
+c'est aussi une sortie idéale pour le reste de la famille qui ne 
+participe pas à la course.
+
+Vous pouvez télécharger le programme ici :
+
+#{url}
+
+Si vous avez besoin de nous contacter, vous pouvez ile faire en cliquant 
+sur 'Répondre' ou en écrivant à : info@challengevttroute.fr
+
+Rendez vous dans 10 jours !
+
+L'équipe du challenge VTT-Route
+--
+Challenge VTT-Route
+info@challengevttroute.fr
+EOF
+      
+      MailWorker.send_email(:type => "informer", :subject => subject, :to => email, :body => body, :admin => admin)
+    end
+  end
+
 
 end

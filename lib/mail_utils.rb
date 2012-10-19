@@ -177,13 +177,13 @@ Deux informations importantes à l'approche du Challenge :
 
 En bref, le Challenge Chamousset en Lyonnais / Jean-Christophe Péraud
 c'est aussi une sortie idéale pour le reste de la famille qui ne 
-participe pas à la course.
+participe pas à la course !
 
-Vous pouvez télécharger le programme ici :
+Vous pouvez télécharger le programme complet ici :
 
 #{url}
 
-Si vous avez besoin de nous contacter, vous pouvez ile faire en cliquant 
+Si vous avez besoin de nous contacter, vous pouvez le faire en cliquant 
 sur 'Répondre' ou en écrivant à : info@challengevttroute.fr
 
 Rendez vous dans 10 jours !

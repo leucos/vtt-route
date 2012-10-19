@@ -394,15 +394,13 @@ class Backoffice < Controller
   def inform_all
     sent = 0
     User.each do |u|
-      res = do_inform(u)
-      sent += 1 if res and res.count > 0
+      sent += 1 if do_inform(u)
     end
     
     flash[:info] = "#{sent} infos envoyées"
     redirect_referrer
   end
 
-  end
   def remind(id=nil)
     if !id
       flash[:error] = "Utilisateur non fourni"

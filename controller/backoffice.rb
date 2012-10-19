@@ -434,7 +434,6 @@ class Backoffice < Controller
 
   def do_inform(u)
     return unless u.email =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
-    return unless u.email == "mblanc@erasme.org" or u.email == "mb@mbnet.fr"
     MailUtils::Informer.perform_async(u.email, "#{VttRoute.options.myurl}/#{Programme.r(:index)}", user.email || "unknown")
   end
 

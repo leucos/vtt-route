@@ -165,14 +165,15 @@ Bonjour,
 Deux informations importantes à l'approche du Challenge :
 
   - les participants licenciés devront impérativement présenter une 
-    licence sportive cycliste en cours de validité au retrait du dossard.
+    licence sportive cycliste en cours de validité au retrait du
+    dossard.
     N'oubliez pas ! Ce serait dommage de regarder les autres partir.
     Cependant, tout ne serait pas complètement perdu car...
 
   - de nombreuses manifestations sont prévues le jour de l'épreuve :
      * 3 shows de VTT trial par Bruno Janin, champion du monde,
      * sécurité routiere pour les enfants
-     * vélos rigolos, pour les enfants jusqu'a 99 ans
+     * vélos rigolos, pour les enfants jusqu'à 99 ans
      * parcours trial, vélo électrique, spectacle de danse, buvette...
 
 En bref, le Challenge Chamousset en Lyonnais / Jean-Christophe Péraud
@@ -183,8 +184,8 @@ Vous pouvez télécharger le programme complet ici :
 
 #{url}
 
-Si vous avez besoin de nous contacter, vous pouvez le faire en cliquant 
-sur 'Répondre' ou en écrivant à : info@challengevttroute.fr
+Si vous avez besoin de nous contacter, vous pouvez le faire en 
+cliquant sur 'Répondre' ou en écrivant à : info@challengevttroute.fr
 
 Rendez vous dans 10 jours !
 

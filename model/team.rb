@@ -50,10 +50,12 @@ class Team < Sequel::Model
     # Add race type
     tags << self.race_type.to_sym
 
-    tags << :mixte if pv.gender != pr.gender
-    tags << :hommes if pv.gender == "m" and  pr.gender == "m"
-    tags << :femmes if pv.gender == "f" and  pr.gender == "f"
-    
+    # Gender
+    if not self.handi 
+      tags << :mixte if pv.gender != pr.gender
+      tags << :hommes if pv.gender == "m" and  pr.gender == "m"
+      tags << :femmes if pv.gender == "f" and  pr.gender == "f"
+    end
 
     # Solo
     if "Solo" == self.race_type

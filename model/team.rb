@@ -51,7 +51,7 @@ class Team < Sequel::Model
     tags << self.race_type.to_sym
 
     # Gender
-    if not self.handi 
+    if not self.handi and not self.race_type == "Tandem"
       tags << :mixte if pv.gender != pr.gender
       tags << :hommes if pv.gender == "m" and  pr.gender == "m"
       tags << :femmes if pv.gender == "f" and  pr.gender == "f"

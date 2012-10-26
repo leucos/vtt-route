@@ -130,7 +130,7 @@ Vous vous êtes récemment inscrit sur le site de challenge VTT-Route et nous vo
 en remercions.
 
 Cependant, votre inscription ne sera effective que lorsque la totalité des éléments requis seront fournis.
-Attention : ces éléments doivent nous parvenir avant la clôture des inscriptions (20 octobre).
+Ces éléments doivent être fournis sur place.
 
 Pour que votre inscription soit prise en compte, merci de vérifier les éléments suivants :
 
@@ -158,36 +158,41 @@ EOF
   # General information
   class Informer < MailWorker
     def perform(email, url, admin) 
-      subject = 'Le challenge approche !'
+      subject = 'Challenge, j-2 !'
       body =<<EOF
 Bonjour,
 
-Deux informations importantes à l'approche du Challenge :
+Quelques informations importantes à deux jours du Challenge :
 
-  - les participants licenciés devront impérativement présenter une 
+  - le retrait des dossards commence à 7h.
+
+  - le briefing a lieu à 8h45 
+
+  - les participants licenciés devront IMPERATIVEMENT présenter une 
     licence sportive cycliste en cours de validité au retrait du
     dossard.
     N'oubliez pas ! Ce serait dommage de regarder les autres partir.
-    Cependant, tout ne serait pas complètement perdu car...
 
-  - de nombreuses manifestations sont prévues le jour de l'épreuve :
+  - si vous réglez sur place, merci d'apporter un chèque. Aucun
+    paiement par carte ne pourra être effectué et les règlements en
+    espèce dépendront de la monnaie disponible en caisse.
+
+  - n'hésitez pas à amener vos proches, de nombreuses manifestations 
+    sont prévues le jour de l'épreuve :
      * 3 shows de VTT trial par Bruno Janin, champion du monde,
      * sécurité routiere pour les enfants
      * vélos rigolos, pour les enfants jusqu'à 99 ans
      * parcours trial, vélo électrique, spectacle de danse, buvette...
 
-En bref, le Challenge Chamousset en Lyonnais / Jean-Christophe Péraud
-c'est aussi une sortie idéale pour le reste de la famille qui ne 
-participe pas à la course !
-
 Vous pouvez télécharger le programme complet ici :
-
 #{url}
 
-Si vous avez besoin de nous contacter, vous pouvez le faire en 
-cliquant sur 'Répondre' ou en écrivant à : info@challengevttroute.fr
+Si vous avez besoin de nous contacter, vous pouvez le faire soit par 
+email en cliquant sur 'Répondre' (ou en écrivant à : 
+info@challengevttroute.fr) soit par téléphone en cas d'urgence
+au 06 07 94 72 36
 
-Rendez vous dans 10 jours !
+Rendez vous dimanche !
 
 L'équipe du challenge VTT-Route
 --

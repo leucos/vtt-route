@@ -158,20 +158,31 @@ EOF
   # General information
   class Informer < MailWorker
     def perform(email, url, admin) 
-      subject = 'Challenge, j-2 !'
+      subject = 'A demain !'
       body =<<EOF
 Bonjour,
 
-Quelques informations importantes à deux jours du Challenge :
+Quelques informations importantes pour demain :
 
   - le retrait des dossards commence à 7h.
 
-  - le briefing a lieu à 8h45 
+  - le briefing a lieu à 8h45
+
+  - le départ VTT a lieu à 9h00 (attention, le Progrès a donné une
+    mauvaise heure !)
 
   - les participants licenciés devront IMPERATIVEMENT présenter une 
     licence sportive cycliste en cours de validité au retrait du
     dossard.
     N'oubliez pas ! Ce serait dommage de regarder les autres partir.
+
+  - prenez une petite laine, et des gants chauds, il risque de faire 
+    un peu frisquet, mais ne croyez pas la rumeur, il n'y a pas de 
+    neige !
+
+  - vous pourrez manger chaud sur place (saucisse, tortilla, boissons 
+    chaudes, frites, crèpes, etc...). Les bénéfice de la buvette/snack 
+    seront intégralement reversés à HandiSport Val d'Ozon.
 
   - si vous réglez sur place, merci d'apporter un chèque. Aucun
     paiement par carte ne pourra être effectué et les règlements en
@@ -184,15 +195,12 @@ Quelques informations importantes à deux jours du Challenge :
      * vélos rigolos, pour les enfants jusqu'à 99 ans
      * parcours trial, vélo électrique, spectacle de danse, buvette...
 
-Vous pouvez télécharger le programme complet ici :
-#{url}
-
 Si vous avez besoin de nous contacter, vous pouvez le faire soit par 
 email en cliquant sur 'Répondre' (ou en écrivant à : 
 info@challengevttroute.fr) soit par téléphone en cas d'urgence
 au 06 07 94 72 36
 
-Rendez vous dimanche !
+Rendez vous demain !
 
 L'équipe du challenge VTT-Route
 --

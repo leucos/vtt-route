@@ -342,6 +342,27 @@ class Backoffice < Controller
     respond!(csv_string, 200, 'Content-Type' => 'text/csv')
   end
 
+  def csv_export_users
+    csv_string = CSV.generate do |csv|
+      csv << [ "Nom", "Prénom", "Equipe", "Categorie" ]
+
+      User.each do |u|
+        next unless u
+        next if u.superadmin or u.admin
+        next unless u.team and !u.team.has_free_spot?
+        next unless u.profile
+
+        csv << [ u.profile.name.upcase,
+          u.profile.surname.capitalize,
+          u.team.plate,
+          u.team.name.capitalize,          
+          u.team.category.map { |v| v.capitalize }.join('-')
+        ]
+      end
+    end
+    respond!(csv_string, 200, 'Content-Type' => 'text/csv')
+  end
+
   def csv_export_retrait
     csv_string = CSV.generate do |csv|
 

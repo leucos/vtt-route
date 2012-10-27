@@ -363,7 +363,8 @@ class Backoffice < Controller
 
         missing << :paiement if u.profile.payment_required? and !u.profile.payment_received
         missing << :certif if u.profile.certificate_required? and !u.profile.certificate_received
-        missing << :licence if u.profile.licence.nil? or u.profile.licence == ''
+        # missing << :licence if u.profile.licence.nil? or u.profile.licence == ''
+        missing << :licence if (not u.profile.licence.nil? and u.profile.licence != '')
         missing << :authoris if u.profile.authorization_required? and !u.profile.authorization_received
         miss = missing.join('+').upcase
         miss = "OK" if miss == ""
@@ -381,7 +382,7 @@ class Backoffice < Controller
 
         missingo << :paiement if o.payment_required? and !o.payment_received
         missingo << :certif if o.certificate_required? and !o.certificate_received
-        missingo << :licence unless o.licence.nil? or o.licence == ''
+        missingo << :licence if (not o.licence.nil? and o.licence != '')
         missingo << :authoris if o.authorization_required? and !o.authorization_received
         misso = missingo.join('+').upcase
         misso = "OK" if misso == ""

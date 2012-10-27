@@ -341,8 +341,52 @@ class Backoffice < Controller
 
     respond!(csv_string, 200, 'Content-Type' => 'text/csv')
   end
-  
+
   def csv_export_retrait
+    csv_string = CSV.generate do |csv|
+
+      csv << [ "Nom", "Prénom", "ADN", "Manquant", "Catégorie", "Plaque", "Nom Part", "Prenom Part", "ADN Part"]
+      
+      DB.fetch("SELECT profiles.name as n, profiles.user_id as uid,
+        teams.plate as p 
+        FROM profiles, teams 
+        WHERE profiles.user_id = teams.vtt_id 
+        ORDER BY profiles.name").each do |m|      
+
+        u = User[m[:uid]]
+        next unless u
+        next if u.superadmin or u.admin
+        next unless u.team and !u.team.has_free_spot?
+
+        p = u.profile
+        missing = Array.new
+
+        missing << :paiement if u.profile.payment_required? and !u.profile.payment_received
+        missing << :certif if u.profile.certificate_required? and !u.profile.certificate_received
+        missing << :authoris if u.profile.authorization_required? and !u.profile.authorization_received
+        miss = missing.join('+').upcase
+        miss = "OK" if miss == ""
+
+        t = u.team
+        next unless t
+        cat = t.category
+        next unless cat
+        cname = cat.map { |v| v.capitalize }.join('-')
+ 
+        other_id = (t.vtt_id == u.id ? t.route_id : t.vtt_id )
+        o = User[other_id].profile
+
+
+        csv << [ p.name.upcase, p.surname.capitalize, p.birth.year, miss, cname, t.plate,
+          o.name.upcase, o.surname.capitalize, o.birth.year
+        ]
+      end
+    end
+
+    respond!(csv_string, 200, 'Content-Type' => 'text/csv')
+  end
+  
+  def csv_export_all
     csv_string = CSV.generate do |csv|
 
       csv << [ "Nom", "Prénom", "ADN", "Manquant", "Catégorie", "Plaque", "Nom Part", "Prenom Part", "ADN Part"]

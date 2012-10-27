@@ -345,7 +345,7 @@ class Backoffice < Controller
   def csv_export_retrait
     csv_string = CSV.generate do |csv|
 
-      csv << [ "Nom", "Prénom", "ADN", "Manquant", "Catégorie", "Plaque", "Nom Part", "Prenom Part", "ADN Part"]
+      csv << [ "Nom", "Prénom", "ADN", "Manquant", "Catégorie", "Plaque", "NomP", "PrenomP", "ADNP", "ManquantP"]
       
       DB.fetch("SELECT profiles.name as n, profiles.user_id as uid,
         teams.plate as p 
@@ -363,6 +363,7 @@ class Backoffice < Controller
 
         missing << :paiement if u.profile.payment_required? and !u.profile.payment_received
         missing << :certif if u.profile.certificate_required? and !u.profile.certificate_received
+        missing << :licence if u.profile.licence.nil? or u.profile.licence == ''
         missing << :authoris if u.profile.authorization_required? and !u.profile.authorization_received
         miss = missing.join('+').upcase
         miss = "OK" if miss == ""
@@ -376,9 +377,17 @@ class Backoffice < Controller
         other_id = (t.vtt_id == u.id ? t.route_id : t.vtt_id )
         o = User[other_id].profile
 
+        missingo = Array.new
+
+        missingo << :paiement if o.payment_required? and !o.payment_received
+        missingo << :certif if o.certificate_required? and !o.certificate_received
+        missingo << :licence unless o.licence.nil? or o.licence == ''
+        missingo << :authoris if o.authorization_required? and !o.authorization_received
+        misso = missingo.join('+').upcase
+        misso = "OK" if misso == ""
 
         csv << [ p.name.upcase, p.surname.capitalize, p.birth.year, miss, cname, t.plate,
-          o.name.upcase, o.surname.capitalize, o.birth.year
+                 o.name.upcase, o.surname.capitalize, o.birth.year, misso
         ]
       end
     end

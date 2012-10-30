@@ -169,8 +169,16 @@ Bravo pour votre courage, et merci !
 Une mention spéciale aux équipes handi dont la détermination dans le vent 
 et le froid ont forcé le respect de tous. Chapeau !
 
-Nous avons mis en ligne les photos prises par nos signaleurs et autres 
-bénévoles à cette adresse : 
+Les quelques retours que nous avons eus sont plutôt positifs, mais nous 
+avons besoin de votre avis pour améliorer les circuits, l'organisation, 
+la restauration, etc... Vous trouverez un petit formulaire à remplir 
+ici : http://chalengevttroute.fr/formulaire
+
+Ç'est anonyme, ça prend moins de 3 minutes, et votre avis est vraiment 
+important pour nous. Alors merci d'avance !
+
+Une fois ce petit service rendu, vous pourrez profiter des photos 
+prises par nos signaleurs et autres bénévoles à cette adresse : 
 
 https://picasaweb.google.com/105811499874742518418
 
@@ -179,22 +187,13 @@ l'association Handisport Val d'Ozon. Si vous désirez soutenir leur
 action, n'hésitez pas. Vous trouverez les informations nécessaires sur 
 leur site (http://www.handisport-valdozon.fr/).
 
-Par ailleurs, vous trouverez quelques vidéos tournées à la va-vite ici :
+Par ailleurs, vous trouverez quelques vidéos tournées à la va-vite ici:
 
 https://www.youtube.com/watch?v=z6g7TOKOHvw&list=PLOF4_z8_YdVWNLRB5VcqA-UIOWP9b7T_L&feature=view_all
 
 La qualité est très amateur mais l'idée c'était surtout d'avoir un 
 petit souvenir de cette édition à se repasser les soirs d'hiver, en 
 attendant de faire mieux la prochaine fois.
-
-Justement, nous avons besoin de votre avis pour améliorer les circuits,
-l'organisation, la restauration, etc... Vous trouverez un petit formulaire
-à remplir ici :
-
-http://chalengevttroute.fr/formulaire
-
-Ç'est anonyme, ça prend moins de 3 minutes, et votre avis est vraiment 
-important pour nous. Alors merci d'avance !
 
 J'allais oublier, quelque chose qui probablement vous intéresse : les 
 classements ! Ils sont disponibles sur le site, en page d'accueil : 

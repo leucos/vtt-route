@@ -197,8 +197,8 @@ http://chalengevttroute.fr/formulaire
 important pour nous. Alors merci d'avance !
 
 J'allais oublier, quelque chose qui probablement vous intéresse : les 
-classements ! Ils sont disponibles sur le site, en page d'accueil 
-(http://challengevttroute.fr/).
+classements ! Ils sont disponibles sur le site, en page d'accueil : 
+http://challengevttroute.fr/
 
 Nous conservons votre email afin de pouvoir vous prévenir pour la 
 prochaine édition mais sachez que conformément à la loi, vous disposez 

@@ -158,49 +158,61 @@ EOF
   # General information
   class Informer < MailWorker
     def perform(email, url, admin) 
-      subject = 'A demain !'
+      subject = 'Un grand merci à tous !'
       body =<<EOF
 Bonjour,
 
-Quelques informations importantes pour demain :
+Un grand merci pour votre participation au Challenge VTT-Route. Vous
+avez transformé cette première en succès, malgré la météo exécrable.
+Bravo pour votre courage, et merci !
 
-  - le retrait des dossards commence à 7h.
+Une mention speciale aux équipes handi dont la détermination dans le vent 
+et le froid ont forcé le respect de tous. Chapeau !
 
-  - le briefing a lieu à 8h45
+Nous avons mis en ligne les photos prises par nos signaleurs et autres 
+bénévoles à cette adresse : 
 
-  - le départ VTT a lieu à 9h00 (attention, le Progrès a donné une
-    mauvaise heure !)
+https://picasaweb.google.com/105811499874742518418
 
-  - les participants licenciés devront IMPERATIVEMENT présenter une 
-    licence sportive cycliste en cours de validité au retrait du
-    dossard.
-    N'oubliez pas ! Ce serait dommage de regarder les autres partir.
+Les bénéfices de la vente photo devaient aller intégralement à 
+l'association Handisport Val d'Ozon. Si vous désirez soutenir leur 
+action, n'hésitez pas. Vous trouverez les informations nécessaires sur 
+leur site (http://www.handisport-valdozon.fr/).
 
-  - prenez une petite laine, et des gants chauds, il risque de faire 
-    un peu frisquet, mais ne croyez pas la rumeur, il n'y a pas de 
-    neige !
+Par ailleurs, vous trouverez quelques vidéos tournées à la va-vite ici :
 
-  - vous pourrez manger chaud sur place (saucisse, tortilla, boissons 
-    chaudes, frites, crèpes, etc...). Les bénéfice de la buvette/snack 
-    seront intégralement reversés à HandiSport Val d'Ozon.
+https://www.youtube.com/watch?v=z6g7TOKOHvw&list=PLOF4_z8_YdVWNLRB5VcqA-UIOWP9b7T_L&feature=view_all
 
-  - si vous réglez sur place, merci d'apporter un chèque. Aucun
-    paiement par carte ne pourra être effectué et les règlements en
-    espèce dépendront de la monnaie disponible en caisse.
+La qualité est très amateur mais l'idée c'était surtout d'avoir un petit 
+souvenir de cette édition à se repasser les soirs d'hiver, en attendant 
+de faire mieux la prochaine fois.
 
-  - n'hésitez pas à amener vos proches, de nombreuses manifestations 
-    sont prévues le jour de l'épreuve :
-     * 3 shows de VTT trial par Bruno Janin, champion du monde,
-     * sécurité routiere pour les enfants
-     * vélos rigolos, pour les enfants jusqu'à 99 ans
-     * parcours trial, vélo électrique, spectacle de danse, buvette...
+Justement, nous avons besoin de votre avis pour améliorer les circuits,
+l'organisation, la restauration, etc... Vous trouverez un petit formulaire
+à remplir ici :
+
+http://chalengevttroute.fr/formulaire
+
+Ç'est anonyme, ça prend moins de 3 minutes, et votre avis est vraiment 
+important pour nous. Alors merci d'avance !
+
+J'allais oublier, quelque chose qui probablement vous intéresse : les 
+classements ! Ils sont disponibles sur le site, en page d'accueil 
+(http://challengevttroute.fr/).
+
+Nous conservons votre email afin de pouvoir vous prévenir pour la 
+prochaine édition mais sachez que conformément à la loi, vous disposez 
+d'un droit de consultation et de rectification. Pour faire simple, si 
+vous désirez disparaitre de nos tablettes il suffit de nous le demander 
+par email, ce sera fait sur le champ sans aucune question. Par ailleurs, 
+sachez qu'en aucun cas ces informations ne sont transmises à des tiers; 
+vous ne recevrez donc aucun "pourriel" à cause de nous.
 
 Si vous avez besoin de nous contacter, vous pouvez le faire soit par 
 email en cliquant sur 'Répondre' (ou en écrivant à : 
-info@challengevttroute.fr) soit par téléphone en cas d'urgence
-au 06 07 94 72 36
+info@challengevttroute.fr).
 
-Rendez vous demain !
+Merci de votre confiance, et rendez vous à la prochaine édition !
 
 L'équipe du challenge VTT-Route
 --

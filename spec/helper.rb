@@ -1,5 +1,8 @@
 require 'ramaze'
 require 'ramaze/spec/bacon'
+require 'coveralls'
+
+Coveralls.wear!
 
 require File.expand_path('../../app', __FILE__)
 

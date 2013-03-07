@@ -35,4 +35,5 @@ group :development do
   gem 'sqlite3'
   gem 'capybara'
   #gem 'capybara-screenshot'
+  gem 'coveralls', require: false
 end
